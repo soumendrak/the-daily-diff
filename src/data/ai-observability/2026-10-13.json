@@ -1,67 +1,7 @@
 {
   "date": "2026-10-13",
+  "story_window": "2026-10-12",
   "edition": "AI Observability Daily",
-  "dek": "The systems signals, evaluation practice, and agent behavior worth watching.",
-  "stories": [
-    {
-      "category": "Traditional observability",
-      "category_key": "observability",
-      "title": "Build telemetry exports around OpenTelemetry, not a vendor lock-in",
-      "publisher": "OpenTelemetry",
-      "published": "2026-10-08",
-      "url": "https://opentelemetry.io/blog/2026/otel-native-by-design/",
-      "summary": "OpenTelemetry's design guide makes a practical case for letting customers export logs, traces, and metrics to the backend they choose. It distinguishes software customers run themselves—where built-in instrumentation and endpoint configuration fit—from cloud platforms, which need configurable telemetry drains. Preserve correlation and semantic conventions so exported signals remain useful outside your product.",
-      "takeaway": "Treat portability as part of the product contract: exporting data is not enough if context and meaning disappear on the way out."
-    },
-    {
-      "category": "Traditional observability",
-      "category_key": "observability",
-      "title": "OBI adds trace IDs to existing logs without changing the application",
-      "publisher": "OpenTelemetry",
-      "published": "2026-10-06",
-      "url": "https://opentelemetry.io/blog/2026/obi-trace-log-correlation/",
-      "summary": "OpenTelemetry's eBPF-based OBI can annotate existing application log lines with trace context, so operators can connect a failing trace to its logs without rebuilding or redeploying the service. The rollout uses a log-shipper filter to remove placeholder lines and recommends starting with one low-risk service before expanding.",
-      "takeaway": "This is a low-friction bridge for legacy services—but validate the filtering carefully to avoid duplicate or malformed log records."
-    },
-    {
-      "category": "Evals",
-      "category_key": "evals",
-      "title": "Evaluator backfills turn yesterday’s production traces into today’s test set",
-      "publisher": "Langfuse",
-      "published": "2026-09-30",
-      "url": "https://langfuse.com/blog/2026-09-30-langfuse-september-update",
-      "summary": "Langfuse's September release lets teams apply a newly configured evaluator to past observations, choosing a time window, item cap, and sampling rate while previewing estimated LLM cost. The same update describes using a typed decision model as a judge for cheap, fast observation-level scores, while retaining LLM judges where written reasoning is useful.",
-      "takeaway": "Backfills make eval coverage less dependent on what the team remembered to label in advance; budget and sampling controls still matter."
-    },
-    {
-      "category": "Evals",
-      "category_key": "evals",
-      "title": "Score the whole conversation, not just isolated spans",
-      "publisher": "Arize AI",
-      "published": "2026-09",
-      "url": "https://arize.com/blog/new-in-arize-ax-september-2026-updates/",
-      "summary": "Arize AX's September update treats sessions as first-class evaluation and review units: teams can annotate a conversation, queue it for human review, and preview an evaluator at session level. It also adds image-aware judge templates, so a vision evaluation can inspect the actual image rather than a textual stand-in.",
-      "takeaway": "Conversation-level quality often emerges across turns; span-level metrics alone can miss whether the user’s task was completed."
-    },
-    {
-      "category": "AI-agent observability",
-      "category_key": "agents",
-      "title": "The OpenTelemetry Demo now traces an agent across tools and services",
-      "publisher": "OpenTelemetry",
-      "published": "2026-07-28",
-      "url": "https://opentelemetry.io/blog/2026/we-broke-the-demo/",
-      "summary": "The Demo 3.0 release adds an instrumented LangGraph ReAct agent, an MCP server, and a chat UI. Its traces follow interactions from the user-facing application through model calls, agent tool use, MCP, and downstream services; a Collector processor normalizes legacy GenAI telemetry into the official gen_ai semantic conventions.",
-      "takeaway": "A useful reference architecture for debugging the whole execution path—not just the model request that happened to be slow."
-    },
-    {
-      "category": "AI-agent observability",
-      "category_key": "agents",
-      "title": "Agent-as-a-Judge moves production-trace review beyond fixed span checks",
-      "publisher": "Arize AI",
-      "published": "2026-09",
-      "url": "https://arize.com/blog/new-in-arize-ax-september-2026-updates/",
-      "summary": "Arize describes an agentic judge that inspects production traces, locates relevant spans, and labels issues using criteria adapted to failures observed in production. In the same update, whole-session annotations and review queues connect automated detection to human inspection of the complete interaction.",
-      "takeaway": "Use this as a triage aid, not an oracle: validate judge labels against human review and track false positives as the criteria evolve."
-    }
-  ]
+  "dek": "No stories met the strict October 12 publication-date cutoff.",
+  "stories": []
 }
