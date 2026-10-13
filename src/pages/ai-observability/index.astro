@@ -1,0 +1,140 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ThemeToggleButton from '../../components/ThemeToggleButton.astro';
+import Footer from '../../components/Footer.astro';
+
+const editionFiles = import.meta.glob('../../data/ai-observability/*.json', { eager: true, import: 'default' });
+const editions = Object.values(editionFiles).sort((a, b) => b.date.localeCompare(a.date));
+const latest = editions[0];
+const categories = [
+  { key: 'observability', label: 'Traditional observability', number: '01' },
+  { key: 'evals', label: 'Evals', number: '02' },
+  { key: 'agents', label: 'AI-agent observability', number: '03' },
+];
+const pageUrl = 'https://tdd.cat/ai-observability/';
+const pageSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${pageUrl}#collection`,
+  url: pageUrl,
+  name: 'AI Observability Daily',
+  description: 'A daily editorial scan of traditional observability, AI evaluations, and AI-agent observability.',
+  dateModified: latest.date,
+  hasPart: latest.stories.map((story, index) => ({
+    '@type': 'Article',
+    position: index + 1,
+    headline: story.title,
+    url: story.url,
+    datePublished: story.published,
+  })),
+};
+---
+
+<Layout
+  title="AI Observability Daily — The Daily Diff"
+  description="A daily editorial scan of traditional observability, AI evaluations, and AI-agent observability."
+  jsonLd={pageSchema}
+>
+  <main class="page-container ai-observability-page">
+    <header class="ai-observability-masthead">
+      <div class="ai-observability-topline">
+        <a href="/" class="ai-observability-home">The Daily Diff</a>
+        <ThemeToggleButton />
+      </div>
+      <p class="ai-observability-kicker">A focused daily edition · Issue {editions.length}</p>
+      <h1>AI Observability<br /><em>Daily</em></h1>
+      <p class="ai-observability-dek">{latest.dek}</p>
+      <div class="ai-observability-meta">
+        <time datetime={latest.date}>{new Date(`${latest.date}T00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <span>{latest.stories.length} selected stories</span>
+      </div>
+      <hr class="ai-observability-rule" />
+      <p class="ai-observability-editor-note">A curated scan across the reliability stack: telemetry foundations, evaluation practice, and agent behavior. Each story links to its original source; publication dates are shown on the story.</p>
+    </header>
+
+    <div class="ai-observability-sections">
+      {categories.map((category) => {
+        const stories = latest.stories.filter((story) => story.category_key === category.key);
+        return (
+          <section class="ai-observability-section" aria-labelledby={`section-${category.key}`}>
+            <div class="ai-observability-section-heading">
+              <span class="ai-observability-section-number">{category.number}</span>
+              <h2 id={`section-${category.key}`}>{category.label}</h2>
+              <span class="ai-observability-section-count">{stories.length} stories</span>
+            </div>
+            <div class="ai-observability-story-grid">
+              {stories.map((story) => (
+                <article class="ai-observability-story">
+                  <div class="ai-observability-story-meta">
+                    <span>{story.publisher}</span>
+                    <time datetime={story.published}>{story.published === '2026-09' ? 'September 2026' : new Date(`${story.published}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+                  </div>
+                  <h3><a href={story.url} target="_blank" rel="noopener noreferrer">{story.title}<span aria-hidden="true"> ↗</span></a></h3>
+                  <p>{story.summary}</p>
+                  <p class="ai-observability-takeaway"><strong>Why it matters</strong> {story.takeaway}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+
+    {editions.length > 1 && (
+      <nav class="ai-observability-archive" aria-label="Past AI Observability editions">
+        <h2>Previous editions</h2>
+        <ul>
+          {editions.slice(1).map((edition) => (
+            <li><a href={`/ai-observability/${edition.date}/`}>{edition.date}</a> · {edition.stories.length} stories</li>
+          ))}
+        </ul>
+      </nav>
+    )}
+
+    <p class="ai-observability-method">Editorial selection and summaries are independent of the linked publishers. Product capabilities and claims are attributed to their original sources.</p>
+    <Footer showDelayNote={false} />
+  </main>
+</Layout>
+
+<style lang="scss">
+.ai-observability-page {
+  max-width: 1080px;
+  padding-top: clamp(1.5rem, 5vw, 4rem);
+}
+.ai-observability-masthead { max-width: 760px; margin: 0 auto 3rem; }
+.ai-observability-topline { display: flex; justify-content: space-between; align-items: center; }
+.ai-observability-home, .ai-observability-kicker, .ai-observability-meta, .ai-observability-section-number, .ai-observability-section-count, .ai-observability-story-meta, .ai-observability-method {
+  font-size: .72rem; letter-spacing: .07em; text-transform: uppercase;
+}
+.ai-observability-home { color: var(--accent-ink); font-weight: 700; }
+.ai-observability-kicker { color: var(--ink-faint); margin: 2.5rem 0 .5rem; }
+.ai-observability-masthead h1 { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 5.7rem); line-height: .98; letter-spacing: -.055em; margin: 0; }
+.ai-observability-masthead h1 em { color: var(--accent); font-weight: 500; }
+.ai-observability-dek { font-family: var(--font-display); font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--ink-soft); margin: 1.25rem 0; }
+.ai-observability-meta { display: flex; gap: 1rem; color: var(--ink-faint); }
+.ai-observability-rule { border: 0; border-top: 3px double var(--rule); margin: 1.25rem 0; }
+.ai-observability-editor-note { font-size: .9rem; max-width: 680px; color: var(--ink-soft); }
+.ai-observability-section { margin: 3rem 0; }
+.ai-observability-section-heading { display: flex; align-items: baseline; gap: .8rem; border-bottom: 2px solid var(--rule); padding-bottom: .55rem; margin-bottom: 1.2rem; }
+.ai-observability-section-number, .ai-observability-section-count { color: var(--ink-faint); }
+.ai-observability-section-heading h2 { font: 700 clamp(1.3rem, 3vw, 1.8rem)/1.2 var(--font-display); margin: 0; flex: 1; }
+.ai-observability-story-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule-hair); border: 1px solid var(--rule-hair); }
+.ai-observability-story { background: var(--bg-sheet); padding: clamp(1rem, 2.4vw, 1.7rem); }
+.ai-observability-story-meta { display: flex; justify-content: space-between; gap: .75rem; color: var(--ink-faint); font-size: .65rem; }
+.ai-observability-story h3 { font: 700 1.2rem/1.3 var(--font-display); margin: .75rem 0; }
+.ai-observability-story h3 a:hover { color: var(--accent-ink); }
+.ai-observability-story h3 span { color: var(--accent-ink); font: .8em sans-serif; }
+.ai-observability-story p { color: var(--ink-soft); font-size: .91rem; line-height: 1.65; }
+.ai-observability-story .ai-observability-takeaway { border-top: 1px solid var(--rule-hair); padding-top: .7rem; font-size: .84rem; }
+.ai-observability-takeaway strong { color: var(--ink); }
+.ai-observability-archive { border-top: 1px solid var(--rule-soft); padding-top: 1rem; }
+.ai-observability-archive h2 { font: 700 1.1rem var(--font-display); }
+.ai-observability-archive ul { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding: 0; list-style: none; font-size: .85rem; }
+.ai-observability-archive a { color: var(--accent-ink); }
+.ai-observability-method { color: var(--ink-faint); font-size: .62rem; margin-top: 2.5rem; }
+@media (max-width: 680px) {
+  .ai-observability-story-grid { grid-template-columns: 1fr; }
+  .ai-observability-section-heading { flex-wrap: wrap; }
+  .ai-observability-section-count { margin-left: auto; }
+  .ai-observability-meta { flex-wrap: wrap; }
+}
+</style>
