@@ -8,6 +8,7 @@ const editions = Object.values(editionFiles).sort((a, b) => b.date.localeCompare
 const latest = editions[0];
 const platformGroups = latest.platform_groups;
 const companyGroups = latest.company_groups;
+const noItemsSurfaced = latest.source_sweep.no_item_surfaced ?? latest.source_sweep.no_october_12_item_surfaced ?? [];
 const categories = [
   { key: 'observability', label: 'Traditional observability', number: '01' },
   { key: 'evals', label: 'Evals', number: '02' },
@@ -90,12 +91,12 @@ const pageSchema = {
 
     <section class="ai-observability-sweep" aria-labelledby="sweep-heading">
       <h2 id="sweep-heading"><span>3</span> What the sweep found</h2>
-      <p><strong>{latest.source_sweep.date_matched_items} dated source entries</strong> surfaced across {latest.source_sweep.eligible_publishers.length} publishers, curated into {latest.source_sweep.curated_story_count} stories. The set includes company blog posts, product release notes, and one SRE practice announcement—not just vendor blog articles.</p>
-      <p><strong>No October 12 item surfaced</strong> on these checked indexes: {latest.source_sweep.no_october_12_item_surfaced.join(', ')}.</p>
+      <p><strong>{latest.source_sweep.date_matched_items} dated source entries</strong> surfaced for {windowLabel} across {latest.source_sweep.eligible_publishers.length} publishers, curated into {latest.source_sweep.curated_story_count} stories.</p>
+      {noItemsSurfaced.length > 0 && <p><strong>No {windowLabel} item surfaced</strong> on these checked indexes: {noItemsSurfaced.join(', ')}.</p>}
       <p class="ai-observability-scope-note">{latest.source_sweep.out_of_window} “No item surfaced” describes only the official pages checked, not every employee post or community discussion.</p>
     </section>
 
-    <h2 class="ai-observability-stories-heading"><span>4</span> Stories published on October 12</h2>
+    <h2 class="ai-observability-stories-heading"><span>4</span> Stories published on {windowLabel}</h2>
 
     {latest.stories.length === 0 ? (
       <div class="ai-observability-empty" role="status">
