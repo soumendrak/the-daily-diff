@@ -11,7 +11,8 @@ const categories = [
   { key: 'evals', label: 'Evals', number: '02' },
   { key: 'agents', label: 'AI-agent observability', number: '03' },
 ];
-const pageUrl = 'https://tdd.cat/ai-observability/';
+const pageUrl = new URL('/ai-observability/', Astro.site).toString();
+const windowLabel = new Date(`${latest.story_window}T00:00:00`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const pageSchema = {
   '@type': 'CollectionPage',
   '@id': `${pageUrl}#collection`,
@@ -45,39 +46,47 @@ const pageSchema = {
       <p class="ai-observability-dek">{latest.dek}</p>
       <div class="ai-observability-meta">
         <time datetime={latest.date}>{new Date(`${latest.date}T00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</time>
-        <span>{latest.stories.length} selected stories</span>
+        <span>Coverage window: {windowLabel}</span>
+        <span>{latest.stories.length === 0 ? 'No qualifying stories' : `${latest.stories.length} selected stories`}</span>
       </div>
       <hr class="ai-observability-rule" />
-      <p class="ai-observability-editor-note">A curated scan across the reliability stack: telemetry foundations, evaluation practice, and agent behavior. Each story links to its original source; publication dates are shown on the story.</p>
+      <p class="ai-observability-editor-note">Only stories published on {windowLabel} qualify for this edition. Older stories are intentionally excluded; if none qualify, this page stays empty rather than widening the date window.</p>
     </header>
 
-    <div class="ai-observability-sections">
-      {categories.map((category) => {
-        const stories = latest.stories.filter((story) => story.category_key === category.key);
-        return (
-          <section class="ai-observability-section" aria-labelledby={`section-${category.key}`}>
-            <div class="ai-observability-section-heading">
-              <span class="ai-observability-section-number">{category.number}</span>
-              <h2 id={`section-${category.key}`}>{category.label}</h2>
-              <span class="ai-observability-section-count">{stories.length} stories</span>
-            </div>
-            <div class="ai-observability-story-grid">
-              {stories.map((story) => (
-                <article class="ai-observability-story">
-                  <div class="ai-observability-story-meta">
-                    <span>{story.publisher}</span>
-                    <time datetime={story.published}>{story.published === '2026-09' ? 'September 2026' : new Date(`${story.published}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
-                  </div>
-                  <h3><a href={story.url} target="_blank" rel="noopener noreferrer">{story.title}<span aria-hidden="true"> ↗</span></a></h3>
-                  <p>{story.summary}</p>
-                  <p class="ai-observability-takeaway"><strong>Why it matters</strong> {story.takeaway}</p>
-                </article>
-              ))}
-            </div>
-          </section>
-        );
-      })}
-    </div>
+    {latest.stories.length === 0 ? (
+      <div class="ai-observability-empty" role="status">
+        <h2>No qualifying stories</h2>
+        <p>Nothing published on {windowLabel} met this edition’s scope. We’re leaving today’s issue empty instead of filling it with older links.</p>
+      </div>
+    ) : (
+      <div class="ai-observability-sections">
+        {categories.map((category) => {
+          const stories = latest.stories.filter((story) => story.category_key === category.key);
+          return (
+            <section class="ai-observability-section" aria-labelledby={`section-${category.key}`}>
+              <div class="ai-observability-section-heading">
+                <span class="ai-observability-section-number">{category.number}</span>
+                <h2 id={`section-${category.key}`}>{category.label}</h2>
+                <span class="ai-observability-section-count">{stories.length} stories</span>
+              </div>
+              <div class="ai-observability-story-grid">
+                {stories.map((story) => (
+                  <article class="ai-observability-story">
+                    <div class="ai-observability-story-meta">
+                      <span>{story.publisher}</span>
+                      <time datetime={story.published}>{story.published === '2026-09' ? 'September 2026' : new Date(`${story.published}T00:00:00`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+                    </div>
+                    <h3><a href={story.url} target="_blank" rel="noopener noreferrer">{story.title}<span aria-hidden="true"> ↗</span></a></h3>
+                    <p>{story.summary}</p>
+                    <p class="ai-observability-takeaway"><strong>Why it matters</strong> {story.takeaway}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+    )}
 
     {editions.length > 1 && (
       <nav class="ai-observability-archive" aria-label="Past AI Observability editions">
@@ -113,6 +122,9 @@ const pageSchema = {
 .ai-observability-meta { display: flex; gap: 1rem; color: var(--ink-faint); }
 .ai-observability-rule { border: 0; border-top: 3px double var(--rule); margin: 1.25rem 0; }
 .ai-observability-editor-note { font-size: .9rem; max-width: 680px; color: var(--ink-soft); }
+.ai-observability-empty { max-width: 700px; margin: 3rem auto; padding: 2rem; text-align: center; background: var(--bg-sheet); border: 1px solid var(--rule-soft); }
+.ai-observability-empty h2 { font: 700 1.5rem var(--font-display); margin: 0 0 .5rem; }
+.ai-observability-empty p { color: var(--ink-soft); margin: 0; }
 .ai-observability-section { margin: 3rem 0; }
 .ai-observability-section-heading { display: flex; align-items: baseline; gap: .8rem; border-bottom: 2px solid var(--rule); padding-bottom: .55rem; margin-bottom: 1.2rem; }
 .ai-observability-section-number, .ai-observability-section-count { color: var(--ink-faint); }

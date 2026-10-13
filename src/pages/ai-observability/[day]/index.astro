@@ -11,6 +11,7 @@ export function getStaticPaths() {
 
 const { edition } = Astro.props;
 const formattedDate = new Date(`${edition.date}T00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+const windowLabel = new Date(`${edition.story_window}T00:00:00`).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 const categories = ['Traditional observability', 'Evals', 'AI-agent observability'];
 ---
 
@@ -21,7 +22,14 @@ const categories = ['Traditional observability', 'Evals', 'AI-agent observabilit
       <p class="kicker">Past edition</p>
       <h1>{formattedDate}</h1>
       <p>{edition.dek}</p>
+      <p>Coverage window: {windowLabel}</p>
     </header>
+    {edition.stories.length === 0 && (
+      <section class="ai-observability-empty" role="status">
+        <h2>No qualifying stories</h2>
+        <p>Nothing published on {windowLabel} met this edition’s scope. Older links are intentionally excluded.</p>
+      </section>
+    )}
     {categories.map((category) => {
       const stories = edition.stories.filter((story) => story.category === category);
       if (!stories.length) return null;
