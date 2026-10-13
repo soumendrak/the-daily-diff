@@ -31,7 +31,7 @@
       "deploy",
       "dist",
       "--project-name",
-      "the-daily-diff-byn",
+      "the-daily-diff",
       "--branch",
       "master"
     ],

@@ -47,3 +47,5 @@ Included after primary-source review: [Claude observability dashboard](https://p
 The fetch command produces dated candidates with source evidence and review requirements. It does not treat HN votes or GitHub stars as signal ratings, does not silently overwrite editorial issues, and fails on API errors. GitHub coverage is explicitly limited to stable releases from the configured watchlist.
 
 Daily automation now lives in `skills/ai-observability-newspaper` and `scripts/run-daily-newspaper.js`. The October 12 issue excludes the user-disputed SRE book item and two DigitalOcean articles for which only modification dates could be verified. Conflicting dates are excluded rather than resolved by choosing a convenient field. No production publication or cron activation was performed.
+
+Cloudflare account verification confirmed the live Pages project is named `the-daily-diff`, with domains `the-daily-diff-byn.pages.dev` and `tidytraces.com`, and no Git provider attached. A repository push alone therefore does not deploy this project. The daily runner now targets the verified project name.
