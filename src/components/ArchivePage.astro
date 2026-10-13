@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
 import ThemeToggleButton from './ThemeToggleButton.astro';
 import Footer from './Footer.astro';
+import BrandLogo from './BrandLogo.astro';
 import { publicationStreaks } from '../lib/publicationStreaks.js';
 
 const editions = await getCollection('observability');
@@ -100,6 +101,7 @@ const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   jsonLd={[archiveSchema, breadcrumbSchema, itemListSchema]}
 >
 	<main class="page-container archive-page">
+		<BrandLogo compact />
 		<header class="archive-header">
 			<div class="archive-title-group">
 				<h1 class="archive-heading">{editionName} Calendar</h1>

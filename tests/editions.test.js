@@ -22,6 +22,11 @@ test('source tabs are mutually exclusive and signal filters require recorded sco
   assert.equal(matchesStoryFilters('hn', 9, 'hn', '8'), true);
   assert.equal(matchesStoryFilters('github', 8, 'github', '9'), false);
   assert.equal(matchesStoryFilters('news', 10, 'news', '9'), true);
+  for (const source of ['hn', 'news', 'github']) {
+    assert.equal(matchesStoryFilters(source, undefined, 'all', 'all'), true);
+    assert.equal(matchesStoryFilters(source, 9, 'all', '9'), true);
+    assert.equal(matchesStoryFilters(source, 7, 'all', '8'), false);
+  }
 });
 
 test('AI publication gate rejects older stories and incorrect windows; empty issues are valid', () => {

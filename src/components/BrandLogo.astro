@@ -1,0 +1,13 @@
+---
+interface Props { compact?: boolean }
+const { compact = false } = Astro.props;
+---
+<a class:list={['brand-link', { compact }]} href="/" aria-label="Tidy Traces homepage">
+  <img class="brand-logo" src="/brand/tidytraces-logo.svg" alt="Tidy Traces" width="464" height="144" fetchpriority="high" />
+</a>
+<style>
+  .brand-link { display: inline-block; max-width: 100%; }
+  .brand-logo { display: block; width: min(380px, 75vw); height: auto; }
+  .compact .brand-logo { width: min(230px, 55vw); }
+  :global([data-theme="dark"]) .brand-logo { filter: invert(1); }
+</style>

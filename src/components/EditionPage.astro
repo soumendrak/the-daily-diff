@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import ThemeToggleButton from './ThemeToggleButton.astro';
 import Footer from './Footer.astro';
+import BrandLogo from './BrandLogo.astro';
 import { SITE_METADATA } from '../config';
 import { resolveStoryImage } from '../lib/storyFilters.js';
 
@@ -49,11 +50,10 @@ interface Props {
 const { day, stories, issue, prevDay, nextDay, isHomepage = false, dek, storyWindow } = Astro.props;
 
 const editionName = 'AI Observability Daily';
-const homeHref = '/';
 const archiveHref = '/archive/';
 const issueHref = `/ai-observability/${day}/`;
-const filters = [{ key: 'hn', label: 'HN' }, { key: 'news', label: 'NEWS' }, { key: 'github', label: 'GITHUB' }];
-const initialSource = filters.find((filter) => stories.some((story) => story.source === filter.key))?.key ?? 'hn';
+const filters = [{ key: 'all', label: 'All' }, { key: 'hn', label: 'HN' }, { key: 'news', label: 'NEWS' }, { key: 'github', label: 'GITHUB' }];
+const initialSource = 'all';
 function resolveImage(story: StoryProps | undefined) {
   return resolveStoryImage(story?.image);
 }
@@ -190,18 +190,8 @@ const breadcrumbSchema = {
 						<ThemeToggleButton />
 					</div>
 				</div>
-				<h1 class="masthead-name"><a href={homeHref} class="masthead-title-link">{editionName}</a></h1>
-<p class="masthead-tagline">Observability · Evals · AI agents</p>
-				<pre class="masthead-cat masthead-cat--left">
-  /\_/\
- (=^.^=)
- (")_(")
-				</pre>
-				<pre class="masthead-cat masthead-cat--right">
-  /\_/\
- (=^.^=)
- (")_(")
-				</pre>
+				<h1 class="masthead-name"><BrandLogo /></h1>
+<p class="masthead-tagline">{editionName} · Observability · Evals · AI agents</p>
 				<hr class="masthead-rule-thick" />
 				{dek && <p class="edition-dek">{dek}</p>}
 				{storyWindow && <p class="edition-window">Coverage window: {storyWindow} · Original sources, independent editorial takeaways.</p>}
@@ -427,7 +417,7 @@ const breadcrumbSchema = {
 		const activeSourceBtn = document.querySelector('#source-filter-container .filter-btn.active');
 		const activeInterestBtn = document.querySelector('#interest-filter-container .filter-btn.active');
 
-		const sourceFilter = activeSourceBtn ? activeSourceBtn.getAttribute('data-filter')! : 'hn';
+		const sourceFilter = activeSourceBtn ? activeSourceBtn.getAttribute('data-filter')! : 'all';
 		const interestFilter = activeInterestBtn ? activeInterestBtn.getAttribute('data-filter')! : 'all';
 
 		let visibleCount = 0;

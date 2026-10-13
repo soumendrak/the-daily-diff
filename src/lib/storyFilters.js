@@ -1,6 +1,6 @@
 /** @param {string} source @param {number | undefined} score @param {string} sourceFilter @param {string} signalFilter */
 export function matchesStoryFilters(source, score, sourceFilter, signalFilter) {
-  if (source !== sourceFilter) return false;
+  if (sourceFilter !== 'all' && source !== sourceFilter) return false;
   if (signalFilter === 'all') return true;
   const threshold = Number(signalFilter);
   return Number.isFinite(score) && score >= threshold;

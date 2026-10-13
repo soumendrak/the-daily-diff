@@ -24,7 +24,7 @@ This is a static site. A new AI issue must be curated, saved to the repository, 
 ## Final behavior
 
 - `/` opens AI Observability Daily using the original newspaper reader.
-- HN, NEWS, GITHUB are discovery sources within AI observability. The first source with stories is selected initially. The revised issue has 2 verified HN stories, 11 official news stories, and 2 GitHub release stories.
+- HN, NEWS, GITHUB are discovery sources within AI observability. The All Section is selected initially, combining all sources. The revised issue has 2 verified HN stories, 11 official news stories, and 2 GitHub release stories.
 - All, Recommended, Must-Read filter recorded signal scores. Unrated stories stay in All. Recommended uses >= 8 and Must-Read >= 9; scores are not fabricated.
 - `/archive/` is the AI publication calendar, with issue counts and latest/longest publishing streaks. These are consecutive publication dates, not personal reading activity.
 - `/ai-observability/YYYY-MM-DD/` retains each real AI issue. Previous/next navigation and RSS history grow as issues are added. There is currently one real AI issue.

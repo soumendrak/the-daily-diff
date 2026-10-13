@@ -5,7 +5,7 @@ Tidy Traces is an AI-observability-only fork of https://github.com/arpitbbhayani
 - AI Observability opens at `/` on `https://tidytraces.com`. There is no engineering edition or engineering navigation tab.
 - Use the original newspaper reader in `src/components/EditionPage.astro`; do not create an unrelated landing-page design.
 - Keep all real AI issues in `src/data/ai-observability/`. Dated routes are `/ai-observability/YYYY-MM-DD/`; `/archive/` is the calendar. Never remove previous AI issues when adding a new one.
-- HN, NEWS, GITHUB are mutually exclusive source tabs, ordered exactly that way. They are discovery channels for AI-observability stories, not separate engineering topics. Default to the first source with stories.
+- HN, NEWS, GITHUB are mutually exclusive source tabs, ordered exactly that way. They are discovery channels for AI-observability stories, not separate engineering topics. Default to All, which combines HN, NEWS, and GITHUB; source-specific buttons remain mutually exclusive.
 - Signal filters are All, Recommended (recorded `interest_score` >= 8), Must-Read (>= 9). Missing scores appear only under All; never invent scores to populate filters.
 - Calendars show consecutive publication dates, not inferred personal reading streaks. Do not fabricate issues to fill gaps.
 - Every newly generated daily story, including every brief, requires its own reviewed AI-generated editorial infographic. Use built-in image generation only; stop if unavailable. Store local PNG assets and generation provenance. Label generated work clearly; preserve attribution for existing source images. Legacy `/infographics/` paths use the upstream CDN. Never borrow unrelated graphics.

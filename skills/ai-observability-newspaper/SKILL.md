@@ -5,7 +5,7 @@ description: Create a dated AI observability newspaper from the previous day's v
 
 # AI Observability Newspaper
 
-Produce the edition, not just discovery candidates. Use the existing newspaper reader at `/`, with HN / News / GitHub source tabs, All / Recommended / Must-Read signal filters, and the publication calendar. Do not add an engineering edition or redesign the site.
+Produce the edition, not just discovery candidates. Use the existing newspaper reader at `/`, with All / HN / News / GitHub Section buttons, All / Recommended / Must-Read signal filters, and the publication calendar. Do not add an engineering edition or redesign the site.
 
 ## Run inputs
 

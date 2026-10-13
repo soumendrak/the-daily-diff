@@ -1,7 +1,7 @@
 {
-  "name": "Tidy Traces \u2014 AI Observability Daily",
+  "name": "Tidy Traces — AI Observability Daily",
   "short_name": "Tidy Traces",
-  "description": "Distraction-free engineering and AI observability editions.",
+  "description": "Distraction-free daily AI observability, evaluations, and agent telemetry.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,8 +9,14 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icon.png",
+      "src": "/brand/tidytraces-icon-192.png",
       "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/brand/tidytraces-icon-512.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     }
