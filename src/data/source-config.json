@@ -1,0 +1,61 @@
+{
+  "hn_queries": [
+    "observability",
+    "LLM evaluation",
+    "AI tracing",
+    "agent telemetry",
+    "langfuse"
+  ],
+  "github_repositories": [
+    "langfuse/langfuse",
+    "Arize-ai/phoenix",
+    "Arize-ai/openinference",
+    "langchain-ai/langsmith-sdk",
+    "braintrustdata/braintrust-sdk",
+    "wandb/weave",
+    "langwatch/langwatch",
+    "Helicone/helicone"
+  ],
+  "news_sources": [
+    {
+      "name": "Arize AI",
+      "url": "https://arize.com/blog/"
+    },
+    {
+      "name": "Langfuse",
+      "url": "https://langfuse.com/blog"
+    },
+    {
+      "name": "LangSmith",
+      "url": "https://www.langchain.com/blog"
+    },
+    {
+      "name": "Braintrust",
+      "url": "https://www.braintrust.dev/blog"
+    },
+    {
+      "name": "OpenTelemetry",
+      "url": "https://opentelemetry.io/blog/"
+    },
+    {
+      "name": "Elastic Observability Labs",
+      "url": "https://www.elastic.co/observability-labs/blog"
+    },
+    {
+      "name": "Datadog",
+      "url": "https://www.datadoghq.com/blog/"
+    },
+    {
+      "name": "Honeycomb",
+      "url": "https://www.honeycomb.io/blog/"
+    },
+    {
+      "name": "DigitalOcean",
+      "url": "https://www.digitalocean.com/blog"
+    },
+    {
+      "name": "Splunk Observability",
+      "url": "https://www.splunk.com/en_us/blog/observability.html"
+    }
+  ]
+}

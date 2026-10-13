@@ -2,6 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "the-daily-diff",
   "compatibility_date": "2026-10-09",
+  "routes": [{ "pattern": "tidytraces.com", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",

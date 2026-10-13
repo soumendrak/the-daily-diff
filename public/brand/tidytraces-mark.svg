@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 192" color="#1b1a17" role="img" aria-labelledby="title desc">
+  <title id="title">Tidy Traces</title>
+  <desc id="desc">Two overlapping lowercase t forms share a vertical stem, with a rounded trace extending to the right.</desc>
+  <g fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M48 24V144Q48 160 64 160H224"/>
+    <path d="M24 48H88"/>
+    <path d="M24 96H144"/>
+  </g>
+</svg>

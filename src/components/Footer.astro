@@ -1,26 +1,4 @@
----
-import { SITE_METADATA } from '../config';
-
-interface Props {
-	day?: string;
-	label?: string;
-	showDelayNote?: boolean;
-}
-
-const { day, label, showDelayNote = false } = Astro.props;
-const pdfHref = day ? `https://tdd-edge.b-cdn.net/pdf/${day}.pdf` : 'https://tdd-edge.b-cdn.net/pdf/latest.pdf';
----
-
 <footer class="edition-colophon">
-	{showDelayNote && (
-		<p class="edition-delay-note">
-			Note: Editions are published with a 2-day settling window so the highest-signal discussions and insights surface.
-		</p>
-	)}
-	<div class="colophon-row">
-		{label ? `End of Edition — ${label}` : SITE_METADATA.name} &mdash; The Daily Diff | An Engineering Newspaper curated by <a href={SITE_METADATA.curatorUrl} target="_blank" rel="noopener noreferrer">{SITE_METADATA.curator}</a>
-	</div>
-	<div class="colophon-row">
-		<a href="https://github.com/arpitbbhayani/the-daily-diff" target="_blank" rel="noopener noreferrer">GitHub</a> &bull; <a href={pdfHref} target="_blank" rel="noopener noreferrer">PDF</a> &bull; <a href="/stats/">Stats</a> &bull; <a href="/ai-observability/">AI Observability Daily</a> &bull; <a href="/rss.xml">RSS</a> &bull; <a href="/llms.txt" target="_blank" rel="noopener noreferrer">llms.txt</a> &bull; &copy; <a href="https://tdd.cat">tdd.cat</a>
-	</div>
+  <div class="colophon-row">Tidy Traces &mdash; AI Observability Daily</div>
+  <div class="colophon-row"><a href="/">Latest edition</a> &bull; <a href="/archive/">Calendar</a> &bull; <a href="/rss.xml">RSS</a> &bull; <a href="/llms.txt">llms.txt</a> &bull; <a href="https://github.com/soumendrak/the-daily-diff">Source</a> &bull; <a href="https://tdd.cat/">Original reader</a></div>
 </footer>

@@ -2,23 +2,51 @@
   "date": "2026-10-13",
   "story_window": "2026-10-12",
   "edition": "AI Observability Daily",
-  "dek": "The sweep found 14 items with a confirmed October 12 publication date across traditional observability, evals, and agent operations. Several major observability publishers had no same-day item on the official indexes checked.",
+  "dek": "A date-verified edition of AI observability: original Hacker News announcements and practitioner posts, official publisher news, and GitHub releases covering traces, evaluations, and telemetry reliability.",
   "company_groups": [
     {
       "label": "Traditional observability and reliability",
-      "companies": ["Datadog", "New Relic", "Honeycomb", "Grafana Labs", "Sentry", "Chronosphere", "SigNoz", "Dynatrace", "Splunk / AppDynamics", "Elastic", "Coralogix"]
+      "companies": [
+        "Datadog",
+        "New Relic",
+        "Honeycomb",
+        "Grafana Labs",
+        "Sentry",
+        "Chronosphere",
+        "SigNoz",
+        "Dynatrace",
+        "Splunk / AppDynamics",
+        "Elastic",
+        "Coralogix"
+      ]
     },
     {
       "label": "AI observability, evaluation, and agent platforms",
-      "companies": ["Arize AI", "Langfuse", "LangChain / LangSmith", "Braintrust", "Fiddler", "Weights & Biases / Weave", "Galileo", "LangWatch", "Helicone", "DigitalOcean Agent Learning Services"]
+      "companies": [
+        "Arize AI",
+        "Langfuse",
+        "LangChain / LangSmith",
+        "Braintrust",
+        "Fiddler",
+        "Weights & Biases / Weave",
+        "Galileo",
+        "LangWatch",
+        "Helicone",
+        "DigitalOcean Agent Learning Services"
+      ]
     },
     {
       "label": "Adjacent cloud and SRE publishers",
-      "companies": ["Amazon Web Services / CloudWatch", "Google Cloud"]
+      "companies": [
+        "Amazon Web Services / CloudWatch",
+        "Google Cloud"
+      ]
     },
     {
       "label": "Open standard project (not a company)",
-      "companies": ["OpenTelemetry"]
+      "companies": [
+        "OpenTelemetry"
+      ]
     }
   ],
   "platform_groups": [
@@ -26,56 +54,234 @@
       "label": "1. Engineering blogs and newsrooms",
       "description": "Start with official engineering/product blogs and company newsrooms; search by publication date, then open each candidate article to confirm its own date.",
       "platforms": [
-        {"name": "Datadog — The Monitor", "url": "https://www.datadoghq.com/blog/"},
-        {"name": "New Relic Blog", "url": "https://newrelic.com/blog"},
-        {"name": "Honeycomb Blog", "url": "https://www.honeycomb.io/blog"},
-        {"name": "Grafana Labs Blog", "url": "https://grafana.com/blog/"},
-        {"name": "OpenTelemetry Blog", "url": "https://opentelemetry.io/blog/"},
-        {"name": "Sentry Blog", "url": "https://blog.sentry.io/"},
-        {"name": "Chronosphere Blog Hub", "url": "https://chronosphere.io/learn/", "note": "Browser-verified redirect; direct HTTP fetch was blocked (403)."},
-        {"name": "SigNoz Blog", "url": "https://signoz.io/blog/"},
-        {"name": "Dynatrace News", "url": "https://www.dynatrace.com/news/"},
-        {"name": "Splunk AppDynamics release notes", "url": "https://help.splunk.com/en/appdynamics-on-premises/release-notes-and-references/agents-release-notes/26.10.0/agent-enhancements", "note": "Browser-verified; direct HTTP fetch returned 403."},
-        {"name": "Splunk Observability Blog", "url": "https://www.splunk.com/en_us/blog/observability/rapidly-control-ai-agent-risk-before-it-hits-the-business.html"},
-        {"name": "Elastic Observability Labs", "url": "https://www.elastic.co/observability-labs/blog"},
-        {"name": "Elastic Search Labs", "url": "https://www.elastic.co/search-labs/blog"},
-        {"name": "Coralogix Blog", "url": "https://coralogix.com/blog/"},
-        {"name": "DigitalOcean Blog", "url": "https://www.digitalocean.com/blog"},
-        {"name": "Arize AI Blog", "url": "https://arize.com/blog/"},
-        {"name": "Langfuse Blog", "url": "https://langfuse.com/blog"},
-        {"name": "LangChain / LangSmith Blog", "url": "https://www.langchain.com/blog"},
-        {"name": "Braintrust Blog", "url": "https://www.braintrust.dev/blog"},
-        {"name": "Fiddler Blog", "url": "https://www.fiddler.ai/blog"},
-        {"name": "Weights & Biases Articles", "url": "https://wandb.ai/site/articles"},
-        {"name": "Galileo Blog", "url": "https://galileo.ai/blog"},
-        {"name": "LangWatch Blog", "url": "https://langwatch.ai/blog"},
-        {"name": "Helicone Blog", "url": "https://www.helicone.ai/blog"}
+        {
+          "name": "Datadog — The Monitor",
+          "url": "https://www.datadoghq.com/blog/"
+        },
+        {
+          "name": "New Relic Blog",
+          "url": "https://newrelic.com/blog"
+        },
+        {
+          "name": "Honeycomb Blog",
+          "url": "https://www.honeycomb.io/blog"
+        },
+        {
+          "name": "Grafana Labs Blog",
+          "url": "https://grafana.com/blog/"
+        },
+        {
+          "name": "OpenTelemetry Blog",
+          "url": "https://opentelemetry.io/blog/"
+        },
+        {
+          "name": "Sentry Blog",
+          "url": "https://blog.sentry.io/"
+        },
+        {
+          "name": "Chronosphere Blog Hub",
+          "url": "https://chronosphere.io/learn/",
+          "note": "Browser-verified redirect; direct HTTP fetch was blocked (403)."
+        },
+        {
+          "name": "SigNoz Blog",
+          "url": "https://signoz.io/blog/"
+        },
+        {
+          "name": "Dynatrace News",
+          "url": "https://www.dynatrace.com/news/"
+        },
+        {
+          "name": "Splunk AppDynamics release notes",
+          "url": "https://help.splunk.com/en/appdynamics-on-premises/release-notes-and-references/agents-release-notes/26.10.0/agent-enhancements",
+          "note": "Browser-verified; direct HTTP fetch returned 403."
+        },
+        {
+          "name": "Splunk Observability Blog",
+          "url": "https://www.splunk.com/en_us/blog/observability/rapidly-control-ai-agent-risk-before-it-hits-the-business.html"
+        },
+        {
+          "name": "Elastic Observability Labs",
+          "url": "https://www.elastic.co/observability-labs/blog"
+        },
+        {
+          "name": "Elastic Search Labs",
+          "url": "https://www.elastic.co/search-labs/blog"
+        },
+        {
+          "name": "Coralogix Blog",
+          "url": "https://coralogix.com/blog/"
+        },
+        {
+          "name": "DigitalOcean Blog",
+          "url": "https://www.digitalocean.com/blog"
+        },
+        {
+          "name": "Arize AI Blog",
+          "url": "https://arize.com/blog/"
+        },
+        {
+          "name": "Langfuse Blog",
+          "url": "https://langfuse.com/blog"
+        },
+        {
+          "name": "LangChain / LangSmith Blog",
+          "url": "https://www.langchain.com/blog"
+        },
+        {
+          "name": "Braintrust Blog",
+          "url": "https://www.braintrust.dev/blog"
+        },
+        {
+          "name": "Fiddler Blog",
+          "url": "https://www.fiddler.ai/blog"
+        },
+        {
+          "name": "Weights & Biases Articles",
+          "url": "https://wandb.ai/site/articles"
+        },
+        {
+          "name": "Galileo Blog",
+          "url": "https://galileo.ai/blog"
+        },
+        {
+          "name": "LangWatch Blog",
+          "url": "https://langwatch.ai/blog"
+        },
+        {
+          "name": "Helicone Blog",
+          "url": "https://www.helicone.ai/blog"
+        }
       ]
     },
     {
       "label": "2. Changelogs, release notes, and cloud service updates",
       "description": "Use these for dated product changes that may not receive a separate blog post.",
       "platforms": [
-        {"name": "DigitalOcean Changelog", "url": "https://ideas.digitalocean.com/changelog"},
-        {"name": "Coralogix Metrics release notes", "url": "https://coralogix.com/docs/user-guides/release-notes/metrics/"},
-        {"name": "Coralogix Explore release notes", "url": "https://coralogix.com/docs/user-guides/release-notes/explore/"},
-        {"name": "AWS What's New — ElastiCache Insights", "url": "https://aws.amazon.com/about-aws/whats-new/2026/10/amazon-elasticache-valkey-elasticache-insights/"},
-        {"name": "Google Cloud Observability release notes", "url": "https://docs.cloud.google.com/stackdriver/docs/release-notes"},
-        {"name": "Google SecOps release notes", "url": "https://docs.cloud.google.com/chronicle/docs/secops/release-notes"},
-        {"name": "Google SRE Blog", "url": "https://cloud.google.com/blog/products/devops-sre/sre-book-second-edition/"}
+        {
+          "name": "DigitalOcean Changelog",
+          "url": "https://ideas.digitalocean.com/changelog"
+        },
+        {
+          "name": "Coralogix Metrics release notes",
+          "url": "https://coralogix.com/docs/user-guides/release-notes/metrics/"
+        },
+        {
+          "name": "Coralogix Explore release notes",
+          "url": "https://coralogix.com/docs/user-guides/release-notes/explore/"
+        },
+        {
+          "name": "AWS What's New — ElastiCache Insights",
+          "url": "https://aws.amazon.com/about-aws/whats-new/2026/10/amazon-elasticache-valkey-elasticache-insights/"
+        },
+        {
+          "name": "Google Cloud Observability release notes",
+          "url": "https://docs.cloud.google.com/stackdriver/docs/release-notes"
+        },
+        {
+          "name": "Google SecOps release notes",
+          "url": "https://docs.cloud.google.com/chronicle/docs/secops/release-notes"
+        },
+        {
+          "name": "Google SRE Blog",
+          "url": "https://cloud.google.com/blog/products/devops-sre/sre-book-second-edition/"
+        }
       ]
     }
   ],
-  "source_sweep": {
-    "checked_on": "2026-10-13",
-    "eligible_publishers": ["DigitalOcean", "Dynatrace", "Elastic", "Splunk", "Coralogix", "Amazon Web Services", "Google Cloud"],
-    "date_matched_items": 14,
-    "curated_story_count": 14,
-    "note": "Fourteen first-party publication items with a confirmed October 12 date are included. The coverage spans company engineering posts, official product-release notes, and SRE guidance—not just vendor blog articles. Blog indexes and release-note surfaces were checked alongside candidate item pages; a search-index hit alone was not treated as confirmation. 'No item surfaced' means none was visible in the first-party surfaces checked, not that no employee or community member posted anywhere.",
-    "no_october_12_item_surfaced": ["Datadog", "New Relic", "Honeycomb", "Grafana Labs blog", "OpenTelemetry blog", "Sentry", "Chronosphere", "Arize AI", "Langfuse", "LangChain / LangSmith", "Braintrust", "Fiddler", "Weights & Biases", "Galileo", "LangWatch", "Helicone", "Google Cloud Observability release notes"],
-    "out_of_window": "Only items with a confirmed October 12 publication date are included below. SigNoz's visible agent-observability post was dated October 13 and excluded. DigitalOcean's Inference Router page showed 'Updated October 12' but no clear original publication date, so it was excluded. AppDynamics' agent-enhancement table carries an October 12 release date, but the release-notes page itself was last updated October 13; it was not counted as a publication dated October 12."
-  },
   "stories": [
+    {
+      "title": "A Claude subscription dashboard turns local session files into account-level observability",
+      "publisher": "Prakhar Gurunani",
+      "url": "https://prakhargurunani.com/blog/building-claude-observability/",
+      "published": "2026-10-12",
+      "source": "hn",
+      "hn_id": "50053675",
+      "category": "AI-agent observability",
+      "category_key": "agents",
+      "summary": "Gurunani describes a collector and dashboard that combine Claude Code usage across machines. The article focuses on deduplicated ingestion, missing-machine detection, local data minimization, and the limits of telemetry extracted from undocumented session files. Its cost comparisons are API-equivalent usage estimates, not a subscription invoice.",
+      "takeaway": "Useful agent analytics need coverage checks and privacy controls alongside usage totals. Treat this as a practitioner implementation, not an official Anthropic reporting API.",
+      "interest_score": 8,
+      "score_reason": "Strong direct relevance: a dated practitioner implementation with ingestion, coverage and privacy details. Editorial rating, independent of HN points.",
+      "image": "https://prakhargurunani.com/blog/assets/claude-observability-overview.png",
+      "image_source": "https://prakhargurunani.com/blog/building-claude-observability/",
+      "source_evidence": {
+        "hn_item": "https://hacker-news.firebaseio.com/v0/item/50053675.json",
+        "original_date": "Article time element: 2026-10-12",
+        "url": "https://prakhargurunani.com/blog/building-claude-observability/",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Original article time element (not HN submission time)"
+      },
+      "dedupe_key": "article:prakhargurunani.com/blog/building-claude-observability"
+    },
+    {
+      "title": "Show HN: Airlock pairs agent isolation with a record of commands and changes",
+      "publisher": "Hacker News · simonmaddox",
+      "url": "https://news.ycombinator.com/item?id=50054620",
+      "published": "2026-10-12",
+      "source": "hn",
+      "hn_id": "50054620",
+      "category": "AI-agent observability",
+      "category_key": "agents",
+      "summary": "In a first-party Show HN announcement, Airlock’s developer describes running coding agents inside a macOS virtual machine and showing what commands ran and what changed before returning changes to a project. The post also describes restricting network destinations. These are the developer’s claims; this issue does not independently benchmark the isolation.",
+      "takeaway": "Command and change visibility can complement agent traces when investigating workstation side effects. Isolation controls and complete telemetry are separate questions.",
+      "interest_score": 7,
+      "score_reason": "Relevant agent execution visibility, with unverified product claims and limited observability detail.",
+      "source_evidence": {
+        "hn_item": "https://hacker-news.firebaseio.com/v0/item/50054620.json",
+        "original_date": "Original first-party Show HN announcement timestamp",
+        "url": "https://news.ycombinator.com/item?id=50054620",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Original first-party Show HN announcement; official HN API timestamp"
+      },
+      "dedupe_key": "hn-original:50054620"
+    },
+    {
+      "title": "Langfuse v4.57.0 adds evaluation persistence visibility and ingestion-related fixes",
+      "publisher": "Langfuse · GitHub release",
+      "url": "https://github.com/langfuse/langfuse/releases/tag/v4.57.0",
+      "published": "2026-10-12",
+      "source": "github",
+      "category": "AI-agent observability",
+      "category_key": "agents",
+      "summary": "The October 12 release notes include measurement of score persistence outcomes, extraction of inline media from raw OpenTelemetry documents, and changes to evaluation and ingestion operations. The release bundles many other changes; these items are the subset relevant to AI observability.",
+      "takeaway": "An evaluator result is not useful operationally if it never reaches durable storage. When upgrading, verify score persistence and trace ingestion with a small end-to-end canary.",
+      "interest_score": 8,
+      "score_reason": "Direct primary-source release covering score persistence and trace ingestion, central to the publication beat.",
+      "source_evidence": {
+        "api": "https://api.github.com/repos/langfuse/langfuse/releases/tags/v4.57.0",
+        "published_at": "2026-10-12T17:20:29Z",
+        "url": "https://github.com/langfuse/langfuse/releases/tag/v4.57.0",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12T17:20:29Z",
+        "method": "Stable GitHub release published_at from official API"
+      },
+      "dedupe_key": "release:langfuse/langfuse/releases/tag/v4.57.0"
+    },
+    {
+      "title": "Phoenix v20.21.1 targets span ingestion reliability",
+      "publisher": "Arize Phoenix · GitHub release",
+      "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.21.1",
+      "published": "2026-10-12",
+      "source": "github",
+      "category": "AI-agent observability",
+      "category_key": "agents",
+      "summary": "Phoenix’s October 12 patch release lists a span ingestion reliability fix and support for empty dataframes in TraceDataset. The notes do not quantify a throughput or loss-rate improvement, so this issue makes no performance claim.",
+      "takeaway": "Missing spans undermine every downstream evaluation and incident analysis. Operators should check this patch against their ingestion path and validate telemetry delivery after upgrading.",
+      "interest_score": 9,
+      "score_reason": "A primary-source fix for span ingestion reliability addresses the foundation of trustworthy AI telemetry. Editorial priority, not a claimed benchmark.",
+      "source_evidence": {
+        "api": "https://api.github.com/repos/Arize-ai/phoenix/releases/tags/arize-phoenix-v20.21.1",
+        "published_at": "2026-10-12T21:09:18Z",
+        "url": "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.21.1",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12T21:09:18Z",
+        "method": "Stable GitHub release published_at from official API"
+      },
+      "dedupe_key": "release:Arize-ai/phoenix/releases/tag/arize-phoenix-v20.21.1"
+    },
     {
       "category": "Traditional observability",
       "category_key": "observability",
@@ -84,7 +290,14 @@
       "published": "2026-10-12",
       "url": "https://www.dynatrace.com/news/blog/end-to-end-snowflake-observability-is-now-generally-available-in-dynatrace/",
       "summary": "Dynatrace announced general availability of its Snowflake observability integration, bringing data-pipeline health, warehouse performance, usage/cost, and related telemetry into the same operational view. The announcement is particularly relevant where analytics and AI workloads depend on fresh, reliable warehouse data.",
-      "takeaway": "For AI products, the model trace is only part of the path: warehouse freshness, query performance, and spend can become user-facing reliability problems too."
+      "takeaway": "For AI products, the model trace is only part of the path: warehouse freshness, query performance, and spend can become user-facing reliability problems too.",
+      "source_evidence": {
+        "url": "https://www.dynatrace.com/news/blog/end-to-end-snowflake-observability-is-now-generally-available-in-dynatrace/",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12T13:30:36+00:00",
+        "method": "Primary article publication field/date element confirmed against visible date"
+      },
+      "dedupe_key": "article:www.dynatrace.com/news/blog/end-to-end-snowflake-observability-is-now-generally-available-in-dynatrace"
     },
     {
       "category": "Traditional observability",
@@ -94,7 +307,14 @@
       "published": "2026-10-12",
       "url": "https://www.dynatrace.com/news/blog/dynatrace-reaches-fedramp-class-d-high-initial-implementation-status/",
       "summary": "Dynatrace announced an initial implementation milestone toward FedRAMP High authorization. This is a compliance and public-sector availability update for the observability platform—not a new telemetry or AI-evaluation feature.",
-      "takeaway": "For teams serving U.S. federal workloads, authorization milestones affect procurement and deployment options; the announcement should not be read as a blanket authorization of every service or deployment."
+      "takeaway": "For teams serving U.S. federal workloads, authorization milestones affect procurement and deployment options; the announcement should not be read as a blanket authorization of every service or deployment.",
+      "source_evidence": {
+        "url": "https://www.dynatrace.com/news/blog/dynatrace-reaches-fedramp-class-d-high-initial-implementation-status/",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12T12:53:00+00:00",
+        "method": "Primary article publication field/date element confirmed against visible date"
+      },
+      "dedupe_key": "article:www.dynatrace.com/news/blog/dynatrace-reaches-fedramp-class-d-high-initial-implementation-status"
     },
     {
       "category": "Traditional observability",
@@ -104,7 +324,14 @@
       "published": "2026-10-12",
       "url": "https://www.elastic.co/observability-labs/blog/kubernetes-node-pressure-anomaly-detection",
       "summary": "Elastic describes using anomaly detection over Kubernetes node-pressure signals to surface resource stress ahead of visible workload symptoms. The post reports a controlled test, not a universal production guarantee, and the result varied across runs.",
-      "takeaway": "Treat early-warning detection as a hypothesis to validate against your own workload and alert precision—not as a fixed lead-time promise."
+      "takeaway": "Treat early-warning detection as a hypothesis to validate against your own workload and alert precision—not as a fixed lead-time promise.",
+      "source_evidence": {
+        "url": "https://www.elastic.co/observability-labs/blog/kubernetes-node-pressure-anomaly-detection",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12T00:00:00.000Z",
+        "method": "Primary article publication field/date element confirmed against visible date"
+      },
+      "dedupe_key": "article:www.elastic.co/observability-labs/blog/kubernetes-node-pressure-anomaly-detection"
     },
     {
       "category": "Traditional observability",
@@ -114,7 +341,14 @@
       "published": "2026-10-12",
       "url": "https://aws.amazon.com/about-aws/whats-new/2026/10/amazon-elasticache-valkey-elasticache-insights/",
       "summary": "AWS announced a CloudWatch Insights dashboard for node-based Valkey clusters. It uses ElastiCache-published OpenTelemetry metrics, and detailed monitoring can publish metrics every 15 seconds; the underlying CloudWatch metrics are billable.",
-      "takeaway": "This adds a managed health view, but teams should check the monitoring level and metric charges before treating it as a free or exhaustive observability layer."
+      "takeaway": "This adds a managed health view, but teams should check the monitoring level and metric charges before treating it as a free or exhaustive observability layer.",
+      "source_evidence": {
+        "url": "https://aws.amazon.com/about-aws/whats-new/2026/10/amazon-elasticache-valkey-elasticache-insights/",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Explicit original Posted on label on primary announcement"
+      },
+      "dedupe_key": "article:aws.amazon.com/about-aws/whats-new/2026/10/amazon-elasticache-valkey-elasticache-insights"
     },
     {
       "category": "Traditional observability",
@@ -124,7 +358,14 @@
       "published": "2026-10-12",
       "url": "https://coralogix.com/docs/user-guides/release-notes/explore/",
       "summary": "The Explore release notes list changes for October 12 including ways to move between logs and spans across datasets and switch between query-building modes. This is a product-surface update rather than a standalone engineering blog post.",
-      "takeaway": "Fewer context switches can speed investigation, but teams should still verify that the selected datasets preserve the trace/log correlation they depend on."
+      "takeaway": "Fewer context switches can speed investigation, but teams should still verify that the selected datasets preserve the trace/log correlation they depend on.",
+      "source_evidence": {
+        "url": "https://coralogix.com/docs/user-guides/release-notes/explore/",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Explicit October 12 release-note entry, not page dateModified"
+      },
+      "dedupe_key": "article:coralogix.com/docs/user-guides/release-notes/explore"
     },
     {
       "category": "Traditional observability",
@@ -134,7 +375,14 @@
       "published": "2026-10-12",
       "url": "https://coralogix.com/docs/user-guides/release-notes/metrics/",
       "summary": "The Metrics release notes clarify that when a rule reaches its cardinality limit, overflow label values are aggregated under `CoralogixOtherValues`; the documentation change does not describe dropping all subsequent measurements. It also documents the organization-level quota behavior for new or edited rules.",
-      "takeaway": "That distinction matters during incident diagnosis: an overflow bucket signals cardinality pressure, but it is not the same failure mode as ingestion stopping."
+      "takeaway": "That distinction matters during incident diagnosis: an overflow bucket signals cardinality pressure, but it is not the same failure mode as ingestion stopping.",
+      "source_evidence": {
+        "url": "https://coralogix.com/docs/user-guides/release-notes/metrics/",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Explicit October 12 release-note entry, not page dateModified"
+      },
+      "dedupe_key": "article:coralogix.com/docs/user-guides/release-notes/metrics"
     },
     {
       "category": "Traditional observability",
@@ -144,37 +392,14 @@
       "published": "2026-10-12",
       "url": "https://docs.cloud.google.com/chronicle/docs/secops/release-notes",
       "summary": "Google SecOps release notes list the Response Health Hub on October 12, giving operators a place to inspect response/playbook health and related operational signals. This is security-automation operations visibility, adjacent to core infrastructure observability.",
-      "takeaway": "As agents and automated playbooks take action, teams need a way to observe the health of the response workflow—not only the infrastructure underneath it."
-    },
-    {
-      "category": "Traditional observability",
-      "category_key": "observability",
-      "title": "Google publishes the second edition of its SRE book",
-      "publisher": "Google Cloud",
-      "published": "2026-10-12",
-      "url": "https://cloud.google.com/blog/products/devops-sre/sre-book-second-edition/",
-      "summary": "Google's SRE announcement introduces a substantially updated second edition for operating services in an AI-shaped environment. This is practitioner guidance, not a new Cloud Monitoring feature; it belongs in the scan because it speaks to how reliability teams adapt their operating practices.",
-      "takeaway": "A useful field-guide signal for practitioners: observability is part of an operating model, not just a telemetry product."
-    },
-    {
-      "category": "Evals",
-      "category_key": "evals",
-      "title": "DigitalOcean pairs production Signals with multi-turn Simulations",
-      "publisher": "DigitalOcean",
-      "published": "2026-10-12",
-      "url": "https://www.digitalocean.com/blog/introducing-signals-and-simulations",
-      "summary": "DigitalOcean's October 12 blog and changelog introduced Signals and Simulations in public preview. Signals surfaces production agent issues; Simulations exercises multi-turn scenarios and scores trajectories. The two same-day product announcements are grouped as one release story.",
-      "takeaway": "This closes an observe-to-evaluate loop. Because these capabilities are still in preview, teams should confirm supported runtimes and data paths before treating it as a fit for an existing agent stack."
-    },
-    {
-      "category": "AI-agent observability",
-      "category_key": "agents",
-      "title": "DigitalOcean Insights brings built-in telemetry to its agent and cloud stack",
-      "publisher": "DigitalOcean",
-      "published": "2026-10-12",
-      "url": "https://www.digitalocean.com/blog/introducing-insights",
-      "summary": "DigitalOcean announced Insights in public preview, correlating metrics, logs, and traces from supported DigitalOcean products—including Managed Agents, DOKS, and App Platform—without extra instrumentation for those products. The post says custom telemetry and broader product coverage are planned for the preview, not available as a current capability.",
-      "takeaway": "The integration reduces setup inside DigitalOcean, but it is not yet a general-purpose ingest path for arbitrary application or agent telemetry."
+      "takeaway": "As agents and automated playbooks take action, teams need a way to observe the health of the response workflow—not only the infrastructure underneath it.",
+      "source_evidence": {
+        "url": "https://docs.cloud.google.com/chronicle/docs/secops/release-notes",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Explicit October 12 release-note entry, not page dateModified"
+      },
+      "dedupe_key": "article:docs.cloud.google.com/chronicle/docs/secops/release-notes"
     },
     {
       "category": "AI-agent observability",
@@ -184,7 +409,14 @@
       "published": "2026-10-12",
       "url": "https://www.digitalocean.com/blog/introducing-agent-data-services",
       "summary": "Agent Data Services entered private preview as a managed catalog for multimodal content, structured records, and agent sessions. The announcement describes capturing execution traces and feeding session state into retrieval and evaluation workflows over time.",
-      "takeaway": "It treats agent histories as durable operational data, though private preview is not a generally available service and its capabilities need hands-on validation."
+      "takeaway": "It treats agent histories as durable operational data, though private preview is not a generally available service and its capabilities need hands-on validation.",
+      "source_evidence": {
+        "url": "https://www.digitalocean.com/blog/introducing-agent-data-services",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12T13:08:00.018Z",
+        "method": "Primary article publication field/date element confirmed against visible date"
+      },
+      "dedupe_key": "article:www.digitalocean.com/blog/introducing-agent-data-services"
     },
     {
       "category": "AI-agent observability",
@@ -194,7 +426,14 @@
       "published": "2026-10-12",
       "url": "https://www.splunk.com/en_us/blog/observability/rapidly-control-ai-agent-risk-before-it-hits-the-business.html",
       "summary": "Splunk's post connects agent behavior and tool-call visibility with security controls, arguing that an agent can complete a technically valid action while still producing an unacceptable business outcome. It positions runtime observation alongside prevention and policy enforcement.",
-      "takeaway": "Operational success needs more than uptime and latency: teams need to inspect what the agent decided, what tools it used, and whether the outcome was acceptable."
+      "takeaway": "Operational success needs more than uptime and latency: teams need to inspect what the agent decided, what tools it used, and whether the outcome was acceptable.",
+      "source_evidence": {
+        "url": "https://www.splunk.com/en_us/blog/observability/rapidly-control-ai-agent-risk-before-it-hits-the-business.html",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Primary article publication field/date element confirmed against visible date"
+      },
+      "dedupe_key": "article:www.splunk.com/en_us/blog/observability/rapidly-control-ai-agent-risk-before-it-hits-the-business.html"
     },
     {
       "category": "AI-agent observability",
@@ -204,7 +443,14 @@
       "published": "2026-10-12",
       "url": "https://www.splunk.com/en_us/blog/observability/vibe-coded-infrastructure-is-still-infrastructure.html",
       "summary": "Splunk's engineering post makes the case that infrastructure generated with coding agents remains production infrastructure: it still needs testing, ownership, security controls, and telemetry after deployment. The useful shift is to treat generated changes as software changes, not as disposable prompts.",
-      "takeaway": "If an agent can create or modify infrastructure, observability and change accountability need to cover the generated artifacts and their runtime effects."
+      "takeaway": "If an agent can create or modify infrastructure, observability and change accountability need to cover the generated artifacts and their runtime effects.",
+      "source_evidence": {
+        "url": "https://www.splunk.com/en_us/blog/observability/vibe-coded-infrastructure-is-still-infrastructure.html",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12",
+        "method": "Primary article publication field/date element confirmed against visible date"
+      },
+      "dedupe_key": "article:www.splunk.com/en_us/blog/observability/vibe-coded-infrastructure-is-still-infrastructure.html"
     },
     {
       "category": "AI-agent observability",
@@ -214,7 +460,50 @@
       "published": "2026-10-12",
       "url": "https://www.elastic.co/search-labs/blog/agent-builder-conversation-sharing",
       "summary": "Elastic announced shared conversations in Agent Builder so teams can hand an agent session to colleagues with its prior context intact. The article describes availability on Elastic Cloud Serverless first, with other deployment options on a separate rollout path.",
-      "takeaway": "This is useful for investigation handoffs, but shared conversation history is not a substitute for trace-level observability or audit evidence."
+      "takeaway": "This is useful for investigation handoffs, but shared conversation history is not a substitute for trace-level observability or audit evidence.",
+      "source_evidence": {
+        "url": "https://www.elastic.co/search-labs/blog/agent-builder-conversation-sharing",
+        "publication_date": "2026-10-12",
+        "raw_date": "2026-10-12T00:00:00.000Z",
+        "method": "Primary article publication field/date element confirmed against visible date"
+      },
+      "dedupe_key": "article:www.elastic.co/search-labs/blog/agent-builder-conversation-sharing"
     }
-  ]
+  ],
+  "research": {
+    "status": "complete",
+    "completed_sources": [
+      "hn",
+      "news",
+      "github"
+    ],
+    "checked_urls": [
+      "https://www.dynatrace.com/news/blog/end-to-end-snowflake-observability-is-now-generally-available-in-dynatrace/",
+      "https://www.dynatrace.com/news/blog/dynatrace-reaches-fedramp-class-d-high-initial-implementation-status/",
+      "https://www.elastic.co/observability-labs/blog/kubernetes-node-pressure-anomaly-detection",
+      "https://aws.amazon.com/about-aws/whats-new/2026/10/amazon-elasticache-valkey-elasticache-insights/",
+      "https://coralogix.com/docs/user-guides/release-notes/explore/",
+      "https://coralogix.com/docs/user-guides/release-notes/metrics/",
+      "https://docs.cloud.google.com/chronicle/docs/secops/release-notes",
+      "https://www.digitalocean.com/blog/introducing-agent-data-services",
+      "https://www.splunk.com/en_us/blog/observability/rapidly-control-ai-agent-risk-before-it-hits-the-business.html",
+      "https://www.splunk.com/en_us/blog/observability/vibe-coded-infrastructure-is-still-infrastructure.html",
+      "https://www.elastic.co/search-labs/blog/agent-builder-conversation-sharing"
+    ],
+    "excluded": [
+      {
+        "url": "https://cloud.google.com/blog/products/devops-sre/sre-book-second-edition/",
+        "reason": "Excluded following user correction: original publication is disputed/outside the October 12 window; primary metadata conflict, so do not select the convenient October 12 field."
+      },
+      {
+        "url": "https://www.digitalocean.com/blog/introducing-signals-and-simulations",
+        "reason": "Only dateModified / Updated October 12 was verified; original publication date is unproven."
+      },
+      {
+        "url": "https://www.digitalocean.com/blog/introducing-insights",
+        "reason": "Only dateModified / Updated October 12 was verified; original publication date is unproven."
+      }
+    ],
+    "note": "Scoped primary-publication audit of the retained October 12 issue; not an exhaustive news sweep. This legacy issue has not yet been regenerated under the new body/infographic contract."
+  }
 }

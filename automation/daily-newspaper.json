@@ -1,0 +1,40 @@
+{
+  "time_zone": "Asia/Kolkata",
+  "mode": "publish",
+  "timeout_minutes": 90,
+  "agent": {
+    "command": [
+      "codex",
+      "exec",
+      "-C",
+      "{repo}",
+      "--sandbox",
+      "workspace-write",
+      "-c",
+      "approval_policy=\"never\"",
+      "-c",
+      "sandbox_workspace_write.network_access=true",
+      "-c",
+      "web_search=\"live\"",
+      "--color",
+      "never",
+      "--output-last-message",
+      "{run_dir}/agent-result.txt",
+      "-"
+    ]
+  },
+  "publish": {
+    "command": [
+      "npx",
+      "wrangler",
+      "pages",
+      "deploy",
+      "dist",
+      "--project-name",
+      "the-daily-diff-byn",
+      "--branch",
+      "master"
+    ],
+    "commit_edition": true
+  }
+}

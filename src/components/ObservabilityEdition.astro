@@ -1,0 +1,45 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import EditionPage from './EditionPage.astro';
+interface Props {
+  edition: CollectionEntry<'observability'>['data'];
+  issue: number;
+  totalIssues: number;
+  prevDay: string | null;
+  nextDay: string | null;
+  isHomepage?: boolean;
+}
+const { edition, ...navigation } = Astro.props;
+const stories = edition.stories.map((story, index) => ({
+  slug: `observability-${index}`,
+  title: story.title,
+  source: story.source,
+  url: story.url,
+  authors: [],
+  section: story.category_key,
+  isNews: story.source === 'news',
+  interest_score: story.interest_score,
+  comments: story.comments || (story.hn_id ? `https://news.ycombinator.com/item?id=${story.hn_id}` : undefined),
+  publisher: story.publisher,
+  published: story.published,
+  why_read: story.takeaway,
+  image: story.image,
+  imageCaption: story.image_provenance?.kind === 'generated-editorial' ? 'AI-generated editorial infographic · based on the linked source' : (story.image ? `Source image · ${story.publisher}` : undefined),
+  // Escape curated text; source claims and editorial takeaways stay distinct.
+  bodyHtml: (story.body || [story.summary]).map((paragraph) => `<p>${escape(paragraph)}</p>`).join('') + `<p><strong>Why it matters</strong> ${escape(story.takeaway)}</p>`,
+}));
+function escape(text: string) {
+  return text.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
+}
+---
+<EditionPage day={edition.date} stories={stories} dek={edition.dek} storyWindow={edition.story_window} allDays={[]} {...navigation}>
+  <details class="editorial-method">
+    <summary>Editorial method and sources</summary>
+    <p>Only items published on {edition.story_window} qualify. Summaries distinguish source claims from independent editorial takeaways. If nothing qualifies, the issue stays empty. Generated infographics are labelled as editorial illustrations; source images retain their attribution.</p>
+    <p>Original source links and publication dates appear with every story. Source tabs classify discovery channels, while the topic remains AI observability. Recommended means a recorded signal score of at least 8; Must-Read means at least 9. Unrated stories appear only under All.</p>
+  </details>
+</EditionPage>
+<style>
+  .editorial-method { border-top:1px solid var(--rule-soft); padding:1rem 0; color:var(--ink-soft); font-size:.85rem; }
+  summary { cursor:pointer; color:var(--accent-ink); }
+</style>

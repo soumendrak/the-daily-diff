@@ -1,54 +1,22 @@
 # Agent Instructions & Conventions
 
-This document outlines team-shared architecture, conventions, development commands, and workflows for The Daily Diff repository.
+Tidy Traces is an AI-observability-only fork of https://github.com/arpitbbhayani/the-daily-diff. Preserve the original manifesto: distraction-free reading, depth over noise, original sources, useful summaries, and stable newspaper typography.
 
-## Development Workflows
+- AI Observability opens at `/` on `https://tidytraces.com`. There is no engineering edition or engineering navigation tab.
+- Use the original newspaper reader in `src/components/EditionPage.astro`; do not create an unrelated landing-page design.
+- Keep all real AI issues in `src/data/ai-observability/`. Dated routes are `/ai-observability/YYYY-MM-DD/`; `/archive/` is the calendar. Never remove previous AI issues when adding a new one.
+- HN, NEWS, GITHUB are mutually exclusive source tabs, ordered exactly that way. They are discovery channels for AI-observability stories, not separate engineering topics. Default to the first source with stories.
+- Signal filters are All, Recommended (recorded `interest_score` >= 8), Must-Read (>= 9). Missing scores appear only under All; never invent scores to populate filters.
+- Calendars show consecutive publication dates, not inferred personal reading streaks. Do not fabricate issues to fill gaps.
+- Every newly generated daily story, including every brief, requires its own reviewed AI-generated editorial infographic. Use built-in image generation only; stop if unavailable. Store local PNG assets and generation provenance. Label generated work clearly; preserve attribution for existing source images. Legacy `/infographics/` paths use the upstream CDN. Never borrow unrelated graphics.
+- `npm run fetch:sources -- --date YYYY-MM-DD` discovers HN submissions and GitHub watchlist releases. The manually triggered discovery workflow uploads candidates for review; it never silently publishes them. HN submission time alone does not prove original article publication date.
+- Daily curation uses `skills/ai-observability-newspaper` and `scripts/run-daily-newspaper.js`. The runner publishes verified editions automatically when invoked; do not activate a schedule without a request. Freeze the previous-day `story_window`, or the explicit news-day override. Verify original publication evidence, never modification/resurfacing dates, and deduplicate within each issue and across all history. Empty issues require completed source checks.
+- Write full `body` paragraphs, normally 150–220 words (at least 130 for full stories). A source-specific reason may justify a 60+ word brief; it still requires an infographic. Keep editorial takeaways distinct and never pad with invented facts.
+- Build selects the latest issue for `/`, `/md`, `/json`, and RSS, while preserving dated pages. `.github/workflows/verify.yml` checks PRs and master pushes; it does not curate stories or deploy.
+- Styles use SASS newsprint theme variables in `src/styles/main.scss`.
+- Start development in background mode: `npm run dev -- --background`. Manage with `npx astro dev status`, `npx astro dev logs`, `npx astro dev stop`.
+- Before committing: `npm test`, `npm run check`, `npm run build`.
+- `npm run preview:cf` previews Worker static assets. `npm run deploy` builds and deploys using authenticated Wrangler. Existing Pages Git integration may publish master instead.
+- Canonical origin is fixed at `https://tidytraces.com`; an old dashboard `SITE_URL` value must not change it.
 
-When starting the Astro development server, use background mode:
-
-```bash
-astro dev --background
-```
-
-Manage the background server with:
-- `astro dev status` — Check server status
-- `astro dev logs` — View dev server logs
-- `astro dev stop` — Stop background server
-
-Common project scripts:
-- `npm run dev` — Launch the dev server
-- `npm run build` — Compile digest (`scripts/generate-latest.js`) and build the Astro site
-- `npm run preview` — Locally preview the production build
-- `npm run preview:cf` — Preview build output locally using Wrangler
-- `npm run deploy` — Deploy production build to Cloudflare Workers
-- `npm run generate-pdf` — Generate printable A4 edition PDFs
-
-## Pre-Commit Verification
-
-Verify that the build is functional before committing any changes:
-
-1. Run `npm run build` to verify there are no compilation, type, or content collection errors.
-2. Resolve any build errors that occur during the build process.
-3. If a build error is caused by a specific corrupted or invalid file in `src/content/stories/`, delete that file and its corresponding infographic image (if it exists).
-
-## Architecture & Conventions
-
-- **Astro Content Collections**: Daily editions are organized as JSON content collections under `src/content/editions/YYYY-MM-DD.json`.
-- **Classification & Sections**:
-  - Stories belong to distinct tabs/sources: **HN**, **NEWS**, and **GITHUB**, specified via frontmatter `source: 'hn' | 'github' | 'news'`.
-  - The `section` frontmatter attribute is preserved for engineering topic classification (e.g. `ai`, `databases`, `systems`, `engineering`).
-  - Stories classified under `source: 'news'` include product launches, new model releases, library announcements, and technical breakthroughs.
-  - Tabs in the edition reader are mutually exclusive and ordered **HN**, **NEWS**, and **GITHUB**.
-- **Styling**: Styles are authored in SASS (`src/styles/main.scss`) utilizing newsprint typography and CSS custom properties for Day (light) and Night (dark) themes.
-
-## Documentation Reference
-
-Full Astro documentation: https://docs.astro.build
-
-Consult these guides when working on relevant tasks:
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+Astro reference: https://docs.astro.build

@@ -14,9 +14,9 @@ interface Props {
 }
 
 const {
-	title = 'The Daily Diff | An Engineering Newspaper Curated By Arpit Bhayani',
+	title = 'AI Observability Daily — Tidy Traces',
 	description = SITE_METADATA.description,
-	image = 'https://tdd.cat/the-daily-diff.png',
+	image = new URL('/the-daily-diff.png', Astro.site).toString(),
 	type = 'website',
 	publishedTime,
 	jsonLd,
@@ -25,35 +25,18 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = image;
+const siteName = 'Tidy Traces';
 
-const gaId = "G-D4HXVQC71F";
+const gaId = import.meta.env.PUBLIC_GA_ID || "";
 
-const baseSchemaGraph: any[] = [
-	{
-		"@type": "WebSite",
-		"@id": `${Astro.site}#website`,
-		"url": String(Astro.site),
-		"name": SITE_METADATA.name,
-		"alternateName": "Engineering Newspaper",
-		"description": SITE_METADATA.description,
-		"publisher": {
-			"@id": `${Astro.site}#curator`
-		}
-	},
-	{
-		"@type": "Person",
-		"@id": `${Astro.site}#curator`,
-		"name": SITE_METADATA.curator,
-		"url": SITE_METADATA.curatorUrl,
-		"sameAs": [
-			"https://arpitbhayani.me/",
-			"https://twitter.com/arpit_bhayani",
-			"https://github.com/arpitbbhayani",
-			"https://www.linkedin.com/in/arpitbhayani/"
-		],
-		"jobTitle": "Curator & Software Engineer"
-	}
-];
+const baseSchemaGraph: Record<string, unknown>[] = [{
+  '@type': 'WebSite',
+  '@id': `${Astro.site}#website`,
+  url: String(Astro.site),
+  name: SITE_METADATA.name,
+  alternateName: 'AI Observability Daily',
+  description: SITE_METADATA.description,
+}];
 
 if (jsonLd) {
 	if (Array.isArray(jsonLd)) {
@@ -110,13 +93,12 @@ const schemaMarkup = {
 		<meta name="theme-color" content="#ffffff">
 
 		<!-- Autodiscovery Feeds & Machine-Readable Endpoints -->
-		<link rel="alternate" type="application/rss+xml" title={SITE_METADATA.name} href="/rss.xml" />
+		<link rel="alternate" type="application/rss+xml" title="AI Observability Daily" href="/rss.xml" />
 		<link rel="alternate" type="text/markdown" href="/md" title="Latest Edition (Markdown Feed for LLMs & Readers)" />
 		<link rel="alternate" type="application/json" href="/json" title="Latest Edition (JSON Feed for AI & APIs)" />
 		{markdownUrl && (
 			<link rel="alternate" type="text/markdown" href={markdownUrl} title="Edition Plaintext (Markdown for LLMs)" />
 		)}
-		<link rel="search" type="application/opensearchdescription+xml" title={SITE_METADATA.name} href="/opensearch.xml" />
 
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
@@ -124,9 +106,7 @@ const schemaMarkup = {
 		<link rel="canonical" href={canonicalURL} />
 
 		<!-- Author, SEO & AI Engine (GEO) Directives -->
-		<meta name="author" content={SITE_METADATA.curator} />
-		<meta name="creator" content={SITE_METADATA.curator} />
-		<meta name="publisher" content={SITE_METADATA.name} />
+		<meta name="publisher" content={siteName} />
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 		<!-- PWA Metadata and iOS support -->
@@ -137,7 +117,7 @@ const schemaMarkup = {
 
 		<!-- OpenGraph / Facebook -->
 		<meta property="og:type" content={type} />
-		<meta property="og:site_name" content={SITE_METADATA.name} />
+		<meta property="og:site_name" content={siteName} />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonicalURL} />
@@ -145,12 +125,11 @@ const schemaMarkup = {
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="628" />
 		{publishedTime && <meta property="article:published_time" content={publishedTime} />}
-		{publishedTime && <meta property="article:author" content={SITE_METADATA.curatorUrl} />}
 
 		<!-- Twitter -->
 		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:site" content={SITE_METADATA.curatorTwitter} />
-		<meta name="twitter:creator" content={SITE_METADATA.curatorTwitter} />
+
+
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={socialImageURL} />
@@ -190,7 +169,7 @@ const schemaMarkup = {
 								});
 							}
 						}
-						
+
 						// 2. Register the stable, clean, non-versioned service worker
 						navigator.serviceWorker.register('/sw.js')
 							.then((reg) => {

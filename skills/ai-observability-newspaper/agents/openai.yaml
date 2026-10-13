@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Observability Newspaper"
+  short_description: "Create yesterday’s sourced AI observability edition"
+  default_prompt: "Use $ai-observability-newspaper to create and validate yesterday’s AI observability newspaper."

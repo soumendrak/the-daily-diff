@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import ThemeToggleButton from './ThemeToggleButton.astro';
 import Footer from './Footer.astro';
 import { SITE_METADATA } from '../config';
+import { resolveStoryImage } from '../lib/storyFilters.js';
 
 const SOURCE_LABEL: Record<string, string> = {
 	arxiv: 'arXiv',
@@ -19,6 +20,7 @@ interface StoryProps {
 	why_read?: string;
 	authors: string[];
 	image?: string;
+	imageCaption?: string;
 	interest_score?: number;
 	comments?: string;
 	hn_id?: string;
@@ -27,6 +29,8 @@ interface StoryProps {
 	depth_score?: number;
 	novelty_score?: number;
 	bodyHtml?: string;
+	publisher?: string;
+	published?: string;
 }
 
 interface Props {
@@ -38,16 +42,20 @@ interface Props {
 	nextDay: string | null;
 	allDays: { day: string; label: string }[];
 	isHomepage?: boolean;
+	dek?: string;
+	storyWindow?: string;
 }
 
-const { day, stories, issue, totalIssues, prevDay, nextDay, allDays, isHomepage = false } = Astro.props;
+const { day, stories, issue, prevDay, nextDay, isHomepage = false, dek, storyWindow } = Astro.props;
 
-function resolveImage(story: StoryProps, day: string) {
-	if (!story.image) return null;
-	if (story.image.startsWith('/')) {
-		return "https://tdd-edge.b-cdn.net/" + story.image;
-	}
-	return story.image;
+const editionName = 'AI Observability Daily';
+const homeHref = '/';
+const archiveHref = '/archive/';
+const issueHref = `/ai-observability/${day}/`;
+const filters = [{ key: 'hn', label: 'HN' }, { key: 'news', label: 'NEWS' }, { key: 'github', label: 'GITHUB' }];
+const initialSource = filters.find((filter) => stories.some((story) => story.source === filter.key))?.key ?? 'hn';
+function resolveImage(story: StoryProps | undefined) {
+  return resolveStoryImage(story?.image);
 }
 
 const label = new Date(`${day}T00:00:00`).toLocaleDateString('en-US', {
@@ -65,7 +73,7 @@ function bylineFor(story: StoryProps) {
 }
 
 function sourceLabelFor(story: StoryProps) {
-	return SOURCE_LABEL[story.source] ?? story.source.toUpperCase();
+	return story.publisher ?? SOURCE_LABEL[story.source] ?? story.source.toUpperCase();
 }
 
 // Deterministic PRNG seeded by the day, so the feature spacing looks random
@@ -90,32 +98,23 @@ function randomFeatureGap(rng: () => number) {
 }
 
 const lead = stories[0];
-const rest = stories.slice(1);
 
-const pageTitle = isHomepage 
-	? 'The Daily Diff | An Engineering Newspaper Curated By Arpit Bhayani' 
-	: `${label} — ${SITE_METADATA.name} | Curated by ${SITE_METADATA.curator}`;
 
-const pageDescription = isHomepage
-	? SITE_METADATA.longDescription
-	: `Engineering Newspaper for ${label}: high-signal software engineering, architecture, and systems stories curated by ${SITE_METADATA.curator}.`;
+const pageTitle = isHomepage ? 'AI Observability Daily — Tidy Traces' : `${label} — AI Observability Daily | Tidy Traces`;
+const pageDescription = dek || SITE_METADATA.description;
 
 const issueSchema = {
 	"@type": "PublicationIssue",
-	"@id": `https://tdd.cat/${day}/#issue`,
+	"@id": `${new URL(issueHref, Astro.site)}#issue`,
 	"issueNumber": String(issue),
 	"datePublished": `${day}T00:00:00Z`,
 	"name": `${SITE_METADATA.name} — ${label}`,
 	"description": pageDescription,
 	"isPartOf": {
 		"@type": "Periodical",
-		"name": SITE_METADATA.name,
-		"url": "https://tdd.cat/",
-		"publisher": {
-			"@type": "Person",
-			"name": SITE_METADATA.curator,
-			"url": SITE_METADATA.curatorUrl
-		}
+		"name": editionName,
+		"url": String(Astro.site),
+
 	},
 	"hasPart": stories.slice(0, 10).map((s, idx) => ({
 		"@type": "TechArticle",
@@ -127,26 +126,27 @@ const issueSchema = {
 	}))
 };
 
+
 const breadcrumbSchema = {
 	"@type": "BreadcrumbList",
 	"itemListElement": [
 		{
 			"@type": "ListItem",
 			"position": 1,
-			"name": SITE_METADATA.name,
-			"item": "https://tdd.cat/"
+			"name": editionName,
+			"item": String(Astro.site)
 		},
 		{
 			"@type": "ListItem",
 			"position": 2,
 			"name": "Archive",
-			"item": "https://tdd.cat/archive/"
+			"item": new URL(archiveHref, Astro.site).toString()
 		},
 		{
 			"@type": "ListItem",
 			"position": 3,
 			"name": label,
-			"item": `https://tdd.cat/${day}/`
+			"item": new URL(issueHref, Astro.site).toString()
 		}
 	]
 };
@@ -155,57 +155,43 @@ const breadcrumbSchema = {
 <Layout
 	title={pageTitle}
 	description={pageDescription}
-	image={resolveImage(lead, day) || undefined}
+	image={resolveImage(lead) || undefined}
 	type={isHomepage ? 'website' : 'article'}
 	publishedTime={`${day}T00:00:00Z`}
 	jsonLd={[issueSchema, breadcrumbSchema]}
-	markdownUrl={`/${day}.md`}
+
 >
 	<main class="page-container">
-		<article id="newspaper-sheet" class="newspaper-sheet" data-day={day} data-count={stories.length} data-prev={prevDay} data-next={nextDay}>
+		<article id="newspaper-sheet" class="newspaper-sheet" data-day={day} data-count={stories.length} data-prev={prevDay ? `/ai-observability/${prevDay}/` : undefined} data-next={nextDay ? `/ai-observability/${nextDay}/` : undefined}>
 			<header class="masthead">
 				<div class="masthead-eyebrow">
 					<span class="masthead-eyebrow-left">
-						<a href="/archive/" class="masthead-archive-link" aria-label="Back to archive" title="Back to archive">
+						<a href={archiveHref} class="masthead-archive-link" aria-label="Back to archive" title="Back to archive">
 							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"></path><path d="m12 19-7-7 7-7"></path></svg>
 							<span>Archive</span>
 						</a>
 						<span class="masthead-eyebrow-sep">&middot;</span>
-						<a class="masthead-eyebrow-link" href="/" rel="noopener noreferrer">tdd.cat</a>
+						<a class="masthead-eyebrow-link" href="/" rel="noopener noreferrer">tidytraces.com</a>
 					</span>
 					<div class="masthead-eyebrow-center-group">
 						<button id="prev-day-btn" class="masthead-nav-btn" disabled={!prevDay} aria-label="Previous edition" title="Previous edition">
 							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg>
 						</button>
-						
+
 						<time class="masthead-eyebrow-center" datetime={day}>{label}</time>
-						
+
 						<button id="next-day-btn" class="masthead-nav-btn" disabled={!nextDay} aria-label="Next edition" title="Next edition">
 							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg>
 						</button>
 					</div>
 					<div class="masthead-eyebrow-right">
-						<a
-							href={`https://tdd-edge.b-cdn.net/pdf/${day}.pdf`}
-							download={`the-daily-diff-${day}.pdf`}
-							class="masthead-pdf-btn"
-							aria-label="Download edition as PDF"
-							title="Download edition as PDF"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-							<span>PDF</span>
-						</a>
-						<span class="masthead-eyebrow-sep">&middot;</span>
+
 						<span id="masthead-story-count">{stories.length} {stories.length === 1 ? 'Story' : 'Stories'}</span>
 						<ThemeToggleButton />
 					</div>
 				</div>
-				<h1 class="masthead-name"><a href="/" class="masthead-title-link">{SITE_METADATA.name}</a></h1>
-				<p class="masthead-tagline">
-					An Engineering Newspaper &middot; Curated by <a href={SITE_METADATA.curatorUrl} target="_blank" rel="noopener noreferrer" class="curator-link">{SITE_METADATA.curator}</a>
-				</p>
+				<h1 class="masthead-name"><a href={homeHref} class="masthead-title-link">{editionName}</a></h1>
+<p class="masthead-tagline">Observability · Evals · AI agents</p>
 				<pre class="masthead-cat masthead-cat--left">
   /\_/\
  (=^.^=)
@@ -217,25 +203,25 @@ const breadcrumbSchema = {
  (")_(")
 				</pre>
 				<hr class="masthead-rule-thick" />
-				
+				{dek && <p class="edition-dek">{dek}</p>}
+				{storyWindow && <p class="edition-window">Coverage window: {storyWindow} · Original sources, independent editorial takeaways.</p>}
+
 				<div class="filter-bar">
 					<div class="filter-group source-filter" id="source-filter-container">
 						<span class="filter-label">Section</span>
 						<button class="filter-mobile-trigger" aria-haspopup="listbox" aria-expanded="false" id="source-filter-trigger">
 							<svg class="filter-trigger-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-							<span class="filter-trigger-text" id="source-filter-text">HN</span>
+							<span class="filter-trigger-text" id="source-filter-text">{filters.find((filter) => filter.key === initialSource)?.label}</span>
 							<svg class="filter-chevron-icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 								<path d="m6 9 6 6 6-6"/>
 							</svg>
 						</button>
 						<div class="filter-options">
-							<button class="filter-btn active" data-filter="hn">HN</button>
-							<button class="filter-btn" data-filter="news">NEWS</button>
-							<button class="filter-btn" data-filter="github">GITHUB</button>
+{filters.map((filter) => <button class:list={["filter-btn", {active: filter.key === initialSource}]} data-filter={filter.key}>{filter.label}</button>)}
 						</div>
 					</div>
 
-					<div class="filter-group interest-filter" id="interest-filter-container">
+										<div class="filter-group interest-filter" id="interest-filter-container">
 						<span class="filter-label">Signal</span>
 						<button class="filter-mobile-trigger" aria-haspopup="listbox" aria-expanded="false" id="interest-filter-trigger">
 							<svg class="filter-trigger-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
@@ -254,7 +240,7 @@ const breadcrumbSchema = {
 			</header>
 
 			<div class="no-stories-message" id="no-stories-message">
-				<p>No stories match the selected filters in today's edition.</p>
+				<p>{stories.length === 0 ? 'No qualifying stories in this publication window.' : 'No stories match the selected filters in this edition.'}</p>
 			</div>
 
 			{stories.length > 0 && (() => {
@@ -266,7 +252,7 @@ const breadcrumbSchema = {
 				return (
 				<section class="newspaper-columns">
 					{stories.map((story, index) => {
-						const img = resolveImage(story, day);
+						const img = resolveImage(story);
 						const hasImage = Boolean(img);
 						const isLead = index === 0;
 
@@ -316,6 +302,7 @@ const breadcrumbSchema = {
 										<span class="story-source-sep">&middot;</span>
 									</>
 								)}
+								{story.published && <><time datetime={story.published}>{story.published}</time><span class="story-source-sep">&middot;</span></>}
 								{bylineFor(story) && <>{bylineFor(story)}<span class="story-source-sep">&middot;</span></>}
 								<a class="story-source-link" href={story.url} target="_blank" rel="noopener noreferrer">{sourceLabelFor(story)} &rsaquo;</a>
 								{story.comments && (
@@ -352,9 +339,11 @@ const breadcrumbSchema = {
 										width="560"
 										height="418"
 										itemprop="image"
+										onerror="this.parentElement.hidden = true"
 										onload="this.classList.remove('loading'); this.parentElement.classList.remove('is-loading');"
 									/>
-								</div>
+									{story.imageCaption && <p class="image-caption">{story.imageCaption}</p>}
+									</div>
 							)}
 							<div class="story-body content blog-content" itemprop="articleBody">
 								{story.bodyHtml ? <Fragment set:html={story.bodyHtml} /> : null}
@@ -366,7 +355,8 @@ const breadcrumbSchema = {
 				);
 			})()}
 
-			<Footer label={label} showDelayNote={isHomepage} day={day} />
+			<slot />
+			<Footer />
 		</article>
 	</main>
 
@@ -377,7 +367,7 @@ const breadcrumbSchema = {
 </Layout>
 
 <script>
-	const day = document.getElementById('newspaper-sheet')!.getAttribute('data-day') as string;
+	import { matchesStoryFilters } from '../lib/storyFilters.js';
 
 	const prevBtn = document.getElementById('prev-day-btn') as HTMLButtonElement;
 	const nextBtn = document.getElementById('next-day-btn') as HTMLButtonElement;
@@ -419,11 +409,11 @@ const breadcrumbSchema = {
 	const nextTarget = sheet.getAttribute('data-next');
 
 	prevBtn?.addEventListener('click', () => {
-		if (prevTarget) window.location.href = `/${prevTarget}/`;
+		if (prevTarget) window.location.href = prevTarget;
 	});
 
 	nextBtn?.addEventListener('click', () => {
-		if (nextTarget) window.location.href = `/${nextTarget}/`;
+		if (nextTarget) window.location.href = nextTarget;
 	});
 
 	// Source and Interest filtering logic
@@ -447,23 +437,12 @@ const breadcrumbSchema = {
 			const source = story.getAttribute('data-source');
 			const interest = story.getAttribute('data-interest');
 
-			let sourceMatch = false;
-			if (sourceFilter === 'news') {
-				sourceMatch = (source === 'news');
-			} else if (sourceFilter === 'github') {
-				sourceMatch = (source === 'github');
-			} else if (sourceFilter === 'hn') {
-				sourceMatch = (source === 'hn' || (source !== 'news' && source !== 'github'));
-			} else if (sourceFilter === 'all') {
-				sourceMatch = true;
-			}
-
-			const interestMatch = (interestFilter === 'all' ||
-				(interestFilter === '9' ? (interest === '9' || interest === '10') : interest === interestFilter));
+			const score = interest === null ? undefined : Number(interest);
+			const matches = matchesStoryFilters(source || '', score, sourceFilter, interestFilter);
 
 			story.classList.remove('is-lead', 'is-feature', 'is-feature-reverse');
 
-			if (sourceMatch && interestMatch) {
+			if (matches) {
 				story.removeAttribute('data-hidden');
 				visibleStories.push(story);
 				visibleCount++;
@@ -503,7 +482,7 @@ const breadcrumbSchema = {
 		// Update mobile trigger text
 		const sourceFilterText = document.getElementById('source-filter-text');
 		const interestFilterText = document.getElementById('interest-filter-text');
-		
+
 		if (sourceFilterText && activeSourceBtn) {
 			sourceFilterText.textContent = activeSourceBtn.textContent;
 		}
@@ -542,14 +521,14 @@ const breadcrumbSchema = {
 					g.classList.remove('open');
 					g.querySelector('.filter-mobile-trigger')?.setAttribute('aria-expanded', 'false');
 				});
-				
+
 				if (!isOpen) {
 					group.classList.add('open');
 					trigger.setAttribute('aria-expanded', 'true');
 				}
 			});
 		}
-		
+
 		// When clicking a button inside options, close the dropdown
 		const options = group.querySelectorAll('.filter-btn');
 		options.forEach((btn) => {
@@ -600,6 +579,13 @@ const breadcrumbSchema = {
 		100% {
 			background-color: var(--bg-sheet-alt);
 		}
+	}
+
+	.image-caption {
+		font-size: 0.7rem;
+		line-height: 1.4;
+		margin: 0.35rem 0 0;
+		opacity: 0.7;
 	}
 
 	.story-featured-image {

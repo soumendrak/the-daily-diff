@@ -1,63 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
-import { marked } from 'marked';
-import EditionPage from '../components/EditionPage.astro';
-import { isNewsStory } from '../lib/storyClassification';
-
-const editions = await getCollection('editions');
-const chronological = [...editions].sort((a, b) => a.data.date.localeCompare(b.data.date));
-
-if (chronological.length === 0) {
-	return Astro.redirect('/archive/');
-}
-
-const latestEdition = chronological.at(-1)!;
-const latestDay = latestEdition.data.date;
-const latestIndex = chronological.length - 1;
-
-const allDays = chronological.map((edition) => ({
-	day: edition.data.date,
-	label: new Date(`${edition.data.date}T00:00:00`).toLocaleDateString('en-US', {
-		weekday: 'short',
-		year: 'numeric',
-		month: 'short',
-		day: 'numeric',
-	}),
-}));
-
-const stories = latestEdition.data.stories.map((story) => {
-	const comments = story.comments || (story.hn_id ? `https://news.ycombinator.com/item?id=${story.hn_id}` : undefined);
-	const bodyHtml = story.social_post ? (marked.parse(story.social_post) as string) : '';
-	return {
-		slug: story.id,
-		title: story.title,
-		source: story.source,
-		url: story.url,
-		why_read: story.why_read,
-		authors: story.authors || [],
-		image: story.image || undefined,
-		interest_score: story.interest_score,
-		comments,
-		hn_id: story.hn_id,
-		section: story.section,
-		isNews: isNewsStory(story),
-		depth_score: story.depth_score,
-		novelty_score: story.novelty_score,
-		utility_score: story.utility_score,
-		bodyHtml,
-	};
-});
-
-const props = {
-	day: latestDay,
-	stories,
-	issue: latestIndex + 1,
-	totalIssues: chronological.length,
-	prevDay: chronological[latestIndex - 1]?.data.date ?? null,
-	nextDay: null,
-	allDays: [...allDays].reverse(),
-	isHomepage: true,
-};
+import ObservabilityEdition from '../components/ObservabilityEdition.astro';
+const editions = (await getCollection('observability')).sort((a, b) => a.data.date.localeCompare(b.data.date));
+const latest = editions.at(-1);
+if (!latest) throw new Error('Add a curated AI observability edition before building.');
 ---
-
-<EditionPage {...props} />
+<ObservabilityEdition edition={latest.data} issue={editions.length} totalIssues={editions.length} prevDay={editions.at(-2)?.data.date ?? null} nextDay={null} isHomepage />

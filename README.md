@@ -1,91 +1,79 @@
-# The Daily Diff
+# Tidy Traces — AI Observability Daily
 
-The Daily Diff is an engineering newspaper curated by [Arpit Bhayani](https://arpitbhayani.me/) that delivers the highest-signal software engineering, distributed systems, system architecture, and technical insights. It organizes stories chronologically by day, ranks them by interest score, and provides a clean, distraction-free reading experience.
+An **AI-observability-only** publication using the distraction-free newspaper reader from [The Daily Diff](https://github.com/arpitbbhayani/the-daily-diff), by [Arpit Bhayani](https://arpitbhayani.me/). Preserve the original reader’s typography, source tabs, signal filters, images, date navigation, and calendar. The latest AI issue opens directly at **https://tidytraces.com/**; there is no engineering edition or engineering tab.
 
-## Features
+## Reading
 
-- Chronological edition-based browsing of curated software engineering stories and technical breakdowns.
-- Dark and light theme support with an authentic newsprint-style layout.
-- Detailed metadata for each story including author attribution, tags, and interest scores.
-- Feeds available via RSS, Markdown (`/md`), and JSON (`/json`), optimized for readers and LLMs (GEO).
+- Latest issue: `/`
+- Publication calendar and streaks: `/archive/`
+- Dated issue: `/ai-observability/YYYY-MM-DD/`
+- RSS history: `/rss.xml`
+- Latest Markdown and JSON: `/md` and `/json`
+
+**HN / NEWS / GITHUB** are mutually exclusive discovery channels, ordered like upstream. All stories still belong to AI observability. The first populated source opens by default. **All / Recommended / Must-Read** are signal filters: Recommended requires a recorded score of at least 8, Must-Read at least 9. Unrated stories appear under All. The current issue contains 2 HN stories, 11 publisher-news stories, and 2 GitHub release stories. Signal scores are editorial judgements with recorded reasons; they are independent of vote/star counts. Unrated publisher stories remain in All.
+
+The calendar shows publication streaks, not personal reading activity. Only one real AI issue exists currently; older issues are not fabricated. Previous issues stay available when new editions are added. The old `/ai-observability/` landing URL redirects to `/`.
 
 ## Development
 
-Run the following commands to install dependencies and run the local development server.
+Requires Node.js 22.12 or newer.
 
-### Prerequisites
-
-Ensure you have Node.js installed on your machine.
-
-### Setup
-
-Install the project dependencies.
-
-```bash
-npm install
+```sh
+npm ci
+npm run dev -- --background
 ```
 
-### Run
+Open http://localhost:4321/. Manage the background server with `npx astro dev status`, `npx astro dev logs`, and `npx astro dev stop`.
 
-Start the local development server.
-
-```bash
-npm run dev
-```
-
-The site will be available locally at `http://localhost:4321`.
-
-### Build
-
-Create a production-ready build.
-
-```bash
+```sh
+npm test
+npm run check
 npm run build
+npm run preview
 ```
 
-The compiled assets will be written to the `dist` directory.
+## Content updates
 
-### Generate & Upload PDF Editions
+Add a dated JSON file in `src/data/ai-observability/` and **keep prior issues**. The homepage, calendar, date navigation, RSS, Markdown, and JSON update on the next build. Each issue must declare the previous-day `story_window`; original story publication dates must match it. Categories are `observability`, `evals`, and `agents`; sources are `hn`, `news`, and `github` (default `news` for official publisher posts). An empty issue is valid when nothing qualifies.
 
-Each daily edition can be compiled into an authentic, printable A4 newspaper PDF with newsprint styling and uploaded to Bunny CDN storage:
+Each story has a publisher, original URL, publication date, summary, full `body` paragraphs, and separate editorial takeaway. New full stories normally contain 150–220 words, with a 130-word minimum. Sparse sources may justify a 60+ word brief with a recorded reason. Optional `interest_score` is an integer 0–10 supported by editorial judgement; it must not be made up merely to fill filters. Optional `hn_id` or `comments` links to the source discussion. Every new daily story requires a distinct reviewed generated infographic, including briefs. The built-in image tool is the only permitted generator; unavailable generation stops the run. Local PNGs and `image_provenance` travel with the edition and are labelled as AI-generated editorial graphics. Existing source images retain attribution; legacy `/infographics/` references use the upstream CDN.
 
-```bash
-# 1. Build the static site first
-npm run build
+Source discovery is now connected:
 
-# 2. Generate and upload PDF for the latest edition
-npm run generate-pdf
+```sh
+npm run fetch:sources -- --date 2026-10-12
 ```
 
-#### CLI Options
+Without a date, the command searches yesterday in UTC. It uses Algolia HN date search, verifies submissions against the official HN API, and checks stable GitHub releases in `src/data/source-config.json`. GitHub coverage is a maintained watchlist, not a global trending scan. Results are written to `.cache/source-candidates/YYYY-MM-DD.json`, with discussion URLs, source timestamps, HN metrics, and explicit review status. HN submission dates do not establish an older article's original publication date; check the primary article before including it. First-party Show HN announcements can use their original post date.
 
-- `npm run generate-pdf`: Generates PDF for the latest edition and uploads it to Bunny CDN (`/pdf/${day}.pdf` and `/pdf/latest.pdf`).
-- `npm run generate-pdf -- --day 2026-10-02`: Generates and uploads PDF for a specific date.
-- `npm run generate-pdf -- --all`: Backfills and uploads PDFs for all historical editions.
-- `npm run generate-pdf -- --no-upload`: Generates the PDF locally into `public/pdf/` and `dist/pdf/` without uploading to Bunny Storage.
+`.github/workflows/fetch-sources.yml` supports manual source discovery and uploads a candidate artifact. It has no active schedule. It uses the workflow's read-only GitHub token; local runs can use an existing `gh` login or public API access. Failed requests fail the job instead of being reported as an empty category. New sources can be added to the watchlist.
 
-## Deployment (Cloudflare Pages)
+The reusable skill now performs research, relevance review, full story writing, ratings, and infographic generation. The outer runner validates, builds, commits edition outputs, and publishes automatically when invoked. Date-label changes do not create issues. A fork does not automatically inherit upstream commits, and upstream engineering content is intentionally excluded. `.github/workflows/verify.yml` verifies PRs and master pushes, including the publication-date gate. It does not fabricate daily content or deploy.
 
-The project is configured for deployment on **Cloudflare Pages**.
+## Daily skill and runner
 
-### Git Integration (Recommended)
-Connect your repository in the [Cloudflare Dashboard](https://dash.cloudflare.com/) under **Compute (Workers) > Pages**:
-- **Framework preset:** Astro
-- **Build command:** `npm run build`
-- **Build output directory:** `dist`
+The portable skill lives in [skills/ai-observability-newspaper](skills/ai-observability-newspaper/SKILL.md). The runner is [scripts/run-daily-newspaper.js](scripts/run-daily-newspaper.js), configured in `automation/daily-newspaper.json`.
 
-### Wrangler CLI
+```sh
+npm run newspaper:daily -- --news-date 2026-10-12 --dry-run
+npm run newspaper:daily -- --mode build
+npm run newspaper:daily
+node scripts/install-newspaper-cron.js --print
+```
 
-You can also preview and deploy using Wrangler:
+Default mode publishes automatically to the configured existing Pages project. `--news-date` freezes the original publication day; without it, the edition covers yesterday. Strict date evidence, all-history deduplication, full text, and a reviewed infographic for every story are publication gates. Retrying a compliant existing issue preserves its bytes and images. Logs/drafts are kept in `.cache/daily-runs/`.
 
-```bash
-# Preview build output with Cloudflare Pages local simulator
+No cron job is activated by this change. A future scheduled run needs a clean dedicated checkout, Codex authentication, a runtime exposing built-in image generation, and Cloudflare credentials. Image API fallback is explicitly disabled. The legacy October 13 issue has been date-corrected but is not yet compliant with the new full-text/all-image contract; the runner will reject it rather than silently republish it. See [automation instructions](skills/ai-observability-newspaper/references/automation.md).
+
+## Deployment
+
+```sh
 npm run preview:cf
-
-# Deploy to Cloudflare
 npm run deploy
 ```
 
-## AI Observability Daily
+Wrangler deploys `dist` as Worker static assets, with `tidytraces.com` configured as a root custom domain. It requires authentication and an active domain zone. For the existing Cloudflare Pages deployment, use production branch **master**, build `npm run build`, output `dist`, and attach `tidytraces.com` under Custom domains.
 
-The focused AI Observability edition lives at `/ai-observability/`, alongside the engineering newspaper. Add each dated edition as `src/data/ai-observability/YYYY-MM-DD.json`; the page automatically selects the newest date and keeps links to earlier editions. Keep stories grouped into traditional observability, evals, and AI-agent observability, include the original publication date and source link, and write summaries that distinguish source claims from editorial takeaways. Each edition must declare its previous-day publication window as `story_window` and include only stories published on that date; leave `stories` empty when nothing qualifies. Daily issues are editorially curated in the repository; adding a dated file does not happen automatically. The Cloudflare Pages deployment can use `SITE_URL` at build time to set canonical metadata for its own `pages.dev` address; no custom domain is assumed or configured.
+Canonical URLs are fixed to `https://tidytraces.com` so an old Pages `SITE_URL` cannot override them. Remove any external redirect sending `/` to `/ai-observability/`. Google Analytics is disabled unless the fork configures its own `PUBLIC_GA_ID`; the upstream measurement ID is not reused.
+
+See [the source and live-site comparison](docs/upstream-comparison.md) for the diagnosis and repair evidence.

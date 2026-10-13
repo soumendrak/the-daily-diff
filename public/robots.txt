@@ -23,4 +23,4 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://tdd.cat/sitemap-index.xml
+Sitemap: https://tidytraces.com/sitemap-index.xml

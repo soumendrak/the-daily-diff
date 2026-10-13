@@ -1,0 +1,39 @@
+---
+name: ai-observability-newspaper
+description: Create a dated AI observability newspaper from the previous day's verified HN submissions, official publisher news, and GitHub releases. Use for daily unattended newspaper creation, backfills, or an explicit publish run in a Tidy Traces-compatible repository; preserve the existing reader and edition history.
+---
+
+# AI Observability Newspaper
+
+Produce the edition, not just discovery candidates. Use the existing newspaper reader at `/`, with HN / News / GitHub source tabs, All / Recommended / Must-Read signal filters, and the publication calendar. Do not add an engineering edition or redesign the site.
+
+## Run inputs
+
+Determine the repository, edition date, publication window, and output mode from the invocation. With no explicit date, use today's calendar date in `Asia/Kolkata` for the edition and the previous calendar date for its `story_window`. HN/GitHub API searches use that day's UTC boundaries, so schedule after the UTC day closes (08:00 IST is a suitable default). Freeze both dates for the entire run. An explicit news date overrides the daily default: news from October 12 belongs to the October 13 edition. Use `--news-date 2026-10-12`; never include October 30 material in that run.
+
+Read repository `AGENTS.md`, `src/data/source-config.json`, and [editorial-policy.md](references/editorial-policy.md). That reference defines date evidence, news discovery, story depth, infographics, and signal ratings. Read [infographics.md](references/infographics.md) before generating any graphics. Use [automation.md](references/automation.md) only for setting up or diagnosing the unattended runner.
+
+A scheduled invocation authorizes automatic research, editorial selection, writing the new issue, and building it. External publication uses the explicitly configured publish mode and command. A credentials/configuration failure is a failed run, not a reason to publish yesterday's build as today's.
+
+## Create the issue
+
+1. Confirm the agent runtime exposes built-in image generation. Use only that capability. If unavailable, stop with a nonzero/blocked result before research. The user explicitly declined an image API fallback. Check whether `src/data/ai-observability/EDITION-DATE.json` already exists. Preserve it. A normal retry must not regenerate a published issue; backfill/replacement requires an explicit instruction.
+2. Run `npm run fetch:sources -- --date STORY-WINDOW`. Read the resulting `.cache/source-candidates/STORY-WINDOW.json`. It supplies HN discovery evidence and stable GitHub releases from the configured watchlist; it is not a ready-to-publish issue.
+3. Research **News** separately using primary publisher blogs, release notes, and official announcements. Use the configured `news_sources` first, then focused web search. Verify original pages, not just snippets or index dates.
+4. Review HN candidates against their original article dates. A first-party Show HN announcement can use its original post date; a resurfaced older article cannot use HN submission time as its publication date. Verify GitHub release `published_at`; exclude drafts and prereleases.
+5. Select relevant items about LLM/agent tracing, evaluations, telemetry reliability, cost/latency, privacy, runtime visibility, and instrumentation. Traditional observability is eligible when its relevance to operating AI systems is concrete. Exclude generic AI and engineering news that does not serve this beat. Do not force a story into every source tab.
+6. Write original `body` paragraphs, normally 150–220 words, matching the upstream edition’s depth (sample median: 157 words). Explain the change, implementation detail, operator relevance, and evidence limits; keep a separate `takeaway`. Full stories require at least 130 body words. Sparse primary sources may justify a 60+ word brief with `format: "brief"` and a concrete `brief_reason`; never pad with invented facts. Record original URLs, publication evidence, source labels, stable original-event `dedupe_key`, and reasons for editorial scores.
+7. Generate a distinct, source-grounded editorial infographic for **every retained story**, including all briefs, with the built-in image tool. Inspect the final image for factual and text accuracy; copy its PNG into the designated image directory and record provenance and SHA-256. Short length, low score, or source tab never excuses missing imagery. If any image fails, stop; never publish a text-only or partially illustrated edition.
+8. Write an issue with `date`, `story_window`, `dek`, `research`, and `stories`. Preserve all earlier issues. For a runner invocation, write **only the designated draft path, designated image directory, and research logs**; the runner promotes it after validation. For direct invocation, validate a temporary draft before creating the final dated issue.
+
+`research.status` must be `complete`, with `completed_sources: ["hn", "news", "github"]` and `checked_urls` for the official News surfaces visited. Each included story must have `source_evidence.url`, `source_evidence.publication_date` equal to the window, `source_evidence.raw_date` containing the original ISO date/timestamp, and a concrete `source_evidence.method` explaining the verification. Optional fields may record raw timestamps, HN discussion links, and GitHub API URLs. Avoid copying entire articles/release notes into evidence.
+
+Write an empty `stories` array only after completing all three source checks and finding no eligible stories. Explain that result in `dek` and `research`. API failures, unreadable critical sources, missing date evidence, and exhausted research are **blocked/failed**, not an empty successful issue.
+
+## Validate and finish
+
+Use the repository's schema and `scripts/lib/daily-newspaper.js` draft validator. The daily validator enforces text depth, date evidence, global deduplication, and one reviewed local infographic per story. Asset validation checks actual PNG files and review hashes. Run `npm test`, `npm run check`, and `npm run build`. Confirm that the root and dated issue contain the new edition, RSS points to its dated URL, and `/md` and `/json` use its data. Keep existing reader/source/signal semantics intact.
+
+The runner owns checks, promotion, local edition commits, and publication. Do not perform them inside its editorial agent session. Outside the runner, perform the requested build/publish steps only within the invocation's mode; do not infer permission to change deployment targets, credentials, schedules, unrelated application code, or existing issues.
+
+Report edition/window dates, source counts, excluded/uncertain items, validation results, publication outcome, and paths to evidence/logs. Never report a source-only discovery artifact as a completed newspaper.

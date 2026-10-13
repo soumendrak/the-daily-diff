@@ -30,3 +30,7 @@ pnpm-debug.log*
 public/pdf/
 public/editions/
 public/*.pdf
+
+# Unreviewed source discovery candidates
+.cache/
+.lavish/

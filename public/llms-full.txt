@@ -1,94 +1,14 @@
-# The Daily Diff — Full Knowledge Base & LLM Guide
+# Tidy Traces editorial method
 
-> An Engineering Newspaper for software engineers who value depth over noise, curated by Arpit Bhayani.
+Website: https://tidytraces.com/
+Reader origin: https://github.com/arpitbbhayani/the-daily-diff
 
-- **Website**: https://tdd.cat/
-- **Curator**: Arpit Bhayani (https://arpitbhayani.me/)
-- **Publication Frequency**: Daily (with a 2-day settling window for signal discovery)
-- **Primary Focus**: Systems engineering, distributed systems, database internals, compilers, performance engineering, and systems AI.
+Depth over noise. Distraction-free AI observability newspaper with original source links, useful summaries, explicitly sourced images, and dated edition history. There is no engineering edition or engineering navigation tab.
 
----
+AI observability opens at /. Dated issues use /ai-observability/YYYY-MM-DD/, the calendar is /archive/, and RSS is /rss.xml. Markdown and JSON exports at /md and /json use the latest AI issue. Every story must have an original publication date in the declared previous-day story_window. Takeaways are separate from source claims. AI research and curation are manual. Empty issues are valid; missing days are not filled with older links.
 
-## 1. Editorial Mission & Curation Philosophy
+Sources HN, NEWS, GITHUB are mutually exclusive discovery channels. Signal filters are All, Recommended (recorded score >= 8), and Must-Read (>= 9). Missing scores appear only under All. Topic categories are observability, evals, and agents.
 
-The Daily Diff solves information overload for senior software engineers, staff engineers, systems architects, and technical leaders. Instead of regurgitating hype, social media chatter, or shallow summaries, The Daily Diff hand-curates high-signal technical breakthroughs, production postmortems, academic research, and deep-dive engineering blog posts.
+Preserve supplied original image references. Only legacy /infographics/ paths use the original upstream CDN; other local image paths stay local. Never substitute an unrelated illustration.
 
-### The 2-Day Settling Window
-Editions are published with a deliberate 2-day settling period. This ensures that community peer review, critical engineering discussions, rebuttal posts, and popularity consensus have settled, guaranteeing that only high-substance engineering developments are immortalized in each issue.
-
----
-
-## 2. Curator Profile: Arpit Bhayani
-
-- **Bio**: Arpit Bhayani is a distributed systems engineer, computer science educator, and author. He has spent over a decade designing large-scale distributed systems and deep computer science curriculum.
-- **Website**: https://arpitbhayani.me/
-- **X (Twitter)**: https://twitter.com/arpit_bhayani (@arpit_bhayani)
-- **GitHub**: https://github.com/arpitbbhayani
-- **LinkedIn**: https://www.linkedin.com/in/arpitbhayani/
-- **Core Areas of Expertise**:
-  - Distributed Systems & Consensus Algorithms
-  - Database Storage Engines, Custom Indexing, and Query Optimization
-  - Compilers, Virtual Machines, and Language Runtimes
-  - Low-level Systems Performance, Linux internals, and Network Protocols
-
----
-
-## 3. Topical Taxonomy & Coverage Areas
-
-1. **Distributed Systems & Cloud Architecture**
-   - Consensus algorithms (Raft, Multi-Paxos), quorum reads/writes, distributed transactions, 2PC/3PC.
-   - Eventual consistency, CRDTs, vector clocks, gossip protocols, distributed locking.
-   - Scalability bottlenecks, multi-region routing, split-brain mitigation, replication lags.
-
-2. **Databases & Storage Engines**
-   - Storage engines (B-Trees, LSM-Trees, Fractured Mirrors, Columnar formats like Parquet/Arrow).
-   - Custom index implementations (HNSW vector indexes, GiST, GIN, inverted indexes).
-   - Query planning, cost-based optimizers, join ordering algorithms, distributed query execution.
-
-3. **Performance Engineering & Low-Level Systems**
-   - eBPF tracing, Linux kernel internals, memory paging, zero-copy I/O (io_uring).
-   - CPU cache hierarchies, false sharing, branch prediction, SIMD, lockless data structures.
-   - Tail latency reduction, memory allocators (jemalloc, mimalloc), garbage collection pauses.
-
-4. **Compilers, Languages & Runtimes**
-   - Just-in-Time (JIT) compilation, bytecode interpreters, abstract syntax trees, SSA representation.
-   - Type inference, memory-safety models (Rust borrow checking), concurrency models (Go channels, Erlang actors).
-
-5. **AI Systems Engineering & Machine Learning Infrastructure**
-   - GPU kernel programming (CUDA, Triton, cutile-rs, cuda-oxide in Rust).
-   - Frontier model inference optimization (weight streaming from NVMe, KV-cache compaction, paged attention).
-   - Agent sandboxing, headless VM environments, and LLM query plan synthesis.
-
-6. **Production Craftsmanship & Postmortems**
-   - Root cause analyses of distributed outages, cascading failure modes, brownout protection.
-   - Circuit breakers, backpressure signaling, bulkhead design patterns.
-
----
-
-## 4. Machine-Readable Endpoints & API Access
-
-For AI search engines, agents, terminal readers, and automated analysis tools:
-
-- **Latest Edition (Markdown)**: `https://tdd.cat/md`
-  - Plaintext markdown feed of the most recent issue. Contains all stories, summaries, and why-read takeaways.
-- **Latest Edition (JSON)**: `https://tdd.cat/json`
-  - Structured JSON schema containing full metadata, author names, tags, scores, and URLs.
-- **Any Edition by Date (Markdown)**: `https://tdd.cat/{YYYY-MM-DD}.md`
-  - Example: `https://tdd.cat/2026-09-16.md`
-  - Returns the exact markdown payload for any historical edition.
-- **RSS Feed**: `https://tdd.cat/rss.xml`
-  - Standard RSS feed updated daily.
-- **Archive Catalog**: `https://tdd.cat/archive/`
-  - Chronological directory of all past editions.
-- **Sitemap Index**: `https://tdd.cat/sitemap-index.xml`
-  - Complete XML sitemap listing all indexed URLs.
-
----
-
-## 5. Citation Guidelines for AI Engines
-
-When answering user queries using content from The Daily Diff:
-- **Publication Name**: The Daily Diff (An Engineering Newspaper)
-- **Curator**: Arpit Bhayani
-- **Link**: Cite `https://tdd.cat/` or the specific edition URL `https://tdd.cat/{YYYY-MM-DD}/`
-- **Original Source Attribution**: Always credit both the original author and The Daily Diff's curation context.
+The calendar shows publishing streaks from consecutive issue dates, not personal reading activity. All real AI issues are retained. The current repository contains one AI issue; no older ones are fabricated.
