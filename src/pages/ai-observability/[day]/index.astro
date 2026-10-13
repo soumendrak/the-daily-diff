@@ -1,0 +1,58 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import ThemeToggleButton from '../../../components/ThemeToggleButton.astro';
+import Footer from '../../../components/Footer.astro';
+
+export function getStaticPaths() {
+  const files = import.meta.glob('../../../data/ai-observability/*.json', { eager: true, import: 'default' });
+  const editions = Object.values(files).sort((a, b) => a.date.localeCompare(b.date));
+  return editions.map((edition) => ({ params: { day: edition.date }, props: { edition } }));
+}
+
+const { edition } = Astro.props;
+const formattedDate = new Date(`${edition.date}T00:00:00`).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+const categories = ['Traditional observability', 'Evals', 'AI-agent observability'];
+---
+
+<Layout title={`${formattedDate} — AI Observability Daily`} description={edition.dek}>
+  <main class="page-container ai-observability-archive-page">
+    <header>
+      <nav><a href="/ai-observability/">← AI Observability Daily</a><ThemeToggleButton /></nav>
+      <p class="kicker">Past edition</p>
+      <h1>{formattedDate}</h1>
+      <p>{edition.dek}</p>
+    </header>
+    {categories.map((category) => {
+      const stories = edition.stories.filter((story) => story.category === category);
+      if (!stories.length) return null;
+      return (
+        <section aria-labelledby={`archive-${category}`}>
+          <h2 id={`archive-${category}`}>{category}</h2>
+          {stories.map((story) => (
+            <article>
+              <div class="meta">{story.publisher} · {story.published}</div>
+              <h3><a href={story.url} target="_blank" rel="noopener noreferrer">{story.title} ↗</a></h3>
+              <p>{story.summary}</p>
+              <p><strong>Why it matters:</strong> {story.takeaway}</p>
+            </article>
+          ))}
+        </section>
+      );
+    })}
+    <Footer showDelayNote={false} />
+  </main>
+</Layout>
+
+<style lang="scss">
+.ai-observability-archive-page { max-width: 900px; padding-top: 2rem; }
+header nav { display:flex; justify-content:space-between; align-items:center; }
+header nav a { color:var(--accent-ink); font-size:.78rem; text-transform:uppercase; }
+.kicker,.meta { color:var(--ink-faint); font-size:.7rem; letter-spacing:.06em; text-transform:uppercase; }
+header h1 { font:700 clamp(2rem,6vw,3.5rem)/1.1 var(--font-display); margin:.4rem 0; }
+section { margin:2.5rem 0; }
+section h2 { font:700 1.5rem var(--font-display); border-bottom:2px solid var(--rule); padding-bottom:.5rem; }
+article { background:var(--bg-sheet); border-bottom:1px solid var(--rule-hair); padding:1rem 1.2rem; }
+article h3 { font:700 1.2rem/1.35 var(--font-display); margin:.5rem 0; }
+article a:hover { color:var(--accent-ink); }
+article p { color:var(--ink-soft); font-size:.9rem; }
+</style>

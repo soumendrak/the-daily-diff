@@ -82,6 +82,10 @@ You can also preview and deploy using Wrangler:
 # Preview build output with Cloudflare Pages local simulator
 npm run preview:cf
 
-# Deploy to Cloudflare Pages
+# Deploy to Cloudflare
 npm run deploy
 ```
+
+## AI Observability Daily
+
+The focused AI Observability edition lives at `/ai-observability/`, alongside the engineering newspaper. Add each dated edition as `src/data/ai-observability/YYYY-MM-DD.json`; the page automatically selects the newest date and keeps links to earlier editions. Keep stories grouped into traditional observability, evals, and AI-agent observability, include the original publication date and source link, and write summaries that distinguish source claims from editorial takeaways. Daily issues are editorially curated in the repository; adding a dated file does not happen automatically.
