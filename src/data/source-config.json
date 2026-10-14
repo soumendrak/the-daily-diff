@@ -56,6 +56,10 @@
     {
       "name": "Splunk Observability",
       "url": "https://www.splunk.com/en_us/blog/observability.html"
+    },
+    {
+      "name": "Dynatrace",
+      "url": "https://www.dynatrace.com/news/"
     }
   ]
 }

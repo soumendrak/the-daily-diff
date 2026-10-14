@@ -169,3 +169,18 @@ Why it matters: Rehearse evidence retrieval and check source coverage; retention
 
 ![Elastic demonstrates how to verify retention and query old audit evidence](/edition-images/2026-10-14/elastic-audit-retention.webp)
 AI-generated editorial infographic, based on the linked source.
+
+## Dynatrace compares Collector builds by component coverage and operational ownership
+
+Source: Dynatrace · Amrith Raj — https://www.dynatrace.com/news/blog/opentelemetry-collector-distributions-compared-core-contrib-ocb-and-vendor-builds-which-one-should-you-use/
+Published: 2026-10-13
+Channel: news
+
+Dynatrace's Amrith Raj compares four OpenTelemetry Collector choices: lean Core, broad Contrib, custom distributions assembled with the Collector Builder (OCB), and vendor packages. The key distinction is which components a binary includes and who owns its build, upgrades, and support. Contrib components have maturity labels that can vary by telemetry signal. A custom OCB build selects and pins modules; vendor packages curate their own set, with support and testing dependent on the offering. The examples are illustrative, so component names and versions need verification before deployment.
+
+Our editorial connection is the transport layer beneath AI tracing. Before choosing a package, write down the receivers, processors, exporters, and signals your agent workloads require. In a staging environment, test whether model and tool-call attributes survive the pipeline, whether sensitive fields are removed as intended, and whether telemetry still arrives after an upgrade. Compare those requirements with the chosen release's actual component manifest. A distribution label alone does not establish trace completeness or privacy protection; those outcomes need evidence from the running pipeline.
+
+Why it matters: Choose against a tested AI telemetry pipeline and an explicit ownership model.
+
+![Dynatrace compares Collector builds by component coverage and operational ownership](/edition-images/2026-10-14/dynatrace-collector-builds.webp)
+AI-generated editorial infographic, based on the linked source.

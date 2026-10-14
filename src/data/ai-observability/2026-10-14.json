@@ -485,6 +485,49 @@
       },
       "image_width": 1440,
       "image_height": 960
+    },
+    {
+      "title": "Dynatrace compares Collector builds by component coverage and operational ownership",
+      "url": "https://www.dynatrace.com/news/blog/opentelemetry-collector-distributions-compared-core-contrib-ocb-and-vendor-builds-which-one-should-you-use/",
+      "publisher": "Dynatrace · Amrith Raj",
+      "published": "2026-10-13",
+      "category_key": "observability",
+      "source": "news",
+      "summary": "Core, Contrib, custom OCB builds, and vendor packages trade component coverage against build and support ownership.",
+      "body": [
+        "Dynatrace's Amrith Raj compares four OpenTelemetry Collector choices: lean Core, broad Contrib, custom distributions assembled with the Collector Builder (OCB), and vendor packages. The key distinction is which components a binary includes and who owns its build, upgrades, and support. Contrib components have maturity labels that can vary by telemetry signal. A custom OCB build selects and pins modules; vendor packages curate their own set, with support and testing dependent on the offering. The examples are illustrative, so component names and versions need verification before deployment.",
+        "Our editorial connection is the transport layer beneath AI tracing. Before choosing a package, write down the receivers, processors, exporters, and signals your agent workloads require. In a staging environment, test whether model and tool-call attributes survive the pipeline, whether sensitive fields are removed as intended, and whether telemetry still arrives after an upgrade. Compare those requirements with the chosen release's actual component manifest. A distribution label alone does not establish trace completeness or privacy protection; those outcomes need evidence from the running pipeline."
+      ],
+      "format": "full",
+      "takeaway": "Choose against a tested AI telemetry pipeline and an explicit ownership model.",
+      "image": "/edition-images/2026-10-14/dynatrace-collector-builds.webp",
+      "image_width": 1440,
+      "image_height": 960,
+      "image_provenance": {
+        "kind": "generated-editorial",
+        "generator": "built-in-imagegen",
+        "prompt": "Create one landscape editorial infographic PNG for a calm technical newspaper. Warm pale newsprint background, charcoal ink line art, restrained brick-red accents, bold readable serif headings, generous whitespace. Use simple outlined cards, arrows and small technical icons. No product logos, screenshots, invented metrics or decorative scenery. Render only the short text specified here.\nTitle exactly: \"CHOOSE YOUR COLLECTOR BUILD\".\nAt the top, a small box labelled \"REQUIRED SIGNALS + COMPONENTS\" branches evenly into FOUR equally sized option cards. Do not rank the four options.\nCard 1 heading \"CORE\"; labels \"MINIMAL COMPONENTS\" and \"SIMPLE OTLP PIPELINES\"; icon of a small toolbox.\nCard 2 heading \"CONTRIB\"; labels \"BROAD COMPONENT LIBRARY\" and \"CHECK MATURITY PER SIGNAL\"; icon of a larger toolbox.\nCard 3 heading \"OCB\"; labels \"SELECT + PIN COMPONENTS\" and \"OWN YOUR BUILD\"; icon of selected building blocks.\nCard 4 heading \"VENDOR\"; labels \"CURATED COMPONENTS\" and \"VERIFY SUPPORT TERMS\"; icon of a packaged toolbox with a checklist.\nBottom shared checklist exactly: \"CHECK THE MANIFEST • PIN VERSIONS • STAGE UPGRADES\".\nFooter exactly: \"Conceptual selection guide · based on Dynatrace\".\nFacts to preserve: the primary article compares Core, Contrib, custom builds using OpenTelemetry Collector Builder, and vendor distributions. Component availability, per-signal maturity and build/support ownership determine the choice. Vendor support and testing depend on the actual offering. Do not imply that every vendor build is stable, every Contrib component is production ready, or that any choice has guaranteed speed, compliance or lower cost. This is general telemetry guidance, not a newly announced AI feature. Keep every heading and label legible and contained in its card.",
+        "based_on": [
+          "https://www.dynatrace.com/news/blog/opentelemetry-collector-distributions-compared-core-contrib-ocb-and-vendor-builds-which-one-should-you-use/"
+        ],
+        "reviewed": true,
+        "sha256": "f4dbdd95e450d4f5e8a1febe4cbffc776724a97cebc7156b338c57206379462d",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "83a914c3704d0c0af68cd81592a7cdccde085195d0723ee5636e9be3b90b1ce7"
+        }
+      },
+      "interest_score": 8,
+      "score_reason": "Actionable component-maturity and ownership checks for the transport layer beneath AI traces; general telemetry guidance, not a new AI-specific feature.",
+      "dedupe_key": "article:www.dynatrace.com/news/blog/opentelemetry-collector-distributions-compared-core-contrib-ocb-and-vendor-builds-which-one-should-you-use",
+      "source_evidence": {
+        "url": "https://www.dynatrace.com/news/blog/opentelemetry-collector-distributions-compared-core-contrib-ocb-and-vendor-builds-which-one-should-you-use/",
+        "publication_date": "2026-10-13",
+        "raw_date": "2026-10-13T20:41:38+00:00",
+        "method": "Original primary article time element and JSON-LD datePublished agree on October 13; dateModified is October 14 and is not used as publication evidence."
+      }
     }
   ],
   "research": {
@@ -510,7 +553,9 @@
       "https://langfuse.com/changelog/2026-10-13-system-one-compatible-decision-models",
       "https://arize.com/blog/does-being-rude-to-ai-work/",
       "https://opentelemetry.io/blog/2026/hostmetrics-process-scraper-rc/",
-      "https://www.elastic.co/observability-labs/blog/audit-logging-retention-elasticsearch"
+      "https://www.elastic.co/observability-labs/blog/audit-logging-retention-elasticsearch",
+      "https://www.dynatrace.com/news/",
+      "https://www.dynatrace.com/news/blog/opentelemetry-collector-distributions-compared-core-contrib-ocb-and-vendor-builds-which-one-should-you-use/"
     ],
     "excluded": [
       {
@@ -588,7 +633,7 @@
         "reason": "Outside the focused AI observability/evaluation/agent telemetry beat; an October 13 HN submission does not make it eligible."
       }
     ],
-    "note": "Scoped primary-source sweep, not exhaustive coverage. HN is first-party launch evidence, GitHub covers the configured watchlist. Vendor claims and editorial guidance remain distinct.",
+    "note": "Scoped primary-source sweep, not exhaustive coverage. HN is first-party launch evidence, GitHub covers the configured watchlist. Vendor claims and editorial guidance remain distinct. The Dynatrace comparison was added after a user-supplied primary URL exposed a missing publisher in the configured watchlist; the watchlist now includes Dynatrace.",
     "source_checks": [
       {
         "name": "Arize AI",
@@ -649,6 +694,12 @@
         "url": "https://www.splunk.com/en_us/blog/observability.html",
         "status": 200,
         "checked_at": "2026-10-14T15:32:06.821Z"
+      },
+      {
+        "name": "Dynatrace",
+        "url": "https://www.dynatrace.com/news/",
+        "status": 200,
+        "checked_at": "2026-10-14T16:22:45.246Z"
       }
     ]
   }
