@@ -16,7 +16,7 @@ Tidy Traces is an AI-observability-only fork of https://github.com/arpitbbhayani
 - Styles use SASS newsprint theme variables in `src/styles/main.scss`.
 - Start development in background mode: `npm run dev -- --background`. Manage with `npx astro dev status`, `npx astro dev logs`, `npx astro dev stop`.
 - Before committing: `npm test`, `npm run check`, `npm run build`.
-- `npm run preview:cf` previews Worker static assets. `npm run deploy` builds and deploys using authenticated Wrangler. Existing Pages Git integration may publish master instead.
+- `npm run preview:cf` previews Worker static assets. `npm run deploy` builds and deploys to the existing Cloudflare Pages project `the-daily-diff`, production branch `master`, using authenticated Wrangler. This project has no Git integration; a GitHub push alone does not publish changes.
 - Canonical origin is fixed at `https://tidytraces.com`; an old dashboard `SITE_URL` value must not change it.
 
 Astro reference: https://docs.astro.build

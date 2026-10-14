@@ -72,7 +72,7 @@ npm run preview:cf
 npm run deploy
 ```
 
-Wrangler deploys `dist` as Worker static assets, with `tidytraces.com` configured as a root custom domain. It requires authentication and an active domain zone. For the existing Cloudflare Pages deployment, use production branch **master**, build `npm run build`, output `dist`, and attach `tidytraces.com` under Custom domains.
+`npm run deploy` builds and uploads `dist` to the existing Cloudflare Pages project **the-daily-diff**, using production branch **master**. This project serves `tidytraces.com` and has no Git integration, so pushing to GitHub alone does not publish changes. Deployment requires Wrangler authentication with Pages write access. `npm run preview:cf` uses the Worker static-assets configuration for local previews.
 
 Canonical URLs are fixed to `https://tidytraces.com` so an old Pages `SITE_URL` cannot override them. Remove any external redirect sending `/` to `/ai-observability/`. Google Analytics is disabled unless the fork configures its own `PUBLIC_GA_ID`; the upstream measurement ID is not reused.
 
