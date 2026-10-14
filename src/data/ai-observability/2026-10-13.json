@@ -203,7 +203,7 @@
       "takeaway": "Useful agent analytics need coverage checks and privacy controls alongside usage totals. Treat this as a practitioner implementation, not an official Anthropic reporting API.",
       "interest_score": 8,
       "score_reason": "Strong direct relevance: a dated practitioner implementation with ingestion, coverage and privacy details. Editorial rating, independent of HN points.",
-      "image": "https://prakhargurunani.com/blog/assets/claude-observability-overview.png",
+      "image": "/edition-images/2026-10-13/claude-observability-overview.webp",
       "image_source": "https://prakhargurunani.com/blog/building-claude-observability/",
       "source_evidence": {
         "hn_item": "https://hacker-news.firebaseio.com/v0/item/50053675.json",
@@ -213,7 +213,16 @@
         "raw_date": "2026-10-12",
         "method": "Original article time element (not HN submission time)"
       },
-      "dedupe_key": "article:prakhargurunani.com/blog/building-claude-observability"
+      "dedupe_key": "article:prakhargurunani.com/blog/building-claude-observability",
+      "image_width": 1440,
+      "image_height": 824,
+      "image_source_url": "https://prakhargurunani.com/blog/assets/claude-observability-overview.png",
+      "image_optimization": {
+        "format": "webp",
+        "quality": 82,
+        "max_width": 1440,
+        "source_sha256": "35ee37503bf9033dbb8efa42115e826c2e3aa1634e4f23849a92eb23737897f6"
+      }
     },
     {
       "title": "Show HN: Airlock pairs agent isolation with a record of commands and changes",

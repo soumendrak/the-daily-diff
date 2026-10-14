@@ -17,7 +17,7 @@ For an operations team, this creates a useful way to discover examples for evalu
 
 Why it matters: Validate search recall against known failures before relying on it for incident discovery.
 
-![LangSmith adds behavior-based search over agent trajectories](/edition-images/2026-10-14/langsmith-ai-search.png)
+![LangSmith adds behavior-based search over agent trajectories](/edition-images/2026-10-14/langsmith-ai-search.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Assury proposes one audit and control layer across agent platforms
@@ -32,7 +32,7 @@ The operational question is whether an inventory remains accurate when agents ap
 
 Why it matters: Test inventory coverage and control outcomes before treating a central agent list as reliable evidence.
 
-![Assury proposes one audit and control layer across agent platforms](/edition-images/2026-10-14/assury-agent-lifecycle.png)
+![Assury proposes one audit and control layer across agent platforms](/edition-images/2026-10-14/assury-agent-lifecycle.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Consus separates sensitive inference payloads from billing and audit metadata
@@ -47,7 +47,7 @@ That separation changes what an incident investigator can recover. Our editorial
 
 Why it matters: Specify the evidence needed for debugging before choosing a payload-retention policy.
 
-![Consus separates sensitive inference payloads from billing and audit metadata](/edition-images/2026-10-14/consus-private-audit.png)
+![Consus separates sensitive inference payloads from billing and audit metadata](/edition-images/2026-10-14/consus-private-audit.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Langfuse joins traces into a continuous conversation for debugging
@@ -62,7 +62,7 @@ For multi-turn agents, the useful improvement is continuity: an apparently reaso
 
 Why it matters: Verify session identity and tool coverage so the improved conversation reader has trustworthy inputs.
 
-![Langfuse joins traces into a continuous conversation for debugging](/edition-images/2026-10-14/langfuse-session-view.png)
+![Langfuse joins traces into a continuous conversation for debugging](/edition-images/2026-10-14/langfuse-session-view.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Langfuse opens its System One evaluator adapter to custom model endpoints
@@ -77,7 +77,7 @@ A compatible interface makes evaluator substitution easier, but score meaning st
 
 Why it matters: Treat a change of evaluator model as a measurement change and calibrate it against labeled examples.
 
-![Langfuse opens its System One evaluator adapter to custom model endpoints](/edition-images/2026-10-14/langfuse-system-one.png)
+![Langfuse opens its System One evaluator adapter to custom model endpoints](/edition-images/2026-10-14/langfuse-system-one.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Arize separates prompt tone from brevity in a six-model evaluation
@@ -92,7 +92,7 @@ For an evaluation program, the broader lesson is experimental control. Our edito
 
 Why it matters: Separate tone from instructions and measure hidden reasoning before attributing a cost improvement to a prompt change.
 
-![Arize separates prompt tone from brevity in a six-model evaluation](/edition-images/2026-10-14/arize-tone-evaluation.png)
+![Arize separates prompt tone from brevity in a six-model evaluation](/edition-images/2026-10-14/arize-tone-evaluation.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Langfuse v4.58.0 adds bounded media uploads and per-project trace idle settings
@@ -107,7 +107,7 @@ For operators, bounded work matters when media-bearing traces arrive in bursts o
 
 Why it matters: Test multimodal ingestion under bursts and storage failures, including the point when traces become ready for evaluation.
 
-![Langfuse v4.58.0 adds bounded media uploads and per-project trace idle settings](/edition-images/2026-10-14/langfuse-media-ingestion.png)
+![Langfuse v4.58.0 adds bounded media uploads and per-project trace idle settings](/edition-images/2026-10-14/langfuse-media-ingestion.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## LangSmith SDK v0.14.8 fixes session patching and a trace-upload fallback
@@ -122,7 +122,7 @@ Our editorial recommendation is to validate both context continuity and delivery
 
 Why it matters: Verify persisted session associations and upload fallback behavior with an end-to-end canary.
 
-![LangSmith SDK v0.14.8 fixes session patching and a trace-upload fallback](/edition-images/2026-10-14/langsmith-sdk-context.png)
+![LangSmith SDK v0.14.8 fixes session patching and a trace-upload fallback](/edition-images/2026-10-14/langsmith-sdk-context.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Phoenix v20.21.2 normalizes experiment latency and retrieval counts
@@ -137,7 +137,7 @@ Our editorial recommendation is to check the shape of saved experiment results a
 
 Why it matters: Check numeric types at the storage and API boundaries of an evaluation result.
 
-![Phoenix v20.21.2 normalizes experiment latency and retrieval counts](/edition-images/2026-10-14/phoenix-metric-types.png)
+![Phoenix v20.21.2 normalizes experiment latency and retrieval counts](/edition-images/2026-10-14/phoenix-metric-types.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## OpenTelemetry gives process metrics an explicit migration path
@@ -152,7 +152,7 @@ For AI workloads, process metrics remain useful context around model-serving wor
 
 Why it matters: Validate query and alert semantics during schema migration, not just successful metric export.
 
-![OpenTelemetry gives process metrics an explicit migration path](/edition-images/2026-10-14/otel-process-migration.png)
+![OpenTelemetry gives process metrics an explicit migration path](/edition-images/2026-10-14/otel-process-migration.webp)
 AI-generated editorial infographic, based on the linked source.
 
 ## Elastic demonstrates how to verify retention and query old audit evidence
@@ -167,5 +167,5 @@ For teams operating agents that can change external systems, our editorial recom
 
 Why it matters: Rehearse evidence retrieval and check source coverage; retention configuration alone does not prove an auditable history.
 
-![Elastic demonstrates how to verify retention and query old audit evidence](/edition-images/2026-10-14/elastic-audit-retention.png)
+![Elastic demonstrates how to verify retention and query old audit evidence](/edition-images/2026-10-14/elastic-audit-retention.webp)
 AI-generated editorial infographic, based on the linked source.

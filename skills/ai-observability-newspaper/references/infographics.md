@@ -7,8 +7,13 @@ Use the runtime's built-in image-generation tool only. The user explicitly selec
 3. Make one built-in generation call per distinct story. Produce a clean newspaper infographic with warm paper, dark ink, restrained accents, a clear title, readable labels, and a small number of connected elements. Do not make a collage to stand in for separate images.
 4. For a brief, illustrate its narrow change directly. For example, a span-ingestion fix can show a conceptual delivery path and the need to verify arrival. Do not invent architecture details or before/after performance figures absent from the source. Label inferred guidance as conceptual/editorial.
 5. Inspect the actual output with the runtime's image viewer. Check spelling, numerical claims, arrows, readability, factual scope, and source-versus-editorial distinction. Regenerate when needed. `reviewed: true` means this inspection happened; never set it merely because generation returned a file.
-6. Copy the selected final PNG into `IMAGE_DIRECTORY/story-slug.png`. Use a standard 8-bit noninterlaced PNG; its shortest edge must be at least 512 pixels. Use the supplied `IMAGE_URL_PREFIX` in the draft, not a global generated-image path. Compute SHA-256 **after** copying the final file. Record its actual PNG `image_width` and `image_height` in the story so the reader reserves the correct proportions.
-7. Store `image_provenance`: `kind: "generated-editorial"`, `generator: "built-in-imagegen"`, complete final `prompt`, `based_on` containing the primary evidence URL, `reviewed: true`, and `sha256`. The reader labels the graphic as AI-generated editorial work. It must never be presented as the publisher's own screenshot.
+6. Keep the built-in generator's original PNG in the run evidence directory. Publish an optimized **static WebP**, never the multi-megabyte original. From the repository root run:
+   ```sh
+   node scripts/optimize-newspaper-image.js ORIGINAL.png IMAGE_DIRECTORY/story-slug.webp
+   ```
+   The converter uses the repository's `sharp` dependency (installed with `npm ci`), preserves proportions without cropping or enlargement, caps width at 1440 pixels, and tries quality 82 down to 70 to fit **300,000 bytes (300 KB)**. Its shortest edge must remain at least 512 pixels. It stops if that budget cannot be met; simplify/regenerate instead of sacrificing readable labels. Typical newspaper graphics should be around 80–150 KB. Existing output files are never overwritten.
+7. Inspect the **final WebP**, including labels at article width and in zoom view. If compression makes text illegible, regenerate a simpler graphic and reconvert. Use the supplied `IMAGE_URL_PREFIX` with `story-slug.webp` in the draft. Record the converter's `image_width`, `image_height`, and `optimization` metadata. Hash and review refer to the published WebP, not the original PNG.
+8. Store `image_provenance`: `kind: "generated-editorial"`, `generator: "built-in-imagegen"`, complete final `prompt`, `based_on` containing the primary evidence URL, `reviewed: true`, and final WebP `sha256`; put the returned `optimization` object in this provenance too. The reader labels the graphic as AI-generated editorial work. It must never be presented as the publisher's own screenshot.
 
 Example prompt structure (replace all bracketed inputs):
 
@@ -25,4 +30,4 @@ Constraints: no invented metrics, no unsupported product architecture,
 no fake screenshots, no unrelated logos; preserve source/editorial distinction
 ```
 
-The runner validates file existence, PNG structure, dimensions, final hashes, and distinct assets. It cannot replace an agent's visual or factual review. An image-generation failure fails the edition; logs and the draft remain for diagnosis. Story length, signal score, and HN/News/GitHub category are never reasons to skip generation.
+The runner validates file existence, WebP format and full decoding, the 300 KB size budget, dimensions, final hashes, and distinct assets. It cannot replace an agent's visual or factual review. An image-generation failure fails the edition; logs and the draft remain for diagnosis. Story length, signal score, and HN/News/GitHub category are never reasons to skip generation.

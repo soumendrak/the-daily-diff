@@ -33,14 +33,14 @@ Regression case: a Google SRE book story dated October 30 is excluded from an Oc
   "summary": "What the primary source actually says, with useful implementation detail.",
   "body": ["Original factual paragraphs, normally 150–220 words in total, explaining the implementation, operational implications, and evidence limits."],
   "format": "full",
-  "image": "/edition-images/2026-10-14/story-slug.png",
+  "image": "/edition-images/2026-10-14/story-slug.webp",
   "image_provenance": {
     "kind": "generated-editorial",
     "generator": "built-in-imagegen",
     "prompt": "The complete final generation prompt",
     "based_on": ["https://publisher.example/original-item"],
     "reviewed": true,
-    "sha256": "SHA-256 of the visually reviewed final PNG"
+    "sha256": "SHA-256 of the visually reviewed final WebP"
   },
   "takeaway": "An independent implication for engineers operating AI systems.",
   "dedupe_key": "article:publisher.example/original-item",
@@ -57,7 +57,7 @@ Regression case: a Google SRE book story dated October 30 is excluded from an Oc
 
 `source`: `hn`, `news`, `github`. `category_key`: `observability`, `evals`, `agents`. HN items should retain `hn_id`/`comments`. `summary` remains a short abstract; the reader and Markdown export display the full `body` paragraphs. Normally write 150–220 original words; a full story must have at least 130 body words. A sparse source can justify a 60+ word brief with `format: "brief"` and a source-specific `brief_reason`. These are minimum quality gates, not targets for padding. Separate source statements from editorial implications; do not invent benchmarks or repeat a tiny release note to reach length.
 
-Every story requires its own generated editorial infographic, including briefs. `image` points to a real PNG under `/edition-images/EDITION-DATE/`. Store generation prompt, source URLs, visual-review flag, and final file hash in `image_provenance`. Follow [infographics.md](infographics.md). Existing historical issues may retain attributed source images, but this does not waive the daily runner’s complete illustration requirement.
+Every story requires its own generated editorial infographic, including briefs. `image` points to a real optimized WebP (at most 300 KB) under `/edition-images/EDITION-DATE/`. Store generation prompt, source URLs, visual-review flag, and final file hash in `image_provenance`. Follow [infographics.md](infographics.md). Existing historical issues may retain attributed source images, but this does not waive the daily runner’s complete illustration requirement.
 
 ## Signal ratings
 

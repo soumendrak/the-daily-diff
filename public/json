@@ -16,9 +16,9 @@
       ],
       "format": "full",
       "takeaway": "Validate search recall against known failures before relying on it for incident discovery.",
-      "image": "/edition-images/2026-10-14/langsmith-ai-search.png",
-      "image_width": 1738,
-      "image_height": 905,
+      "image": "/edition-images/2026-10-14/langsmith-ai-search.webp",
+      "image_width": 1440,
+      "image_height": 750,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -27,7 +27,13 @@
           "https://www.langchain.com/blog/agent-traces-ai-search-langsmith"
         ],
         "reviewed": true,
-        "sha256": "90e86d012fb0eeac1b4052022fa2cc83558d1f0582e015d9cddb914178e54ec4"
+        "sha256": "16a98e9db41ba68a219c3772c3c1d8d0651f0a154aa0d46178fb91b64d3bdea9",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "90e86d012fb0eeac1b4052022fa2cc83558d1f0582e015d9cddb914178e54ec4"
+        }
       },
       "source": "news",
       "interest_score": 8,
@@ -53,9 +59,9 @@
       ],
       "format": "full",
       "takeaway": "Test inventory coverage and control outcomes before treating a central agent list as reliable evidence.",
-      "image": "/edition-images/2026-10-14/assury-agent-lifecycle.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/assury-agent-lifecycle.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -64,7 +70,13 @@
           "https://news.ycombinator.com/item?id=50072334"
         ],
         "reviewed": true,
-        "sha256": "a41e098f43fa86588be000b28cbb712458095511cfda42e96ac53a2b866cbb87"
+        "sha256": "9c055bab5b6c49972d4f142e9d15508ca427f31b28a116d3c13424b855efa3e6",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "a41e098f43fa86588be000b28cbb712458095511cfda42e96ac53a2b866cbb87"
+        }
       },
       "source": "hn",
       "interest_score": 7,
@@ -93,9 +105,9 @@
       ],
       "format": "full",
       "takeaway": "Specify the evidence needed for debugging before choosing a payload-retention policy.",
-      "image": "/edition-images/2026-10-14/consus-private-audit.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/consus-private-audit.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -104,7 +116,13 @@
           "https://news.ycombinator.com/item?id=50073471"
         ],
         "reviewed": true,
-        "sha256": "c0c852144dcdfe3662c831e5e22015a083cc3b7a06f3476063187a46a8b46df6"
+        "sha256": "c72ba138dcd9819be64dc4f0258b6a6a601f26e827a167d6f08802c1e89646c4",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "c0c852144dcdfe3662c831e5e22015a083cc3b7a06f3476063187a46a8b46df6"
+        }
       },
       "source": "hn",
       "interest_score": 8,
@@ -133,9 +151,9 @@
       ],
       "format": "full",
       "takeaway": "Verify session identity and tool coverage so the improved conversation reader has trustworthy inputs.",
-      "image": "/edition-images/2026-10-14/langfuse-session-view.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/langfuse-session-view.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -144,7 +162,13 @@
           "https://langfuse.com/changelog/2026-10-13-redesigned-session-view"
         ],
         "reviewed": true,
-        "sha256": "4a4f309d4847c9840d783fed061db93c403a7d6d55251e8e7d96b5001bf6b1fc"
+        "sha256": "5a14a411d6c87e12896fe893cb3cdead4ac6ba72861f3e81b2101689ead958fa",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "4a4f309d4847c9840d783fed061db93c403a7d6d55251e8e7d96b5001bf6b1fc"
+        }
       },
       "source": "news",
       "interest_score": 8,
@@ -170,9 +194,9 @@
       ],
       "format": "full",
       "takeaway": "Treat a change of evaluator model as a measurement change and calibrate it against labeled examples.",
-      "image": "/edition-images/2026-10-14/langfuse-system-one.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/langfuse-system-one.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -181,7 +205,13 @@
           "https://langfuse.com/changelog/2026-10-13-system-one-compatible-decision-models"
         ],
         "reviewed": true,
-        "sha256": "4f1eb3eaece52819117b9c80844f320617403544ec35b570623af49b6fa3570d"
+        "sha256": "ca66cd08e9ab89aeb9580680325bcbbbdac037008d57761a39ea4c9ff4ccf254",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "4f1eb3eaece52819117b9c80844f320617403544ec35b570623af49b6fa3570d"
+        }
       },
       "source": "news",
       "interest_score": 8,
@@ -207,9 +237,9 @@
       ],
       "format": "full",
       "takeaway": "Separate tone from instructions and measure hidden reasoning before attributing a cost improvement to a prompt change.",
-      "image": "/edition-images/2026-10-14/arize-tone-evaluation.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/arize-tone-evaluation.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -218,7 +248,13 @@
           "https://arize.com/blog/does-being-rude-to-ai-work/"
         ],
         "reviewed": true,
-        "sha256": "3bf150531807daddba4c1a3832822a9a1e9c4d0abad5c1dd2cf6ea12560726bb"
+        "sha256": "a1b7694c37a5c4644a823eac86701cffae702a6191063aee505a1a017f66766b",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "3bf150531807daddba4c1a3832822a9a1e9c4d0abad5c1dd2cf6ea12560726bb"
+        }
       },
       "source": "news",
       "interest_score": 9,
@@ -244,9 +280,9 @@
       ],
       "format": "full",
       "takeaway": "Test multimodal ingestion under bursts and storage failures, including the point when traces become ready for evaluation.",
-      "image": "/edition-images/2026-10-14/langfuse-media-ingestion.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/langfuse-media-ingestion.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -255,7 +291,13 @@
           "https://github.com/langfuse/langfuse/releases/tag/v4.58.0"
         ],
         "reviewed": true,
-        "sha256": "c462c263a7b9e022b4d03c278ec4ff2b83da2df4365fb21760904b692274175d"
+        "sha256": "ef2114c2cbc4cb4207ad9d5a5b1461a87815a85fc9f1f0d179a5c61441b2c3b3",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "c462c263a7b9e022b4d03c278ec4ff2b83da2df4365fb21760904b692274175d"
+        }
       },
       "source": "github",
       "interest_score": 8,
@@ -282,9 +324,9 @@
       ],
       "format": "full",
       "takeaway": "Verify persisted session associations and upload fallback behavior with an end-to-end canary.",
-      "image": "/edition-images/2026-10-14/langsmith-sdk-context.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/langsmith-sdk-context.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -293,7 +335,13 @@
           "https://github.com/langchain-ai/langsmith-sdk/releases/tag/v0.14.8"
         ],
         "reviewed": true,
-        "sha256": "cd4d8e9d376db92e2926853bdceaeca820ab372932c0abdf3ea1cc4d4ad675bd"
+        "sha256": "8241bc102bec153874e3aac90de74d0c1f43cd60ed79766eed8110e5df16e86a",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "cd4d8e9d376db92e2926853bdceaeca820ab372932c0abdf3ea1cc4d4ad675bd"
+        }
       },
       "source": "github",
       "interest_score": 8,
@@ -321,9 +369,9 @@
       "format": "brief",
       "brief_reason": "The primary patch notes contain two narrow type fixes; no broader feature or benchmark is claimed.",
       "takeaway": "Check numeric types at the storage and API boundaries of an evaluation result.",
-      "image": "/edition-images/2026-10-14/phoenix-metric-types.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/phoenix-metric-types.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -332,7 +380,13 @@
           "https://github.com/Arize-ai/phoenix/releases/tag/arize-phoenix-v20.21.2"
         ],
         "reviewed": true,
-        "sha256": "1b6dc5b081e10e81c9ba96f53b6c671b8415c1434b44eba700f716731d2f6a7c"
+        "sha256": "a30f15a9f93f815c0b726c5c82676fbd49c55bfd82d91b848a2f466538140e5e",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "1b6dc5b081e10e81c9ba96f53b6c671b8415c1434b44eba700f716731d2f6a7c"
+        }
       },
       "source": "github",
       "interest_score": 7,
@@ -359,9 +413,9 @@
       ],
       "format": "full",
       "takeaway": "Validate query and alert semantics during schema migration, not just successful metric export.",
-      "image": "/edition-images/2026-10-14/otel-process-migration.png",
-      "image_width": 1774,
-      "image_height": 887,
+      "image": "/edition-images/2026-10-14/otel-process-migration.webp",
+      "image_width": 1440,
+      "image_height": 720,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -370,7 +424,13 @@
           "https://opentelemetry.io/blog/2026/hostmetrics-process-scraper-rc/"
         ],
         "reviewed": true,
-        "sha256": "42009434ea361dd8bf8477d92d043d78e35e5adb81343d977745482aa7c92089"
+        "sha256": "bd8c91d7a4519e4d0fb4624d4c4be91464d4ba43a56d75849b84af3bf22286f2",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "42009434ea361dd8bf8477d92d043d78e35e5adb81343d977745482aa7c92089"
+        }
       },
       "source": "news",
       "interest_score": 7,
@@ -396,9 +456,9 @@
       ],
       "format": "full",
       "takeaway": "Rehearse evidence retrieval and check source coverage; retention configuration alone does not prove an auditable history.",
-      "image": "/edition-images/2026-10-14/elastic-audit-retention.png",
-      "image_width": 1536,
-      "image_height": 1024,
+      "image": "/edition-images/2026-10-14/elastic-audit-retention.webp",
+      "image_width": 1440,
+      "image_height": 960,
       "image_provenance": {
         "kind": "generated-editorial",
         "generator": "built-in-imagegen",
@@ -407,7 +467,13 @@
           "https://www.elastic.co/observability-labs/blog/audit-logging-retention-elasticsearch"
         ],
         "reviewed": true,
-        "sha256": "29a3954006d638a302dd74f6a33e279f74f9c393526945b18833445259e6e44c"
+        "sha256": "a33097830cf35ffb7a950438f413e1656d0f9953591faa1e78516391469d1d5c",
+        "optimization": {
+          "format": "webp",
+          "quality": 82,
+          "max_width": 1440,
+          "source_sha256": "29a3954006d638a302dd74f6a33e279f74f9c393526945b18833445259e6e44c"
+        }
       },
       "source": "news",
       "interest_score": 8,

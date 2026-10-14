@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFile, lstat, realpath, readlink } from 'node:fs/promises';
 import { execFileSync } from 'node:child_process';
 import path from 'node:path';
-import { inflateSync } from 'node:zlib';
+import { validateNewspaperImage } from './newspaper-images.js';
 import { observabilityIssueSchema } from '../../src/lib/observabilitySchema.js';
 
 export function editionDates(now = new Date(), timeZone = 'Asia/Kolkata', explicitDate) {
@@ -31,14 +31,14 @@ export function validateDailyDraft(raw, dates, history = []) {
     if (story.format === 'brief') {
       if (words < 60 || typeof story.brief_reason !== 'string' || !story.brief_reason.trim()) throw new Error(`A brief needs substantive text and a source-specific reason: ${story.title}`);
     } else if (words < 130) throw new Error(`Full story needs at least 130 body words: ${story.title}`);
-    if (!story.image || !new RegExp(`^/edition-images/${dates.date}/[a-z0-9][a-z0-9-]*\\.png$`).test(story.image)) throw new Error(`Every story, including briefs, needs its own local infographic: ${story.title}`);
+    if (!story.image || !new RegExp(`^/edition-images/${dates.date}/[a-z0-9][a-z0-9-]*\\.webp$`).test(story.image)) throw new Error(`Every story, including briefs, needs its own local WebP infographic: ${story.title}`);
     if (!story.image_provenance || !story.image_provenance.based_on.includes(evidence.url) || story.image_provenance.generator !== 'built-in-imagegen') throw new Error(`Infographic needs reviewed built-in generation provenance: ${story.title}`);
   }
   assertNoDuplicateStories(issue, history);
   return issue;
 }
 
-/** Inspect actual PNG assets; declarations alone cannot satisfy the publication gate. */
+/** Inspect actual optimized WebP assets; declarations alone cannot satisfy the publication gate. */
 export async function validateStoryImages(issue, directory) {
   if (!issue.stories.length) return [];
   const seen = new Set();
@@ -49,32 +49,7 @@ export async function validateStoryImages(issue, directory) {
     const file = path.join(root, filename);
     if ((await lstat(file)).isSymbolicLink() || path.dirname(await realpath(file)) !== root) throw new Error(`Image must be a real file in the designated asset directory: ${filename}`);
     const data = await readFile(file);
-    if (data.length < 24 || data.subarray(0, 8).toString('hex') !== '89504e470d0a1a0a' || data.toString('ascii', 12, 16) !== 'IHDR' || data.readUInt32BE(16) < 512 || data.readUInt32BE(20) < 512) throw new Error(`Missing or invalid infographic PNG: ${filename}`);
-    const channels = { 0: 1, 2: 3, 3: 1, 4: 2, 6: 4 }[data[25]];
-    if (data.length < 33 || data.readUInt32BE(8) !== 13 || data[24] !== 8 || !channels || data[26] || data[27] || data[28]) throw new Error(`Expected a standard 8-bit noninterlaced PNG: ${filename}`);
-    const compressed = [];
-    let offset = 8;
-    let ended = false;
-    while (offset + 12 <= data.length) {
-      const length = data.readUInt32BE(offset);
-      const end = offset + 12 + length;
-      if (end > data.length) throw new Error(`Truncated infographic PNG: ${filename}`);
-      const type = data.toString('ascii', offset + 4, offset + 8);
-      let crc = 0xffffffff;
-      for (const byte of data.subarray(offset + 4, end - 4)) {
-        crc ^= byte;
-        for (let bit = 0; bit < 8; bit++) crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
-      }
-      if (((crc ^ 0xffffffff) >>> 0) !== data.readUInt32BE(end - 4)) throw new Error(`Corrupted infographic PNG: ${filename}`);
-      if (type === 'IDAT') compressed.push(data.subarray(offset + 8, offset + 8 + length));
-      offset = end;
-      if (type === 'IEND') { ended = length === 0 && offset === data.length; break; }
-    }
-    if (!ended || !compressed.length) throw new Error(`Incomplete infographic PNG: ${filename}`);
-    const pixels = inflateSync(Buffer.concat(compressed), { maxOutputLength: 64 * 1024 * 1024 });
-    const stride = data.readUInt32BE(16) * channels + 1;
-    if (pixels.length !== stride * data.readUInt32BE(20)) throw new Error(`Incomplete infographic pixel data: ${filename}`);
-    for (let row = 0; row < pixels.length; row += stride) if (pixels[row] > 4) throw new Error(`Invalid PNG row: ${filename}`);
+    await validateNewspaperImage(data, filename, story);
     const hash = createHash('sha256').update(data).digest('hex');
     if (hash !== story.image_provenance.sha256) throw new Error(`Infographic changed after its recorded review: ${filename}`);
     if (seen.has(hash)) throw new Error(`Each story needs a distinct infographic; reused asset: ${filename}`);
