@@ -16,6 +16,8 @@ export const observabilityIssueSchema = z.looseObject({
       brief_reason: z.string().optional(),
       takeaway: z.string(),
       image: z.string().optional(),
+      image_width: z.number().int().positive().optional(),
+      image_height: z.number().int().positive().optional(),
       image_provenance: z.looseObject({
         kind: z.literal('generated-editorial'),
         generator: z.string().min(1),

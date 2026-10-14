@@ -24,6 +24,8 @@ const stories = edition.stories.map((story, index) => ({
   published: story.published,
   why_read: story.takeaway,
   image: story.image,
+  imageWidth: story.image_width,
+  imageHeight: story.image_height,
   imageCaption: story.image_provenance?.kind === 'generated-editorial' ? 'AI-generated editorial infographic · based on the linked source' : (story.image ? `Source image · ${story.publisher}` : undefined),
   // Escape curated text; source claims and editorial takeaways stay distinct.
   bodyHtml: (story.body || [story.summary]).map((paragraph) => `<p>${escape(paragraph)}</p>`).join('') + `<p><strong>Why it matters</strong> ${escape(story.takeaway)}</p>`,

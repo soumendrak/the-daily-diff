@@ -10,9 +10,9 @@ An **AI-observability-only** publication using the distraction-free newspaper re
 - RSS history: `/rss.xml`
 - Latest Markdown and JSON: `/md` and `/json`
 
-**All / HN / NEWS / GITHUB** are Section buttons. All combines every discovery channel; individual source buttons are mutually exclusive. All stories still belong to AI observability. The All Section opens by default, combining HN, News, and GitHub. **All / Recommended / Must-Read** are signal filters: Recommended requires a recorded score of at least 8, Must-Read at least 9. Unrated stories appear under All. The current issue contains 2 HN stories, 11 publisher-news stories, and 2 GitHub release stories. Signal scores are editorial judgements with recorded reasons; they are independent of vote/star counts. Unrated publisher stories remain in All.
+**All / HN / NEWS / GITHUB** are Section buttons. All combines every discovery channel; individual source buttons are mutually exclusive. All stories still belong to AI observability. The All Section opens by default, combining HN, News, and GitHub. **All / Recommended / Must-Read** are signal filters: Recommended requires a recorded score of at least 8, Must-Read at least 9. Unrated stories appear under All. Signal scores are editorial judgements with recorded reasons; they are independent of vote/star counts. Unrated publisher stories remain in All.
 
-The calendar shows publication streaks, not personal reading activity. Only one real AI issue exists currently; older issues are not fabricated. Previous issues stay available when new editions are added. The old `/ai-observability/` landing URL redirects to `/`.
+The calendar shows publication streaks, not personal reading activity. Only real, sourced AI issues appear; missing editions are not fabricated. Previous issues stay available when new editions are added. The old `/ai-observability/` landing URL redirects to `/`.
 
 ## Development
 

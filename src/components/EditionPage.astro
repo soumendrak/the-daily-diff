@@ -21,6 +21,8 @@ interface StoryProps {
 	why_read?: string;
 	authors: string[];
 	image?: string;
+	imageWidth?: number;
+	imageHeight?: number;
 	imageCaption?: string;
 	interest_score?: number;
 	comments?: string;
@@ -326,8 +328,8 @@ const breadcrumbSchema = {
 										loading={isLead ? "eager" : "lazy"}
 										fetchpriority={isLead ? "high" : "auto"}
 										decoding="async"
-										width="560"
-										height="418"
+										width={story.imageWidth || 560}
+										height={story.imageHeight || 418}
 										itemprop="image"
 										onerror="this.parentElement.hidden = true"
 										onload="this.classList.remove('loading'); this.parentElement.classList.remove('is-loading');"
@@ -548,7 +550,7 @@ const breadcrumbSchema = {
 		width: 100%;
 		max-width: 560px;
 		height: auto;
-		aspect-ratio: 560 / 418;
+		aspect-ratio: auto;
 		overflow: hidden;
 		border-radius: 4px;
 		margin: 1em 0;
@@ -581,7 +583,7 @@ const breadcrumbSchema = {
 	.story-featured-image {
 		width: 100%;
 		height: auto;
-		aspect-ratio: 560 / 418;
+		aspect-ratio: auto;
 		display: block;
 		border-radius: 4px;
 		mix-blend-mode: multiply;
