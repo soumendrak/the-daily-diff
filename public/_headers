@@ -22,3 +22,25 @@
 /llms-full.txt
   Content-Type: text/plain; charset=utf-8
   Access-Control-Allow-Origin: *
+
+# Revalidate app identity and legacy icon URLs after branding updates.
+/manifest.webmanifest
+  Cache-Control: public, max-age=0, must-revalidate
+
+/manifest.json
+  Cache-Control: public, max-age=0, must-revalidate
+
+/favicon*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/icon.png
+  Cache-Control: public, max-age=0, must-revalidate
+
+/android-icon-*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/apple-icon*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/ms-icon-*
+  Cache-Control: public, max-age=0, must-revalidate

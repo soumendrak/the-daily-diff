@@ -2,6 +2,7 @@
 import '../styles/main.scss';
 import PWAInstallBanner from '../components/PWAInstallBanner.astro';
 import { SITE_METADATA } from '../config';
+import pwaPromptScript from '../scripts/pwa-prompt.js?raw';
 
 interface Props {
 	title?: string;
@@ -76,10 +77,10 @@ const schemaMarkup = {
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/brand/tidytraces-mark.svg">
 		<link rel="icon" type="image/png" sizes="32x32" href="/brand/tidytraces-icon-32.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="/brand/tidytraces-icon-192.png">
 		<link rel="apple-touch-icon" sizes="180x180" href="/brand/tidytraces-icon-180.png">
 		<meta name="msapplication-TileColor" content="#ffffff">
 		<meta name="msapplication-TileImage" content="/brand/tidytraces-icon-192.png">
-		<meta name="theme-color" content="#ffffff">
 
 		<!-- Autodiscovery Feeds & Machine-Readable Endpoints -->
 		<link rel="alternate" type="application/rss+xml" title="AI Observability Daily" href="/rss.xml" />
@@ -99,7 +100,8 @@ const schemaMarkup = {
 		<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 		<!-- PWA Metadata and iOS support -->
-		<link rel="manifest" href="/manifest.webmanifest" />
+		<link rel="manifest" href="/manifest.webmanifest?v=2" />
+		<script is:inline set:html={pwaPromptScript} />
 		<meta name="theme-color" content="#111111" />
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

@@ -1,5 +1,13 @@
 {
   "name": "Tidy Traces — AI Observability Daily",
+  "short_name": "Tidy Traces",
+  "id": "/",
+  "description": "Distraction-free daily AI observability, evaluations, and agent telemetry.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#111111",
+  "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/brand/tidytraces-icon-192.png",
@@ -12,9 +20,13 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/brand/tidytraces-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "short_name": "Tidy Traces",
-  "start_url": "/",
-  "description": "Distraction-free daily AI observability, evaluations, and agent telemetry."
+  "scope": "/"
 }

@@ -4,20 +4,21 @@
 <div id="pwa-install-banner" class="pwa-banner" aria-hidden="true" hidden>
 	<div class="pwa-banner-content">
 		<div class="pwa-banner-info">
-			<img class="pwa-banner-icon" src="/icon.png" alt="Tidy Traces icon" width="40" height="40" />
+			<img class="pwa-banner-icon" src="/brand/tidytraces-icon-192.png" alt="Tidy Traces icon" width="40" height="40" />
 			<div class="pwa-banner-text">
 				<strong class="pwa-banner-title">Tidy Traces</strong>
-				<span class="pwa-banner-desc" id="pwa-desc-text">Install for quick access to daily editions.</span>
+				<span class="pwa-banner-desc" id="pwa-desc-text" role="status" aria-live="polite">Install for quick access to daily editions.</span>
 			</div>
 		</div>
 		<div class="pwa-banner-actions">
-			<button id="pwa-install-btn" class="pwa-action-btn">Install</button>
-			<button id="pwa-close-btn" class="pwa-close-btn" aria-label="Dismiss">&times;</button>
+			<button type="button" id="pwa-install-btn" class="pwa-action-btn">Install</button>
+			<button type="button" id="pwa-close-btn" class="pwa-close-btn" aria-label="Dismiss">&times;</button>
 		</div>
 	</div>
 </div>
 
 <style>
+	.pwa-banner[hidden], .pwa-action-btn[hidden] { display: none; }
 	.pwa-banner {
 		position: fixed;
 		bottom: 1rem;
@@ -50,17 +51,20 @@
 	}
 
 	.pwa-banner-info {
+		min-width: 0;
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
 	}
 
 	.pwa-banner-icon {
+		flex-shrink: 0;
 		border-radius: 8px;
 		border: 1px solid var(--rule-soft);
 	}
 
 	.pwa-banner-text {
+		min-width: 0;
 		display: flex;
 		flex-direction: column;
 		line-height: 1.35;
@@ -78,6 +82,7 @@
 	}
 
 	.pwa-banner-actions {
+		flex-shrink: 0;
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
@@ -102,6 +107,7 @@
 		background-color: var(--ink);
 		border-color: var(--ink);
 	}
+	.pwa-action-btn:disabled { opacity: 0.65; cursor: wait; }
 
 	.pwa-close-btn {
 		background: none;
@@ -121,6 +127,10 @@
 	}
 
 	@media (max-width: 600px) {
+		.pwa-banner-content { flex-wrap: wrap; gap: 0.5rem; }
+		.pwa-banner-info { flex: 1 1 100%; }
+		.pwa-banner-actions { margin-left: auto; }
+		.pwa-action-btn, .pwa-close-btn { min-height: 44px; min-width: 44px; }
 		.pwa-banner {
 			bottom: 0.5rem;
 			left: 0.5rem;
@@ -144,92 +154,6 @@
 </style>
 
 <script>
-	let deferredPrompt: any = null;
-
-	const banner = document.getElementById('pwa-install-banner') as HTMLElement | null;
-	const installBtn = document.getElementById('pwa-install-btn') as HTMLButtonElement | null;
-	const closeBtn = document.getElementById('pwa-close-btn') as HTMLButtonElement | null;
-	const descText = document.getElementById('pwa-desc-text') as HTMLElement | null;
-
-	// Detect Apple/iOS/iPadOS devices (including modern iPads configured as desktop Safari)
-	const isiOS = (/iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream) || 
-		(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-	// Check if already in standalone display mode (running as installed PWA)
-	const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-		(navigator as any).standalone === true;
-
-	function showBanner() {
-		if (banner) {
-			banner.removeAttribute('hidden');
-			banner.setAttribute('aria-hidden', 'false');
-			// Allow a tiny paint delay to trigger css transition slide-up
-			setTimeout(() => {
-				banner.classList.add('is-visible');
-			}, 100);
-		}
-	}
-
-	function dismissBanner() {
-		if (banner) {
-			banner.classList.remove('is-visible');
-			setTimeout(() => {
-				banner.setAttribute('hidden', 'true');
-				banner.setAttribute('aria-hidden', 'true');
-			}, 300);
-		}
-	}
-
-	// 1. Android / Chrome & other compatible browsers:
-	window.addEventListener('beforeinstallprompt', (e) => {
-		// Stash the event so it can be triggered later.
-		deferredPrompt = e;
-		// Show our custom install banner if not already installed/standalone
-		if (!isStandalone) {
-			showBanner();
-		}
-	});
-
-	if (installBtn) {
-		installBtn.addEventListener('click', async () => {
-			if (deferredPrompt) {
-				// Show native install prompt
-				deferredPrompt.prompt();
-				// Wait for user to respond
-				const { outcome } = await deferredPrompt.userChoice;
-				console.log(`User response to install prompt: ${outcome}`);
-				// We no longer need the prompt
-				deferredPrompt = null;
-				dismissBanner();
-			} else if (isiOS) {
-				// If iOS, clicking "Install" tells them how to install
-				if (descText) {
-					const isInApp = /FBAN|FBAV|Instagram|Twitter|Slack|GSA|Line/i.test(navigator.userAgent);
-					if (isInApp) {
-						descText.innerHTML = 'Tap your browser menu or <strong style="color:var(--accent);">...</strong>, select <strong style="color:var(--accent);">Open in Safari</strong>, then try installing again.';
-					} else {
-						descText.innerHTML = 'Tap the <strong style="color:var(--accent);">Share</strong> button, then select <strong style="color:var(--accent);">Add to Home Screen</strong>.';
-					}
-				}
-				if (installBtn) {
-					installBtn.style.display = 'none'; // Hide install button once instruction is displayed
-				}
-			}
-		});
-	}
-
-	if (closeBtn) {
-		closeBtn.addEventListener('click', () => {
-			dismissBanner();
-		});
-	}
-
-	// 2. iOS Safari (which doesn't support 'beforeinstallprompt'):
-	// If it's iOS/iPadOS and not already running as a standalone app, show instruction banner
-	if (isiOS && !isStandalone) {
-		// Wait 2 seconds to not overwhelm the user immediately on page load
-		setTimeout(() => {
-			showBanner();
-		}, 2000);
-	}
+  import { setupPWAInstall } from '../lib/pwaInstall.js';
+  setupPWAInstall(window);
 </script>

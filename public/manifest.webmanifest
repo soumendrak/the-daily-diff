@@ -1,6 +1,7 @@
 {
   "name": "Tidy Traces — AI Observability Daily",
   "short_name": "Tidy Traces",
+  "id": "/",
   "description": "Distraction-free daily AI observability, evaluations, and agent telemetry.",
   "start_url": "/",
   "display": "standalone",
@@ -19,6 +20,12 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "/brand/tidytraces-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
   "scope": "/"
