@@ -5,6 +5,7 @@ import Footer from './Footer.astro';
 import BrandLogo from './BrandLogo.astro';
 import { SITE_METADATA } from '../config';
 import { resolveStoryImage } from '../lib/storyFilters.js';
+import { EDITION_AUTHOR, AI_IMAGE_DISCLOSURE } from '../lib/editionCredits.js';
 
 const SOURCE_LABEL: Record<string, string> = {
 	arxiv: 'arXiv',
@@ -24,6 +25,7 @@ interface StoryProps {
 	imageWidth?: number;
 	imageHeight?: number;
 	imageCaption?: string;
+	imageGenerated?: boolean;
 	interest_score?: number;
 	comments?: string;
 	hn_id?: string;
@@ -110,6 +112,7 @@ const issueSchema = {
 	"@id": `${new URL(issueHref, Astro.site)}#issue`,
 	"issueNumber": String(issue),
 	"datePublished": `${day}T00:00:00Z`,
+	"author": { "@type": "Person", "name": EDITION_AUTHOR.name, "url": EDITION_AUTHOR.url },
 	"name": `${SITE_METADATA.name} — ${label}`,
 	"description": pageDescription,
 	"isPartOf": {
@@ -194,6 +197,7 @@ const breadcrumbSchema = {
 				</div>
 				<h1 class="masthead-name"><BrandLogo /></h1>
 <p class="masthead-tagline">{editionName} · Observability · Evals · AI agents</p>
+				<p class="edition-byline">By <a href={EDITION_AUTHOR.url} rel="author">{EDITION_AUTHOR.name}</a></p>
 				<hr class="masthead-rule-thick" />
 				{dek && <p class="edition-dek">{dek}</p>}
 				{storyWindow && <p class="edition-window">Coverage window: {storyWindow} · Original sources, independent editorial takeaways.</p>}
@@ -331,6 +335,8 @@ const breadcrumbSchema = {
 										width={story.imageWidth || 560}
 										height={story.imageHeight || 418}
 										itemprop="image"
+										data-image-provenance={story.imageGenerated ? 'generated-editorial' : undefined}
+										aria-describedby={story.imageGenerated ? 'ai-image-disclosure' : undefined}
 										onerror="this.parentElement.hidden = true"
 										onload="this.classList.remove('loading'); this.parentElement.classList.remove('is-loading');"
 									/>
@@ -348,6 +354,7 @@ const breadcrumbSchema = {
 			})()}
 
 			<slot />
+			{stories.some((story) => story.imageGenerated) && <p id="ai-image-disclosure" class="visually-hidden ai-image-disclosure">{AI_IMAGE_DISCLOSURE}</p>}
 			<Footer />
 		</article>
 	</main>
