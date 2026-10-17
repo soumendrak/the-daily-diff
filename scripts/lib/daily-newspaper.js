@@ -34,9 +34,11 @@ export function assertPublishBaseline(repo, editionDate, { fastForward = true } 
   if (!isAncestor('origin/master', 'HEAD')) {
     if (!fastForward || !isAncestor('HEAD', 'origin/master')) throw new Error('This checkout is behind or diverged from origin/master; rebase the edition commit onto origin/master before publishing or it redeploys stale site code');
     git('merge', '--ff-only', '--quiet', 'origin/master');
+    return 'fast-forwarded';
   }
   const changed = git('diff', '--name-only', 'origin/master', 'HEAD').split('\n').filter(Boolean).filter((file) => !allowed(file));
   if (changed.length) throw new Error(`Only this edition's outputs may differ from origin/master when publishing; merge site changes through a PR first: ${changed.join(', ')}`);
+  return 'current';
 }
 
 /** New drafts only: published issues keep their reviewed bytes on retry. */

@@ -163,7 +163,12 @@ test('runner promotes images, rolls back build failure, and safely retries publi
     await writeFile(path.join(other, 'noop.js'), 'process.exit(0); // newer site code');
     execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@example.invalid', 'commit', '-qam', 'Newer site code'], { cwd: other });
     execFileSync('git', ['push', '-q', 'origin', 'HEAD:master'], { cwd: other });
-    assert.equal(JSON.parse(run({}, 'publish').toString()).published, true);
+    // The fast-forward re-executes the runner so master's runner, rules and config apply.
+    await writeFile(path.join(other, 'scripts/run-daily-newspaper.js'), (await readFile(path.join(other, 'scripts/run-daily-newspaper.js'), 'utf8')).replace("status.stage = 'built';", "status.stage = 'built'; status.runner = 'master';"));
+    execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@example.invalid', 'commit', '-qam', 'Newer runner'], { cwd: other });
+    execFileSync('git', ['push', '-q', 'origin', 'HEAD:master'], { cwd: other });
+    const reexecuted = JSON.parse(run({}, 'publish').toString());
+    assert.equal(reexecuted.published, true); assert.equal(reexecuted.runner, 'master');
     assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }), execFileSync('git', ['rev-parse', 'HEAD'], { cwd: other, encoding: 'utf8' }), 'a behind checkout fast-forwards before deploying');
     assert.match(await readFile(path.join(root, 'noop.js'), 'utf8'), /newer site code/);
     // master moving during curation/build must stop the deploy, not overwrite the newer site.
