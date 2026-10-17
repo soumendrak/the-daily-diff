@@ -13,7 +13,7 @@ Use the runtime's built-in image-generation tool only. The user explicitly selec
    ```
    The converter uses the repository's `sharp` dependency (installed with `npm ci`), preserves proportions without cropping or enlargement, caps width at 1440 pixels, and tries quality 82 down to 70 to fit **300,000 bytes (300 KB)**. Its shortest edge must remain at least 512 pixels. It stops if that budget cannot be met; simplify/regenerate instead of sacrificing readable labels. Typical newspaper graphics should be around 80–150 KB. Existing output files are never overwritten.
 7. Inspect the **final WebP**, including labels at article width and in zoom view. If compression makes text illegible, regenerate a simpler graphic and reconvert. Use the supplied `IMAGE_URL_PREFIX` with `story-slug.webp` in the draft. Record the converter's `image_width`, `image_height`, and `optimization` metadata. Hash and review refer to the published WebP, not the original PNG.
-8. Store `image_provenance`: `kind: "generated-editorial"`, `generator: "built-in-imagegen"`, complete final `prompt`, `based_on` containing the primary evidence URL, `reviewed: true`, and final WebP `sha256`; put the returned `optimization` object in this provenance too. The reader labels the graphic as AI-generated editorial work. It must never be presented as the publisher's own screenshot.
+8. Store `image_provenance`: `kind: "generated-editorial"`, `generator: "built-in-imagegen"`, complete final `prompt`, `based_on` containing the primary evidence URL, `reviewed: true`, and final WebP `sha256`; put the returned `optimization` object in this provenance too. The reader discloses generated graphics once per edition in a visually hidden note linked from each image (`aria-describedby`), not as a caption under each image. Never put an "AI-generated" label, footer, or watermark in the image itself; `validateDailyDraft` rejects such prompts. A generated graphic must never be presented as the publisher's own screenshot.
 
 Example prompt structure (replace all bracketed inputs):
 
@@ -27,7 +27,8 @@ Style: warm newsprint, dark ink, restrained accent, generous spacing
 Composition: a clear title and 3–5 labelled elements; readable at article width
 Text (verbatim): [exact short title and labels]
 Constraints: no invented metrics, no unsupported product architecture,
-no fake screenshots, no unrelated logos; preserve source/editorial distinction
+no fake screenshots, no unrelated logos, no "AI-generated" label or watermark text;
+preserve source/editorial distinction
 ```
 
 The runner validates file existence, WebP format and full decoding, the 300 KB size budget, dimensions, final hashes, and distinct assets. It cannot replace an agent's visual or factual review. An image-generation failure fails the edition; logs and the draft remain for diagnosis. Story length, signal score, and HN/News/GitHub category are never reasons to skip generation.

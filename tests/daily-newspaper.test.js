@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { randomBytes } from 'node:crypto';
 import { optimizeNewspaperImage } from '../scripts/lib/newspaper-images.js';
-import { editionDates, validateDailyDraft, validateStoryImages, assertNoDuplicateStories } from '../scripts/lib/daily-newspaper.js';
+import { editionDates, validateDailyDraft, validateStoryImages, assertNoDuplicateStories, assertNoBurnedInAiLabel } from '../scripts/lib/daily-newspaper.js';
 
 const dates = editionDates(new Date('2026-10-13T02:30:00Z'));
 const story = {
@@ -37,6 +37,9 @@ test('daily contract blocks relabelled dates, incomplete research, thin text and
   assert.equal(validateDailyDraft({ ...issue, stories: [brief] }, dates).stories[0].format, 'brief');
   assert.throws(() => validateDailyDraft({ ...issue, stories: [{ ...brief, image: undefined }] }, dates), /Every story/);
   assert.throws(() => validateDailyDraft({ ...issue, stories: [{ ...story, image_provenance: undefined }] }, dates), /provenance/);
+  // The edition discloses generated graphics once; never burn a per-image AI label into the pixels.
+  assert.throws(() => assertNoBurnedInAiLabel({ ...issue, stories: [{ ...story, image_provenance: { ...story.image_provenance, prompt: "Trace flow. Use only specified text plus small footer 'AI-GENERATED EDITORIAL'." } }] }), /AI-generated label/);
+  assert.equal(assertNoBurnedInAiLabel(issue), issue);
   assert.equal(validateDailyDraft({ ...issue, stories: [] }, dates).stories.length, 0);
 });
 

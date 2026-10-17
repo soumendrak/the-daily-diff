@@ -1,5 +1,7 @@
 # AI Observability Daily — 2026-10-17
 
+By Soumendra Kumar Sahoo
+
 Canonical: https://tidytraces.com/
 Coverage window: 2026-10-16
 
@@ -18,7 +20,6 @@ For an evaluation team, visual examples can help identify tasks worth turning in
 Why it matters: Use visual comparisons to discover test cases; require repeatable inputs and explicit judgments before treating a gallery as a production benchmark.
 
 ![SlopGrid offers no-code visual model comparisons in a first-party Show HN](/edition-images/2026-10-17/slopgrid-benchmarks.webp)
-AI-generated editorial infographic, based on the linked source.
 
 ## Langfuse scopes project keys for ingestion, feedback, and reporting
 
@@ -33,7 +34,6 @@ For teams collecting sensitive agent conversations, this provides a practical wa
 Why it matters: Apply the narrowest scope to each integration and explicitly rotate old keys; creating new permission levels does not restrict existing credentials.
 
 ![Langfuse scopes project keys for ingestion, feedback, and reporting](/edition-images/2026-10-17/langfuse-key-permissions.webp)
-AI-generated editorial infographic, based on the linked source.
 
 ## Honeycomb’s O11yDay recap connects agent failures, traces, and spend
 
@@ -48,7 +48,6 @@ The operational lesson is to connect an individual execution with the policy tha
 Why it matters: Measure the cost and usefulness of the whole agent workflow, and annotate behavior changes so fleet trends can be traced back to individual executions.
 
 ![Honeycomb’s O11yDay recap connects agent failures, traces, and spend](/edition-images/2026-10-17/honeycomb-agent-investigation.webp)
-AI-generated editorial infographic, based on the linked source.
 
 ## Langfuse’s October 16 releases improve ingestion semantics and gateway visibility
 
@@ -63,7 +62,6 @@ For operators, the shared theme is preserving meaning as telemetry crosses adapt
 Why it matters: Validate telemetry meaning across adapters and distinguish gateway overhead from upstream failures before interpreting dashboards after an upgrade.
 
 ![Langfuse’s October 16 releases improve ingestion semantics and gateway visibility](/edition-images/2026-10-17/langfuse-oct16-releases.webp)
-AI-generated editorial infographic, based on the linked source.
 
 ## Phoenix v20.23.0 adds OTLP export for server logs
 
@@ -76,4 +74,7 @@ Phoenix v20.23.0 adds server-log export over OTLP. Its release notes also fix th
 Why it matters: Check the observability server’s own log delivery alongside application traces, using a known event rather than assuming export implies receipt.
 
 ![Phoenix v20.23.0 adds OTLP export for server logs](/edition-images/2026-10-17/phoenix-otlp-server-logs.webp)
-AI-generated editorial infographic, based on the linked source.
+
+---
+
+Story infographics in this edition are AI-generated editorial illustrations based on the linked sources.

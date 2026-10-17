@@ -13,6 +13,17 @@ export function editionDates(now = new Date(), timeZone = 'Asia/Kolkata', explic
   return { date, storyWindow: previous.toISOString().slice(0, 10), windowClosesAt: parsed.toISOString() };
 }
 
+// A per-image label baked into pixels is a visible caption the template cannot hide.
+const BURNED_IN_AI_LABEL = /(label|footer|caption|watermark|stamp|badge|corner|text)[^.]{0,40}AI[-\s]?GENERATED|AI[-\s]?GENERATED[^.]{0,30}(label|footer|caption|watermark|stamp|badge)/i;
+
+/** New drafts only: published issues keep their reviewed bytes on retry. */
+export function assertNoBurnedInAiLabel(issue) {
+  for (const story of issue.stories) {
+    if (BURNED_IN_AI_LABEL.test(story.image_provenance?.prompt || '')) throw new Error(`Do not render an AI-generated label inside the infographic; the edition discloses generated graphics once: ${story.title}`);
+  }
+  return issue;
+}
+
 export function validateDailyDraft(raw, dates, history = []) {
   const issue = observabilityIssueSchema.parse(raw);
   if (issue.date !== dates.date || issue.story_window !== dates.storyWindow) throw new Error('Draft does not match the frozen run dates');
