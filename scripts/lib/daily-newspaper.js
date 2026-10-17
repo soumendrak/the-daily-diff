@@ -19,24 +19,24 @@ const BURNED_IN_AI_LABEL = /(label|footer|caption|watermark|stamp|badge|corner|t
 const NEGATION = /\b(no|not|never|without|avoid|omit|exclude|don'?t)\b/i;
 const requestsBurnedInLabel = (prompt) => prompt.split(/[.;:,\n]/).some((clause) => BURNED_IN_AI_LABEL.test(clause) && !NEGATION.test(clause));
 
-const EDITION_OUTPUT = /^(src\/data\/ai-observability\/[^/]+\.json|public\/edition-images\/.+|public\/md|public\/json)$/;
-
 /**
  * Publishing deploys this checkout, so its application code must be exactly the
- * freshly fetched origin/master; only unpushed edition outputs may sit on top.
- * A clean checkout that is merely behind fast-forwards; a diverged or
- * feature-branch checkout would otherwise redeploy an old template.
+ * freshly fetched origin/master; only this edition's unpushed outputs may sit on
+ * top. A clean checkout that is merely behind fast-forwards (when allowed); a
+ * diverged, stale or feature-branch checkout would otherwise redeploy an old
+ * template or rewrite earlier issues.
  */
-export function assertPublishBaseline(repo) {
+export function assertPublishBaseline(repo, editionDate, { fastForward = true } = {}) {
+  const allowed = (file) => file === `src/data/ai-observability/${editionDate}.json` || file.startsWith(`public/edition-images/${editionDate}/`) || file === 'public/md' || file === 'public/json';
   const git = (...args) => execFileSync('git', args, { cwd: repo, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
   try { git('fetch', '--quiet', 'origin', 'master'); } catch { throw new Error('Publishing requires fetching origin/master to confirm the deployed application code'); }
   const isAncestor = (a, b) => { try { git('merge-base', '--is-ancestor', a, b); return true; } catch { return false; } };
   if (!isAncestor('origin/master', 'HEAD')) {
-    if (!isAncestor('HEAD', 'origin/master')) throw new Error('This checkout has diverged from origin/master; reconcile it before publishing or it redeploys stale site code');
+    if (!fastForward || !isAncestor('HEAD', 'origin/master')) throw new Error('This checkout is behind or diverged from origin/master; rebase the edition commit onto origin/master before publishing or it redeploys stale site code');
     git('merge', '--ff-only', '--quiet', 'origin/master');
   }
-  const changed = git('diff', '--name-only', 'origin/master', 'HEAD').split('\n').filter(Boolean).filter((file) => !EDITION_OUTPUT.test(file));
-  if (changed.length) throw new Error(`Only edition outputs may differ from origin/master when publishing; merge site changes through a PR first: ${changed.join(', ')}`);
+  const changed = git('diff', '--name-only', 'origin/master', 'HEAD').split('\n').filter(Boolean).filter((file) => !allowed(file));
+  if (changed.length) throw new Error(`Only this edition's outputs may differ from origin/master when publishing; merge site changes through a PR first: ${changed.join(', ')}`);
 }
 
 /** New drafts only: published issues keep their reviewed bytes on retry. */
