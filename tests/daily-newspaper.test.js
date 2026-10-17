@@ -40,6 +40,11 @@ test('daily contract blocks relabelled dates, incomplete research, thin text and
   // The edition discloses generated graphics once; never burn a per-image AI label into the pixels.
   assert.throws(() => assertNoBurnedInAiLabel({ ...issue, stories: [{ ...story, image_provenance: { ...story.image_provenance, prompt: "Trace flow. Use only specified text plus small footer 'AI-GENERATED EDITORIAL'." } }] }), /AI-generated label/);
   assert.equal(assertNoBurnedInAiLabel(issue), issue);
+  const withPrompt = (prompt) => ({ ...issue, stories: [{ ...story, image_provenance: { ...story.image_provenance, prompt } }] });
+  assert.throws(() => assertNoBurnedInAiLabel(withPrompt('Readable labels. Use only specified text plus small footer AI-GENERATED EDITORIAL. Flat clean line illustration')), /AI-generated label/);
+  // The skill's own constraint line forbids the label; it must not block a compliant draft.
+  assert.doesNotThrow(() => assertNoBurnedInAiLabel(withPrompt('Constraints: no invented metrics, no unsupported product architecture,\nno fake screenshots, no unrelated logos, no "AI-generated" label or watermark text;\npreserve source/editorial distinction')));
+  assert.doesNotThrow(() => assertNoBurnedInAiLabel(withPrompt('Do not add an AI-generated watermark or footer label.')));
   assert.equal(validateDailyDraft({ ...issue, stories: [] }, dates).stories.length, 0);
 });
 

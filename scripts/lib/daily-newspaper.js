@@ -14,12 +14,15 @@ export function editionDates(now = new Date(), timeZone = 'Asia/Kolkata', explic
 }
 
 // A per-image label baked into pixels is a visible caption the template cannot hide.
-const BURNED_IN_AI_LABEL = /(label|footer|caption|watermark|stamp|badge|corner|text)[^.]{0,40}AI[-\s]?GENERATED|AI[-\s]?GENERATED[^.]{0,30}(label|footer|caption|watermark|stamp|badge)/i;
+// Clauses that forbid such a label ("no AI-generated watermark") are compliant.
+const BURNED_IN_AI_LABEL = /(label|footer|caption|watermark|stamp|badge|corner|text).{0,40}AI[-\s]?GENERATED|AI[-\s]?GENERATED.{0,30}(label|footer|caption|watermark|stamp|badge)/i;
+const NEGATION = /\b(no|not|never|without|avoid|omit|exclude|don'?t)\b/i;
+const requestsBurnedInLabel = (prompt) => prompt.split(/[.;:,\n]/).some((clause) => BURNED_IN_AI_LABEL.test(clause) && !NEGATION.test(clause));
 
 /** New drafts only: published issues keep their reviewed bytes on retry. */
 export function assertNoBurnedInAiLabel(issue) {
   for (const story of issue.stories) {
-    if (BURNED_IN_AI_LABEL.test(story.image_provenance?.prompt || '')) throw new Error(`Do not render an AI-generated label inside the infographic; the edition discloses generated graphics once: ${story.title}`);
+    if (requestsBurnedInLabel(story.image_provenance?.prompt || '')) throw new Error(`Do not render an AI-generated label inside the infographic; the edition discloses generated graphics once: ${story.title}`);
   }
   return issue;
 }

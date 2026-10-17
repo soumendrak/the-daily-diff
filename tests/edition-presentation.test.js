@@ -71,19 +71,26 @@ test('every built edition page has the top byline and no visible per-image AI ca
   }
 });
 
-test('ad-hoc deploys refuse uncommitted or unmerged site changes', async () => {
+test('ad-hoc deploys only ship the current origin/master tip', async () => {
   const dir = await mkdtemp(path.join(tmpdir(), 'tidytraces-deploy-'));
-  const git = (...args) => execFileSync('git', ['-c', 'user.email=t@example.com', '-c', 'user.name=t', ...args], { cwd: dir, stdio: 'pipe' });
-  const guard = () => spawnSync(process.execPath, [path.join(repo, 'scripts/require-committed-site.js')], { cwd: dir, encoding: 'utf8' });
+  const origin = path.join(dir, 'origin.git'), work = path.join(dir, 'work'), other = path.join(dir, 'other');
+  const git = (cwd, ...args) => execFileSync('git', ['-c', 'user.email=t@example.com', '-c', 'user.name=t', ...args], { cwd, stdio: 'pipe' });
+  const guard = () => spawnSync(process.execPath, [path.join(repo, 'scripts/require-committed-site.js')], { cwd: work, encoding: 'utf8' });
   try {
-    git('init', '-q', '-b', 'master');
-    await writeFile(path.join(dir, 'a.txt'), 'one');
-    git('add', '.'); git('commit', '-qm', 'one'); git('update-ref', 'refs/remotes/origin/master', 'HEAD');
-    assert.equal(guard().status, 0);
-    await writeFile(path.join(dir, 'a.txt'), 'dirty');
+    git(dir, 'init', '-q', '--bare', '-b', 'master', origin);
+    git(dir, 'clone', '-q', origin, work);
+    await writeFile(path.join(work, 'a.txt'), 'one');
+    git(work, 'add', '.'); git(work, 'commit', '-qm', 'one'); git(work, 'push', '-q', 'origin', 'HEAD:master');
+    assert.equal(guard().status, 0, guard().stderr);
+    await writeFile(path.join(work, 'a.txt'), 'dirty');
     assert.match(guard().stderr, /uncommitted/);
-    git('commit', '-qam', 'local only');
-    assert.match(guard().stderr, /not on origin\/master/);
+    git(work, 'commit', '-qam', 'local only');
+    assert.match(guard().stderr, /not the current origin\/master tip/);
+    git(work, 'reset', '-q', '--hard', 'origin/master');
+    git(dir, 'clone', '-q', origin, other);
+    await writeFile(path.join(other, 'b.txt'), 'newer');
+    git(other, 'add', '.'); git(other, 'commit', '-qm', 'newer'); git(other, 'push', '-q', 'origin', 'HEAD:master');
+    assert.match(guard().stderr, /not the current origin\/master tip/, 'a stale checkout must not roll production back');
   } finally {
     await rm(dir, { recursive: true, force: true });
   }

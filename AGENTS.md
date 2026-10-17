@@ -17,7 +17,7 @@ Tidy Traces is an AI-observability-only fork of https://github.com/arpitbbhayani
 - The masthead carries the byline "By Soumendra Kumar Sahoo" from `src/lib/editionCredits.js`. `tests/edition-presentation.test.js` builds every edition and fails if the byline leaves the top or a visible per-image AI caption returns.
 - Start development in background mode: `npm run dev -- --background`. Manage with `npx astro dev status`, `npx astro dev logs`, `npx astro dev stop`.
 - Before committing: `npm test`, `npm run check`, `npm run build`.
-- `npm run preview:cf` previews Worker static assets. The Cloudflare Pages project `the-daily-diff` deploys every push to `master` (Git integration), and the daily runner also deploys a clean `master` build. Site changes must be merged to `master` through a PR; anything deployed ad hoc from an uncommitted tree or unmerged branch is reverted by the next daily deploy. `npm run deploy` refuses a dirty tree or a HEAD not on `origin/master`.
+- `npm run preview:cf` previews Worker static assets. The Cloudflare Pages project `the-daily-diff` deploys every push to `master` (Git integration), and the daily runner also deploys a clean `master` build. Site changes must be merged to `master` through a PR; anything deployed ad hoc from an uncommitted tree or unmerged branch is reverted by the next daily deploy. `npm run deploy` refuses a dirty tree or any HEAD other than the freshly fetched `origin/master` tip.
 - Canonical origin is fixed at `https://tidytraces.com`; an old dashboard `SITE_URL` value must not change it.
 
 Astro reference: https://docs.astro.build
