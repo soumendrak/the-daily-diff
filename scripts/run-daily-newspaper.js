@@ -4,7 +4,7 @@ import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { constants } from 'node:fs';
-import { editionDates, validateDailyDraft, validateStoryImages, workspaceFingerprint, assertNoBurnedInAiLabel } from './lib/daily-newspaper.js';
+import { editionDates, validateDailyDraft, validateStoryImages, workspaceFingerprint, assertNoBurnedInAiLabel, assertPublishBaseline } from './lib/daily-newspaper.js';
 
 const repo = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -34,6 +34,7 @@ if (args.includes('--dry-run')) {
 if (new Date(dates.windowClosesAt) > new Date()) throw new Error('The requested source day has not finished; do not publish future or incomplete-day news');
 if (mode === 'publish' && !publish.length) throw new Error('Configure the publication command before running publish mode');
 if (mode === 'publish' && execFileSync('git', ['status', '--porcelain'], { cwd: repo, encoding: 'utf8' }).trim()) throw new Error('Unattended publishing requires a clean dedicated checkout. Commit/merge the site changes first.');
+if (mode === 'publish') assertPublishBaseline(repo);
 
 const lock = path.join(repo, '.cache/daily-newspaper.lock');
 await mkdir(path.dirname(lock), { recursive: true });

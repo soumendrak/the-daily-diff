@@ -8,7 +8,7 @@ import { createHash } from 'node:crypto';
 import sharp from 'sharp';
 import { randomBytes } from 'node:crypto';
 import { optimizeNewspaperImage } from '../scripts/lib/newspaper-images.js';
-import { editionDates, validateDailyDraft, validateStoryImages, assertNoDuplicateStories, assertNoBurnedInAiLabel } from '../scripts/lib/daily-newspaper.js';
+import { editionDates, validateDailyDraft, validateStoryImages, assertNoDuplicateStories, assertNoBurnedInAiLabel, assertPublishBaseline } from '../scripts/lib/daily-newspaper.js';
 
 const dates = editionDates(new Date('2026-10-13T02:30:00Z'));
 const story = {
@@ -146,11 +146,58 @@ test('runner promotes images, rolls back build failure, and safely retries publi
     execFileSync('git', ['config', 'user.email', 'runner@example.invalid'], { cwd: root });
     execFileSync('git', ['add', '.'], { cwd: root });
     execFileSync('git', ['commit', '-qm', 'Fixture baseline'], { cwd: root });
+    const origin = path.join(root, '.cache/origin.git');
+    execFileSync('git', ['init', '-q', '--bare', origin]);
+    execFileSync('git', ['remote', 'add', 'origin', origin], { cwd: root });
+    execFileSync('git', ['push', '-q', 'origin', 'HEAD:master'], { cwd: root });
     assert.throws(() => run({ FAIL_PUBLISH: '1' }, 'publish'));
     assert.equal(execFileSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' }).trim(), '');
     assert.deepEqual(await readFile(path.join(root, 'src/data/ai-observability/2026-10-13.json')), before);
     const published = JSON.parse(run({}, 'publish').toString());
     assert.equal(published.published, true); assert.equal(published.reused_existing_issue, true);
     assert.equal(await readFile(path.join(root, '.cache/published'), 'utf8'), 'yes');
+    // A stale checkout must not redeploy old site code after master moves on (the byline/disclosure revert).
+    execFileSync('git', ['push', '-q', 'origin', 'HEAD:master'], { cwd: root }); // the routine pushes its edition commit
+    const other = path.join(root, '.cache/other');
+    execFileSync('git', ['clone', '-q', origin, other]);
+    await writeFile(path.join(other, 'noop.js'), 'process.exit(0); // newer site code');
+    execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@example.invalid', 'commit', '-qam', 'Newer site code'], { cwd: other });
+    execFileSync('git', ['push', '-q', 'origin', 'HEAD:master'], { cwd: other });
+    assert.equal(JSON.parse(run({}, 'publish').toString()).published, true);
+    assert.equal(execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }), execFileSync('git', ['rev-parse', 'HEAD'], { cwd: other, encoding: 'utf8' }), 'a behind checkout fast-forwards before deploying');
+    assert.match(await readFile(path.join(root, 'noop.js'), 'utf8'), /newer site code/);
+  } finally { await rm(root, { recursive: true, force: true }); }
+});
+
+test('publish baseline allows unpushed edition commits but not stale or unmerged site code', async () => {
+  const root = await mkdtemp(path.join(tmpdir(), 'newspaper-baseline-'));
+  const origin = path.join(root, 'origin.git'), work = path.join(root, 'work');
+  const git = (...args) => execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@example.invalid', ...args], { cwd: work, stdio: 'pipe' });
+  try {
+    execFileSync('git', ['init', '-q', '--bare', origin]);
+    execFileSync('git', ['clone', '-q', origin, work], { stdio: 'pipe' });
+    await mkdir(path.join(work, 'src/data/ai-observability'), { recursive: true });
+    await writeFile(path.join(work, 'app.js'), 'v1');
+    git('add', '.'); git('commit', '-qm', 'base'); git('push', '-q', 'origin', 'HEAD:master');
+    assert.doesNotThrow(() => assertPublishBaseline(work));
+    await writeFile(path.join(work, 'src/data/ai-observability/2026-10-13.json'), '{}');
+    git('add', '.'); git('commit', '-qm', 'edition');
+    assert.doesNotThrow(() => assertPublishBaseline(work), 'a retry after the local edition commit still publishes');
+    await writeFile(path.join(work, 'app.js'), 'unmerged');
+    git('commit', '-qam', 'local site change');
+    assert.throws(() => assertPublishBaseline(work), /Only edition outputs.*app\.js/);
+    git('reset', '-q', '--hard', 'origin/master');
+    const other = path.join(root, 'other');
+    execFileSync('git', ['clone', '-q', origin, other], { stdio: 'pipe' });
+    await writeFile(path.join(other, 'app.js'), 'v2');
+    execFileSync('git', ['-c', 'user.name=t', '-c', 'user.email=t@example.invalid', 'commit', '-qam', 'v2'], { cwd: other });
+    execFileSync('git', ['push', '-q', 'origin', 'HEAD:master'], { cwd: other, stdio: 'pipe' });
+    await mkdir(path.join(work, 'src/data/ai-observability'), { recursive: true });
+    await writeFile(path.join(work, 'src/data/ai-observability/2026-10-14.json'), '{}');
+    git('add', '.'); git('commit', '-qm', 'edition on stale base');
+    assert.throws(() => assertPublishBaseline(work), /diverged/);
+    git('reset', '-q', '--hard', 'HEAD~1');
+    assertPublishBaseline(work);
+    assert.equal(await readFile(path.join(work, 'app.js'), 'utf8'), 'v2', 'a clean, behind checkout fast-forwards');
   } finally { await rm(root, { recursive: true, force: true }); }
 });
